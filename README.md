@@ -13,3 +13,5 @@ code from your own AFS account. If you deviate from that your entire
 group will earn a zero.
 4. You must upload your individual contribution to your group project to 
 earn credit.
+
+![Architecture](/ProjectArchitecture.png)
