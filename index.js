@@ -73,6 +73,12 @@ app.post('/login', async function (request, response) {
 	
 });
 
+app.get('/logout', async function (request, response) {
+	request.session.destroy();
+	response.send('Logged out');
+	response.end();
+});
+
 app.post('/checkSession', async function (request, response) {
 	let UserId = request.body.UserId;
 	let SessionToken = request.body.SessionToken;
