@@ -335,6 +335,68 @@ app.post('/getAllQuestionsOnExam', async function(request, response) {
 
 });
 
+app.post('/insertScore', async function(request, response) {
+	if(!(await isUserLoggedIn(request.session))) {
+        response.send("Please login");
+        response.end();
+        return;
+    }
+
+	let ExamId = request.body.ExamId;
+	let QuestionId = request.body.QuestionId;
+	let AutoGraderScore = request.body.AutoGraderScore;
+	let UserId = request.session.UserData.UserId;
+
+	insertScoresPromise = () => {
+        return new Promise((resolve, reject) => {
+            pool.query('INSERT INTO Scores (ExamId, QuestionId, UserId, AutoGraderScore) VALUES (?, ?, ?, ?)', [ExamId, QuestionId, UserId, AutoGraderScore],
+                (error, elements) => {
+                    if(error) return reject(error);
+                    return resolve(true);
+                });
+        });
+    }
+
+	if(await insertScoresPromise()) {
+        response.json({'Result':'Success'});
+        response.end();
+    } else {
+        response.json({'Result':'Error'});
+        response.end();
+    }
+
+
+})
+
+app.post('/getScores', async function(request, response) {
+	if(!(await isUserLoggedIn(request.session))) {
+        response.send("Please login");
+        response.end();
+        return;
+    }
+
+	let ExamId = request.body.ExamId;
+	let UserId = request.body.UserId;
+	//Students can only retrieve their own scores
+	if(request.session.UserData.AccountType == 'S') {
+		UserId = request.session.UserData.UserId;
+	}
+
+	getScoresPromise  = () => {
+        return new Promise((resolve, reject) => {
+            pool.query('SELECT * FROM Scores WHERE UserId=? AND ExamId=?', [UserId, ExamId],
+                (error, elements) => {
+                    if(error) return reject(error);
+                    return resolve(elements);
+                });
+        });
+    }
+
+	response.json(await getScoresPromise());
+	response.end();
+
+});
+
 /* Data retrieval endpoints */
 
 app.get('/getAllQuestions', async function(request, response) {
