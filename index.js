@@ -47,7 +47,7 @@ POST /getAllQuestionsOnExam [ExamId]
 POST /insertScore [ExamId, QuestionId, AutoGraderScore]
 POST /getScores [UserId, ExamId]
 POST /overrideScore [UserId, ExamId, QuestionId, InstructorOverrideScore, InstructorComment]
-
+POST /getQuestionTestCases [QuestionId]
 
 GET /logout
 GET /createNewExam
@@ -439,7 +439,31 @@ app.post('/overrideScore', async function(request, response) {
         response.end();
     }
 
-})
+});
+
+app.post('/getQuestionTestCases', async function(request, response) {
+	if(!(await isUserLoggedIn(request.session))) {
+        response.send("Please login");
+        response.end();
+        return;
+    }
+
+	let QuestionId = request.body.QuestionId;
+	
+	getTestCasesPromise = () => {
+        return new Promise((resolve, reject) => {
+            pool.query('SELECT * FROM TestCases WHERE QuestionId=?', [QuestionId],
+                (error, elements) => {
+                    if(error) return reject(error);
+                    return resolve(elements);
+                });
+        });
+    }
+
+	response.json(await getTestCasesPromise());
+	response.end();
+
+});
 
 /* Data retrieval endpoints */
 
