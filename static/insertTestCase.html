@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+
+<html>
+
+<a href='/login'>Go back to main page</a>
+<br/>
+<br/>
+
+<form action="insertTestCase" method="post">
+<label>Question Id</label><input type="number" name="QuestionId", id="QuestionId"><br/><br/>
+<label>Test Case Input</label><input type="text" name="TestCaseInput" id="TestCaseInput"><br/>
+<label>Test Case Input Type</label>
+<select name='TestCaseInputType' id='TestCaseInputType'>
+	<option value='S'>String</option>
+	<option value='I'>Integer</option>
+	<option value='F'>Floating Point</option>
+</select><br/><br/>
+<label>Test Case Output</label><input type='text' name='TestCaseOutput' id='TestCaseOutput'><br/>
+<label>Test Case Output Type</label>
+<select name='TestCaseOutputType' id='TestCaseOutputType'>
+    <option value='S'>String</option>
+    <option value='I'>Integer</option>
+    <option value='F'>Floating Point</option>
+</select><br/><br/>
+
+<input type="submit" value="Submit">
+
+
+</html>
+
