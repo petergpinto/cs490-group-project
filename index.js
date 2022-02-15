@@ -56,7 +56,7 @@ GET /getAllQuestions
 
 */
 
-
+require(__dirname + '/TestCases.js')(app);
 
 /* Backend */
 
@@ -159,6 +159,8 @@ app.post('/insertQuestion', async function (request, response) {
 	}
 });
 
+
+/*
 app.post('/insertTestCase', async function (request, response) {
 	if(!(await isUserLoggedIn(request.session))) {
 		response.send('Please login');
@@ -195,6 +197,7 @@ app.post('/insertTestCase', async function (request, response) {
         response.end();
 	}
 });
+*/
 
 app.get('/createNewExam', async function (request, response) {
 	if(!(await isUserLoggedIn(request.session))) {
@@ -441,6 +444,7 @@ app.post('/overrideScore', async function(request, response) {
 
 });
 
+/*
 app.post('/getQuestionTestCases', async function(request, response) {
 	if(!(await isUserLoggedIn(request.session))) {
         response.send("Please login");
@@ -464,6 +468,8 @@ app.post('/getQuestionTestCases', async function(request, response) {
 	response.end();
 
 });
+*/
+
 
 /* Data retrieval endpoints */
 
