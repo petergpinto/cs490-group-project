@@ -41,9 +41,11 @@ POST /checkSession [UserId, SessionToken]
 POST /insertQuestion [QuestionText, FunctionName]
 POST /insertTestCase [QuestionId, TestCaseInput, TestCaseOutput, TestCaseInputType, TestCaseOutputType]
 POST /createNewExam
+POST /releaseExamScore [ExamId]
+POST /addQuestionToExam [QuestionId, ExamId]
+POST /removeQuestionFromExam [QuestionId, ExamId]
 
 GET /logout
-GET /releaseExamScore
 GET /getAllExams
 GET /getAllQuestions
 
@@ -237,6 +239,75 @@ app.post('/releaseExamScore', async function (request, response) {
     }
 
 
+});
+
+app.post('/addQuestionToExam', async function(request, response) {
+    if(!(await isUserLoggedIn(request.session))) {
+        response.send('Please login');
+        response.end();
+        return;
+    }
+
+	let ExamId = request.body.ExamId;
+	let QuestionId = request.body.QuestionId;
+	if(!ExamId || !QuestionId) {
+		response.json({'Result':'Invalid Request'});
+		response.end();
+		return;
+	}
+	
+	addQuestionToExamPromise = () => {
+        return new Promise((resolve, reject) => {
+            pool.query('INSERT INTO ExamQuestions (ExamId, QuestionId) VALUES (?, ?)', [ExamId, QuestionId],
+                (error, elements) => {
+                    if(error) return reject(error);
+                    return resolve(true);
+                });
+        });
+    }
+
+	if(await addQuestionToExamPromise()) {
+		response.json({'Result':'Success'});
+        response.end();
+	} else {
+		response.json({'Result':'Error'});
+        response.end();
+	}
+
+});
+
+app.post('/removeQuestionFromExam', async function(request, response) {
+    if(!(await isUserLoggedIn(request.session))) {
+        response.send('Please login');
+        response.end();
+        return;
+    }
+	
+	let ExamId = request.body.ExamId;
+    let QuestionId = request.body.QuestionId;
+    if(!ExamId || !QuestionId) {
+        response.json({'Result':'Invalid Request'});
+        response.end();
+        return;
+    }
+
+    removeQuestionFromExamPromise = () => {
+        return new Promise((resolve, reject) => {
+            pool.query('DELETE FROM ExamQuestions WHERE ExamId=? and QuestionId=?', [ExamId, QuestionId],
+                (error, elements) => {
+                    if(error) return reject(error);
+                    return resolve(true);
+                });
+        });
+    }
+
+    if(await removeQuestionFromExamPromise()) {
+        response.json({'Result':'Success'});
+        response.end();
+    } else {
+        response.json({'Result':'Error'});
+        response.end();
+    }
 });
 
 
