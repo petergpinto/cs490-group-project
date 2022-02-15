@@ -57,6 +57,7 @@ GET /getAllQuestions
 */
 
 require(__dirname + '/TestCases.js')(app);
+require(__dirname + '/Questions.js')(app);
 
 /* Backend */
 
@@ -122,6 +123,7 @@ app.post('/checkSession', async function (request, response) {
 
 })
 
+/*
 app.post('/insertQuestion', async function (request, response) {
 	//Must be logged in as teacher
 	//Must have valid SessionToken in express session
@@ -158,7 +160,7 @@ app.post('/insertQuestion', async function (request, response) {
 
 	}
 });
-
+*/
 
 /*
 app.post('/insertTestCase', async function (request, response) {
@@ -249,6 +251,7 @@ app.post('/releaseExamScore', async function (request, response) {
 
 });
 
+/*
 app.post('/addQuestionToExam', async function(request, response) {
     if(!(await isUserLoggedIn(request.session))) {
         response.send('Please login');
@@ -283,7 +286,9 @@ app.post('/addQuestionToExam', async function(request, response) {
 	}
 
 });
+*/
 
+/*
 app.post('/removeQuestionFromExam', async function(request, response) {
     if(!(await isUserLoggedIn(request.session))) {
         response.send('Please login');
@@ -317,7 +322,9 @@ app.post('/removeQuestionFromExam', async function(request, response) {
         response.end();
     }
 });
+*/
 
+/*
 app.post('/getAllQuestionsOnExam', async function(request, response) {
 	if(!(await isUserLoggedIn(request.session))) {
         response.send("Please login");
@@ -341,6 +348,7 @@ app.post('/getAllQuestionsOnExam', async function(request, response) {
 	response.end();
 
 });
+*/
 
 app.post('/insertScore', async function(request, response) {
 	if(!(await isUserLoggedIn(request.session))) {
@@ -473,6 +481,7 @@ app.post('/getQuestionTestCases', async function(request, response) {
 
 /* Data retrieval endpoints */
 
+/*
 app.get('/getAllQuestions', async function(request, response) {
 	//Get all questions in the database in JSON format
 	if(!(await isUserLoggedIn(request.session))) {
@@ -493,6 +502,7 @@ app.get('/getAllQuestions', async function(request, response) {
 	response.json(await getAllQuestionsPromise());
 	response.end();
 });
+*/
 
 app.get('/getAllExams', async function(request, response) {
 	//Get all the exams currently in the database
