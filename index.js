@@ -40,12 +40,13 @@ POST /login [username, password]
 POST /checkSession [UserId, SessionToken]
 POST /insertQuestion [QuestionText, FunctionName]
 POST /insertTestCase [QuestionId, TestCaseInput, TestCaseOutput, TestCaseInputType, TestCaseOutputType]
-POST /createNewExam
 POST /releaseExamScore [ExamId]
 POST /addQuestionToExam [QuestionId, ExamId]
 POST /removeQuestionFromExam [QuestionId, ExamId]
+POST /getAllQuestionsOnExam [ExamId]
 
 GET /logout
+GET /createNewExam
 GET /getAllExams
 GET /getAllQuestions
 
@@ -310,6 +311,29 @@ app.post('/removeQuestionFromExam', async function(request, response) {
     }
 });
 
+app.post('/getAllQuestionsOnExam', async function(request, response) {
+	if(!(await isUserLoggedIn(request.session))) {
+        response.send("Please login");
+        response.end();
+        return;
+    }
+
+	let ExamId = request.body.ExamId;
+	
+	getExamQuestionsPromise = () => {
+        return new Promise((resolve, reject) => {
+            pool.query('SELECT * FROM Questions WHERE QuestionId IN (SELECT QuestionId FROM ExamQuestions WHERE ExamId=?)', [ExamId],
+                (error, elements) => {
+                    if(error) return reject(error);
+                    return resolve(elements);
+                });
+        });
+    }
+
+	response.json(await getExamQuestionsPromise());
+	response.end();
+
+});
 
 /* Data retrieval endpoints */
 
