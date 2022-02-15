@@ -34,6 +34,23 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static('static'));
 
 
+/* Endpoints *
+
+POST /login [username, password]
+POST /checkSession [UserId, SessionToken]
+POST /insertQuestion [QuestionText, FunctionName]
+POST /insertTestCase [QuestionId, TestCaseInput, TestCaseOutput, TestCaseInputType, TestCaseOutputType]
+POST /createNewExam
+
+GET /logout
+GET /releaseExamScore
+GET /getAllExams
+GET /getAllQuestions
+
+*/
+
+
+
 /* Backend */
 
 app.post('/login', async function (request, response) { 
