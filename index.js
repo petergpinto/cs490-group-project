@@ -44,6 +44,10 @@ POST /releaseExamScore [ExamId]
 POST /addQuestionToExam [QuestionId, ExamId]
 POST /removeQuestionFromExam [QuestionId, ExamId]
 POST /getAllQuestionsOnExam [ExamId]
+POST /insertScore [ExamId, QuestionId, AutoGraderScore]
+POST /getScores [UserId, ExamId]
+POST /overrideScore [UserId, ExamId, QuestionId, InstructorOverrideScore, InstructorComment]
+
 
 GET /logout
 GET /createNewExam
@@ -396,6 +400,46 @@ app.post('/getScores', async function(request, response) {
 	response.end();
 
 });
+
+app.post('/overrideScore', async function(request, response) {
+	if(!(await isUserLoggedIn(request.session))) {
+        response.send("Please login");
+        response.end();
+        return;
+    }
+
+	//User must be an instructor
+	if(request.session.UserData.AccountType != 'T') {
+		response.send({'Result':'Invalid Request'});
+		response.end();
+		return;
+	}
+
+	let ExamId = request.body.ExamId;
+	let QuestionId = request.body.QuestionId;
+	let UserId = request.body.UserId;
+	let InstructorOverrideScore = request.body.InstructorOverrideScore;
+	let InstructorComment = request.body.InstructorComment;
+
+	updateScorePromise = () => {
+        return new Promise((resolve, reject) => {
+            pool.query('UPDATE Scores SET InstructorOverrideScore=?, InstructorComment=? WHERE UserId=? AND ExamId=? AND QuestionId=?;', [InstructorOverrideScore, InstructorComment, UserId, ExamId, QuestionId],
+                (error, elements) => {
+                    if(error) return reject(error);
+                    return resolve(true);
+                });
+        });
+    }
+
+	if(await updateScorePromise()) {
+        response.json({'Result':'Success'});
+        response.end();
+    } else {
+        response.json({'Result':'Error'});
+        response.end();
+    }
+
+})
 
 /* Data retrieval endpoints */
 
