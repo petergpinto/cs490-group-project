@@ -1,5 +1,4 @@
 /* Session Helper functions */
-module.exports = async function () {
 
 async function isUserLoggedIn(session, pool) {
 	if(!session.loggedin) return false;
@@ -54,7 +53,7 @@ async function checkSessionToken(UserId, SessionToken, pool) {
 			async (error, elements) => {
 				if(error) return reject(error);
 				if(elements.length == 0) return resolve({"Result":"Error"});
-				await refreshSessionToken(UserId);
+				await refreshSessionToken(UserId, pool);
 				return resolve({"Result":"Success", SessionToken:elements[0]});
 			});
 	});
@@ -70,4 +69,9 @@ async function refreshSessionToken(UserId, pool) {
 	});
 }
 
-}
+module.exports = {
+	isUserLoggedIn:isUserLoggedIn,
+	checkUserRole:checkUserRole,
+	checkSessionToken:checkSessionToken,
+	refreshSessionToken:refreshSessionToken
+};

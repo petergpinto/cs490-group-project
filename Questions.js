@@ -1,5 +1,3 @@
-const util = require(__dirname + '/Utility.js');
-
 module.exports = function (app,pool,util) {
 
 app.post('/insertQuestion', async function (request, response) {
