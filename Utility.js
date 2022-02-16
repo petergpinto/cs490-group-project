@@ -73,5 +73,6 @@ module.exports = {
 	isUserLoggedIn:isUserLoggedIn,
 	checkUserRole:checkUserRole,
 	checkSessionToken:checkSessionToken,
-	refreshSessionToken:refreshSessionToken
+	refreshSessionToken:refreshSessionToken,
+	getSessionToken:getSessionToken
 };
