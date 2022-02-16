@@ -1,6 +1,8 @@
-module.exports = function (app) {
+
+module.exports = function (app, pool, util) {
+
 	app.post('/insertTestCase', async function (request, response) {
-		if(!(await isUserLoggedIn(request.session))) {
+		if(!(await util.isUserLoggedIn(request.session))) {
 			response.send('Please login');
 			response.end();
 			return;
@@ -38,7 +40,7 @@ module.exports = function (app) {
 
 
 	app.post('/getQuestionTestCases', async function(request, response) {
-		if(!(await isUserLoggedIn(request.session))) {
+		if(!(await util.isUserLoggedIn(request.session))) {
 		response.send("Please login");
 		response.end();
 		return;

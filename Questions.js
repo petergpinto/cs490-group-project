@@ -1,11 +1,13 @@
-module.exports = function (app) {
+const util = require(__dirname + '/Utility.js');
+
+module.exports = function (app,pool,util) {
 
 app.post('/insertQuestion', async function (request, response) {
 	//Must be logged in as teacher
 	//Must have valid SessionToken in express session
 	//Must have following fields: QuestionText, FunctionName
 
-	if(!(await isUserLoggedIn(request.session))) {
+	if(!(await util.isUserLoggedIn(request.session, pool))) {
 		response.send('Please login');
         response.end();
 		return;
@@ -38,7 +40,7 @@ app.post('/insertQuestion', async function (request, response) {
 });
 
 app.post('/addQuestionToExam', async function(request, response) {
-    if(!(await isUserLoggedIn(request.session))) {
+    if(!(await util.isUserLoggedIn(request.session))) {
         response.send('Please login');
         response.end();
         return;
@@ -73,7 +75,7 @@ app.post('/addQuestionToExam', async function(request, response) {
 });
   
 app.post('/removeQuestionFromExam', async function(request, response) {
-    if(!(await isUserLoggedIn(request.session))) {
+    if(!(await util.isUserLoggedIn(request.session))) {
         response.send('Please login');
         response.end();
         return;
@@ -107,7 +109,7 @@ app.post('/removeQuestionFromExam', async function(request, response) {
 });
   
 app.post('/getAllQuestionsOnExam', async function(request, response) {
-	if(!(await isUserLoggedIn(request.session))) {
+	if(!(await util.isUserLoggedIn(request.session, pool))) {
         response.send("Please login");
         response.end();
         return;
@@ -132,7 +134,7 @@ app.post('/getAllQuestionsOnExam', async function(request, response) {
   
 app.get('/getAllQuestions', async function(request, response) {
 	//Get all questions in the database in JSON format
-	if(!(await isUserLoggedIn(request.session))) {
+	if(!(await util.isUserLoggedIn(request.session))) {
     	response.send("Please login");
 		response.end();
 		return;
