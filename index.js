@@ -116,7 +116,7 @@ app.post('/checkSession', async function (request, response) {
         response.end();
 	}
 
-})
+});
 
 app.listen(8081, function () {
 	console.log('Node server listening on port 8081!');
