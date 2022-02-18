@@ -2,6 +2,7 @@ require('dotenv').config();
 let express = require('express');
 let session = require('express-session');
 let app = express();
+let cors = require('cors');
 let mysql = require('mysql');
 const bluebird = require('bluebird');
 let bodyParser = require('body-parser');
@@ -14,13 +15,14 @@ const pool = mysql.createPool({
   connectionLimit : 10,
 });
 
-const fiveMinutes = 1000 * 60 * 5;
+const fifteenMinutes = 1000 * 60 * 15;
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: true,
     saveUninitialized: true,
-    cookie: { maxAge: fiveMinutes, sameSite: 'strict' }
+    cookie: { maxAge: fifteenMinutes, sameSite: 'strict' }
 }));
+app.use(cors({ origin:"https://cs490.peterpinto.dev", credentials:true}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static('static'));
@@ -55,6 +57,10 @@ require(__dirname + '/Scores.js')(app, pool, util);
 require(__dirname + '/Exam.js')(app, pool, util);
 
 /* Backend */
+
+app.get('/express_backend', (req, res) => {
+  res.send({ express: 'YOUR EXPRESS BACKEND IS CONNECTED TO REACT' });
+});
 
 app.post('/login', async function (request, response) { 
 	let username = request.body.username;
