@@ -1,0 +1,5 @@
+.StudentExamList table {
+	flex: wrap;
+	flex-direction: column;
+	border:1px solid;
+}
