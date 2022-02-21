@@ -132,7 +132,7 @@ app.post('/getAllQuestionsOnExam', async function(request, response) {
   
 app.get('/getAllQuestions', async function(request, response) {
 	//Get all questions in the database in JSON format
-	if(!(await util.isUserLoggedIn(request.session))) {
+	if(!(await util.isUserLoggedIn(request.session, pool))) {
     	response.send("Please login");
 		response.end();
 		return;
