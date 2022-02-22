@@ -6,6 +6,7 @@ async function isUserLoggedIn(session, pool) {
 	if(checkToken.Result != "Success") {
 		return false;
 	} else {
+		refreshSessionToken(session.UserData.UserId, pool);
 		return true;
 	}
 }

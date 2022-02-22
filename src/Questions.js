@@ -13,13 +13,15 @@ app.post('/insertQuestion', async function (request, response) {
 
 	let QuestionText = request.body.QuestionText;
 	let FunctionName = request.body.FunctionName;
-	if(!FunctionName || !QuestionText) {
+	let DifficultyRating = request.body.DifficultyRating;
+
+	if(!FunctionName || !QuestionText || !DifficultyRating) {
 		response.json({'Result':'Invalid Request'});
         response.end();
 	} else {
 		insertQuestionPromise = () => {
 			return new Promise((resolve, reject) => {
-				pool.query('INSERT INTO Questions (QuestionText, FunctionName) VALUES (?, ?)', [QuestionText, FunctionName],
+				pool.query('INSERT INTO Questions (QuestionText, FunctionName, DifficultyRating) VALUES (?, ?, ?)', [QuestionText, FunctionName, DifficultyRating],
 					(error, elements) => {
 						if(error) return reject(error);
 						return resolve(true);
