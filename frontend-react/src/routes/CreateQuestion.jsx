@@ -11,6 +11,7 @@ class CreateQuestion extends Component {
 		var data = new URLSearchParams();
 		data.append('QuestionText', questionData.target[0].value);
 		data.append('FunctionName', questionData.target[1].value);
+		data.append('DifficultyRating', questionData.target[2].value);
 		questionData.target.reset();
 
 		fetch('https://cs490backend.peterpinto.dev/insertQuestion', {
@@ -38,6 +39,8 @@ class CreateQuestion extends Component {
 					<label>Function Name</label>
 					<input type='text' id='FunctionName' key='FunctionName' />
 
+					<label>Difficulty Rating</label>
+					<input type='number' id='DifficultyRating' key='DifficultyRating' />
 					<input type="submit" />
 				</form>
 			</div>

@@ -11,9 +11,10 @@ class TeacherLanding extends Component {
 		this.logout = this.logout.bind(this);
 		this.resetPage = this.resetPage.bind(this);
 		this.viewQuestionBank = this.viewQuestionBank.bind(this);
+		this.createNewExam = this.createNewExam.bind(this);
 		this.createQuestion = this.createQuestion.bind(this);
 		this.reviewExams = this.reviewExams.bind(this);
-		this.state = {data: [{'':''}], showElement:{CreateQuestion:false, ShowQuestionBank:true}};
+		this.state = {data: [{'':''}], showElement:{CreateQuestion:false, ShowCreateExam:false, ShowQuestionBank:true}};
 	}
 
 	resetPage() {
@@ -26,11 +27,15 @@ class TeacherLanding extends Component {
 	}
 
 	viewQuestionBank() {
-		this.setState({showElement:{CreateQuestion:false, ShowQuestionBank:true}});
+		this.setState({showElement:{CreateQuestion:false, ShowCreateExam:false, ShowQuestionBank:true}});
 	}
 
 	createQuestion() {
-		this.setState({showElement:{CreateQuestion:true, ShowQuestionBank:false}});
+		this.setState({showElement:{CreateQuestion:true, ShowCreateExam:false, ShowQuestionBank:false}});
+	}
+
+	createNewExam() {
+		this.setState({showElement:{CreateQuestion:false, ShowCreateExam:true, ShowQuestionBank:false}});
 	}
 
 	reviewExams() {
@@ -49,7 +54,7 @@ class TeacherLanding extends Component {
     		<main className="Main">
 				<div className="TopNavigationBar">
 					<button onClick={this.resetPage}>Home</button>
-					<button onClick={this.createNewExam}>Create New Exam</button>
+					<button onClick={this.createNewExam}>Create Exam</button>
                     <button onClick={this.viewQuestionBank}>View Question Bank</button>
 					<button onClick={this.createQuestion}>Add new Question</button>
                     <button onClick={this.reviewExams}>Review Student Exams</button>
@@ -57,7 +62,8 @@ class TeacherLanding extends Component {
 				</div>
 				<CreateQuestion showElement={this.state.showElement.CreateQuestion} />
 				<ShowQuestionBank showElement={this.state.showElement.ShowQuestionBank} />
-      			<h2>Teacher Landing Page</h2>
+      			<ShowQuestionBank showElement={this.state.showElement.ShowCreateExam} buildForm='true' />
+				<h2>Teacher Landing Page</h2>
     		</main>
 			</div>
   		);
