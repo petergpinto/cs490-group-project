@@ -40,7 +40,7 @@ app.post('/insertQuestion', async function (request, response) {
 });
 
 app.post('/addQuestionToExam', async function(request, response) {
-    if(!(await util.isUserLoggedIn(request.session))) {
+    if(!(await util.isUserLoggedIn(request.session, pool))) {
         response.send('Please login');
         response.end();
         return;
@@ -48,7 +48,8 @@ app.post('/addQuestionToExam', async function(request, response) {
 
 	let ExamId = request.body.ExamId;
 	let QuestionId = request.body.QuestionId;
-	if(!ExamId || !QuestionId) {
+	let PointValue = request.body.PointValue;
+	if(!ExamId || !QuestionId || !PointValue) {
 		response.json({'Result':'Invalid Request'});
 		response.end();
 		return;
@@ -56,9 +57,13 @@ app.post('/addQuestionToExam', async function(request, response) {
 	
 	addQuestionToExamPromise = () => {
         return new Promise((resolve, reject) => {
-            pool.query('INSERT INTO ExamQuestions (ExamId, QuestionId) VALUES (?, ?)', [ExamId, QuestionId],
+            pool.query('INSERT INTO ExamQuestions (ExamId, QuestionId, PointValue) VALUES (?, ?, ?)', [ExamId, QuestionId, PointValue],
                 (error, elements) => {
-                    if(error) return reject(error);
+                    if(error) { 
+						if(error.code =="ER_DUP_ENTRY") 
+							return resolve({'Result':'Success'});
+						return reject(error);
+					}
                     return resolve(true);
                 });
         });
@@ -75,7 +80,7 @@ app.post('/addQuestionToExam', async function(request, response) {
 });
   
 app.post('/removeQuestionFromExam', async function(request, response) {
-    if(!(await util.isUserLoggedIn(request.session))) {
+    if(!(await util.isUserLoggedIn(request.session, pool))) {
         response.send('Please login');
         response.end();
         return;
