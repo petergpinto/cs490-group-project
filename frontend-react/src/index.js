@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { render } from "react-dom";
-import { BrowserRouter, Routes, Route, Redirect } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Redirect, Navigate  } from "react-router-dom";
 import './index.css';
 import App from './App';
 import StudentLanding from './routes/StudentLanding';
@@ -15,6 +15,7 @@ render(
     	<Route path="login" element={<App />} />
 		<Route path="StudentLanding" element={<StudentLanding />} />
 		<Route path="TeacherLanding" element={<TeacherLanding />} />
+		<Route path="/" element={<Navigate to="/login" />} />
 	</Routes>
   </BrowserRouter>,
   rootElement

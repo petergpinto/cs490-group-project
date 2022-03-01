@@ -32,3 +32,48 @@
 	  background-color: #04AA6D;
   color: white;
 }
+
+.ExamQuestion textarea, pre {
+	width: 500px;
+	height: 300px;
+    -moz-tab-size : 4;
+      -o-tab-size : 4;
+         tab-size : 4;
+}
+
+.TakeExam {
+    margin: 5% 0;
+	padding: 10px 0;
+	display:flex;
+	flex-direction:column;
+	justify-content:center;
+	align-items:stretch;
+	align-content:center;
+	width:100%;
+	text-align:center;
+}
+
+.ExamSubmitButton {
+	margin: 5% 0;
+}
+
+.ExamSubmitButton button {
+    background-color: #04AA6D;
+    border: none;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+
+}
+
+.ExamSubmitButton button:hover {
+   background-color: #ddd;
+  color: black;
+}
+
+.ExamSubmitButton button:active {
+      background-color: #04AA6D;
+  color: white;
+}
+
