@@ -47,17 +47,19 @@ export default function Login({ setToken }) {
 		<div className="login">
                	{ invalid? <InvalidLogin /> : null }
 				<form onSubmit={handleSubmit}>
+			<h2> Log In </h2>
                     <div className="input-container">
-                        <label>Username</label>
+                        <label>Username: </label>
                         <input type='text' name='username' id='username' onChange={e => setUserName(e.target.value)} required />
                     </div>
+		    <br/>
                     <div className="input-container">
-                        <label>Password</label>
+                        <label>Password: </label>
                         <input type='password' name='password' id='password' onChange={e => setPassword(e.target.value)}  required />
                     </div>
                     <br/><br/>
                     <div className="button-container">
-                        <input type="submit" />
+                        <input type="submit" name = 'Log' id = 'Log' value = 'Log In' />
                     </div>
                 </form>
         </div>

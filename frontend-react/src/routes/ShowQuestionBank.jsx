@@ -1,17 +1,19 @@
 import React, { Component, useState } from "react";
 import NumericInput from 'react-numeric-input';
+//import './ShowQuestionBank.css';
 
 class ShowQuestionBank extends Component {
 
 	constructor(props) {
 		super(props);
+		this.defaultPointValue = 1;
 		this.getQuestionData = this.getQuestionData.bind(this);
 		this.pointValueChange = this.pointValueChange.bind(this);
 		this.getExamButtons = this.getExamButtons.bind(this);
 		this.refreshExamList = this.refreshExamList.bind(this);
 		this.selectExam = this.selectExam.bind(this);
 		this.handleChange = this.handleChange.bind(this);
-		this.state = {data: [{'':''}], pointValue:{}};
+		this.state = {data: [{'':''}], pointValue:{}, checked:{}, selectedExam:12};
 	}
 
 	getQuestionData() {
@@ -41,12 +43,11 @@ class ShowQuestionBank extends Component {
 	getRowsData() {
         var items = this.state.data;
         var keys = this.getKeys();
-	
 		if(this.props.buildForm) {
 			return items.map((row, index)=>{
             	return <tr key={index}>
-					<input type='checkbox' index={index} onChange={this.handleChange} />
-					<NumericInput data-key={'PointValue'+index} key={'PointValue'+index} min={0} max={50} value={this.state.pointValue['PointValue'+index]? this.state.pointValue['PointValue'+index] : 1} onChange={this.pointValueChange} mobile />
+					<input type='checkbox' index={index} onChange={this.handleChange} value={this.state.checked[index]} />
+					<NumericInput data-key={'PointValue'+index} key={'PointValue'+index} min={0} max={50} value={this.state.pointValue['PointValue'+index]? this.state.pointValue['PointValue'+index] : this.defaultPointValue} onChange={this.pointValueChange} mobile />
 					<RenderRow key={index} data={row} keys={keys}/>
 					</tr>
         	})
@@ -65,19 +66,49 @@ class ShowQuestionBank extends Component {
 		}));
 	}
 
-	handleChange() {
-		//
+	handleChange(event) {
+		let index = event.target.getAttribute('index');
 		this.setState(prevState => ({
-			examQuestions: {
-				...prevState.examQuestions
-				
+			checked: {
+				...prevState.checked,
+				[index]:!prevState.checked[index]
 			}
 		}));
 
+		let questionData = this.state.data[index];
+		let pointValue = this.state.pointValue['PointValue'+index]? this.state.pointValue['PointValue'+index] : this.defaultPointValue
+		//Add question to exam
+	
+		var data = new URLSearchParams();
+    	data.append('QuestionId', questionData.QuestionId);
+    	data.append('ExamId', this.state.selectedExam);
+		data.append('PointValue', pointValue);
+	
+		if(!this.state.checked[index]) {
+		return fetch('https://cs490backend.peterpinto.dev/addQuestionToExam', {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Accept':'application/json',
+				'content-type': 'application/x-www-form-urlencoded'
+            },
+				body:data
+            }).then(res => res.json());
+		} else {
+			return fetch('https://cs490backend.peterpinto.dev/removeQuestionFromExam', {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Accept':'application/json',
+                'content-type': 'application/x-www-form-urlencoded'
+            },
+                body:data
+            }).then(res => res.json());
+		}
 	}
 
 	selectExam(event) {
-		this.setState({ExamId:event.target.getAttribute('examid')});
+		this.setState({selectedExam:event.target.getAttribute('examid')});
 	}
 
 	refreshExamList() {
@@ -90,7 +121,7 @@ class ShowQuestionBank extends Component {
             }).then(res => res.json())
             .then(json => {
                 this.setState({exams:json})
-        });
+        	});
 	}
 
 	getExamButtons() {

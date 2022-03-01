@@ -2,37 +2,39 @@ body
 {
     margin: 0;
     padding: 0;
-    background-color: #E1F1F7;
-    font-family: 'Arial';
+    background-color: #282b2e;
+    font-family: 'Verdana';
 }
 .login{
-    width: 382px;
+    width: 300px;
     margin: auto;
     margin: 20 0 0 450px;
-    padding: 80px;
-    background: #4a4c52;
+    padding: 50px;
+    background: #f3f6f4;
     border-radius: 15px;
+    margin-left: 770px;
+    margin-top: 200px;
 }
 h2{
     text-align: center;
-    color:blue;
+    color: black;
     padding: 20px;
 }
 label{
-    color: #ffc118;
-    font-size: 17px;
+    color: #black;
+    font-size: 15px;
 }
 
-#Uname{
-    width: 300px;
-    height: 30px;
+#username{
+    width: 200px;
+    height: 20px;
     border: none;
     border-radius: 3px;
     padding-left: 8px;
 }
-#Passwd{
-    width: 300px;
-    height: 30px;
+#password{
+    width: 200px;
+    height: 20px;
     border: none;
     border-radius: 3px;
     padding-left: 8px;
@@ -42,9 +44,10 @@ label{
     width: 300px;
     height: 30px;
     border: none;
-    border-radius: 17px;
+    background-color: blue;
+    border-radius: 3px;
     padding-left: 7px;
-    color: blue;
+    color: white;
 
 
 }
