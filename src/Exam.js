@@ -51,6 +51,30 @@ app.post('/releaseExamScore', async function (request, response) {
 
 });
 
+app.post('/getExamQuestions', async function(request, response) {
+	if(!(await util.isUserLoggedIn(request.session, pool))) {
+        response.json({'Result':'Please login'});
+        response.end();
+        return;
+    }
+
+	let ExamId = request.body.ExamId;
+
+	getExamQuestionsPromise = () => {
+        return new Promise((resolve, reject) => {
+			pool.query("SELECT Questions.QuestionId, T.PointValue, Questions.QuestionText FROM Questions INNER JOIN (SELECT * FROM ExamQuestions WHERE ExamId=?) AS T ON Questions.QuestionId=T.QuestionId", [ExamId],
+				(error, elements) => {
+					if(error) return reject(error);
+					return resolve(elements)
+				});
+		});
+	}
+	
+	response.json(await getExamQuestionsPromise());
+	response.end();
+
+})
+
 app.get('/getAllExams', async function(request, response) {
     //Get all the exams currently in the database
     if(!(await util.isUserLoggedIn(request.session, pool))) {
