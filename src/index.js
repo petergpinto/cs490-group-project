@@ -43,6 +43,7 @@ POST /insertScore [ExamId, QuestionId, AutoGraderScore]
 POST /getScores [UserId, ExamId]
 POST /overrideScore [UserId, ExamId, QuestionId, InstructorOverrideScore, InstructorComment]
 POST /getQuestionTestCases [QuestionId]
+POST /updateStudentAnswer [ExamId, QuestionId, StudentResponse]
 
 GET /logout
 GET /createNewExam
