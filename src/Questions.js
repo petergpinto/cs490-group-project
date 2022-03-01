@@ -21,15 +21,16 @@ app.post('/insertQuestion', async function (request, response) {
 	} else {
 		insertQuestionPromise = () => {
 			return new Promise((resolve, reject) => {
-				pool.query('INSERT INTO Questions (QuestionText, FunctionName, DifficultyRating) VALUES (?, ?, ?)', [QuestionText, FunctionName, DifficultyRating],
+				pool.query('call insert_question(?, ?, ?)', [QuestionText, FunctionName, DifficultyRating],
 					(error, elements) => {
 						if(error) return reject(error);
-						return resolve(true);
+						return resolve(elements[0]);
 					});
 			});
 		}
-		if(await insertQuestionPromise()) {
-			response.json({'Result':'Success'});
+		let t = await insertQuestionPromise(); 
+		if(t) {
+			response.json(t);
 			response.end();
 		} else {
 			response.json({'Result':'Error'});
