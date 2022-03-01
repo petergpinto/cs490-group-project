@@ -75,6 +75,43 @@ app.post('/getExamQuestions', async function(request, response) {
 
 })
 
+app.post('/updateStudentResponse', async function(request, response) {
+	if(!(await util.isUserLoggedIn(request.session, pool))) {
+        response.json({'Result':'Please login'});
+        response.end();
+        return;
+    }
+
+	let UserId = request.session.UserData.UserId;
+	let ExamId = request.body.ExamId;
+	let QuestionId = request.body.QuestionId;
+	let StudentResponse = request.body.StudentResponse;
+	if(!ExamId || !QuestionId || !StudentResponse) {
+		response.json({'Result':'Invalid Request'});
+		response.end();
+		return;
+	}
+	
+	updateResponsePromise = () => {
+        return new Promise((resolve, reject) => {
+            pool.query("REPLACE INTO StudentAnswers (UserId, QuestionId, ExamId, StudentResponse) VALUES (?, ?, ?, ?)", [UserId, QuestionId, ExamId, StudentResponse],
+				(error, elements) => {
+					if(error) return reject(error);
+					return resolve(elements);
+				});
+		});
+	}
+
+	if(await updateResponsePromise()) {
+        response.json({'Result':'Success'});
+        response.end();
+    } else {
+        response.json({'Result':'Error'});
+        response.end();
+    }
+
+})
+
 app.get('/getAllExams', async function(request, response) {
     //Get all the exams currently in the database
     if(!(await util.isUserLoggedIn(request.session, pool))) {
