@@ -1,6 +1,19 @@
 import React, { Component, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import NumericInput from 'react-numeric-input';
 import './ShowQuestionBank.css';
+
+function sortByProperty(property){
+	return function(a,b){
+	if(a[property] > b[property])
+		return 1;
+	else if(a[property] < b[property])
+		return -1;
+
+        return 0;
+	}
+}
+
 
 class ShowQuestionBank extends Component {
 
@@ -8,13 +21,15 @@ class ShowQuestionBank extends Component {
 		super(props);
 		this.defaultPointValue = 1;
 		this.getQuestionData = this.getQuestionData.bind(this);
-		this.pointValueChange = this.pointValueChange.bind(this);
 		this.getExamButtons = this.getExamButtons.bind(this);
+		this.pointValueChange = this.pointValueChange.bind(this);
 		this.refreshExamList = this.refreshExamList.bind(this);
 		this.selectExam = this.selectExam.bind(this);
 		this.handleChange = this.handleChange.bind(this);
 		this.createNewExam = this.createNewExam.bind(this);
-		this.state = {data: [{'':''}], pointValue:{}, checked:{}, selectedExam:-1, examResult:""};
+		this.getExamQuestions = this.getExamQuestions.bind(this);
+		this.getPointValues = this.getPointValues.bind(this);
+		this.state = {data: [{'':''}], QuestionPointValues:[], examQuestions: [{'':''}], pointValue:{}, checked:{}, selectedExam:-1, examResult:""};
 	}
 
 	getQuestionData() {
@@ -26,6 +41,8 @@ class ShowQuestionBank extends Component {
 			}
 			}).then(res => res.json())
 			.then(json => {
+				if(json.Result && json.Result != 'Success')
+                    this.props.navigate('/login');
 				this.setState({data:json})
 				});
 	}
@@ -45,6 +62,8 @@ class ShowQuestionBank extends Component {
             }, body:data
             }).then(res => res.json())
             .then(json => {
+				if(json.Result && json.Result != 'Success')
+					this.props.navigate('/login');
                 this.setState({examResult:json})
 				this.setState({selectedExam:json.ExamId});
             });
@@ -58,6 +77,14 @@ class ShowQuestionBank extends Component {
 	getHeader() {
         var keys = this.getKeys();
         return keys.map((key, index)=>{
+			if(key == 'QuestionId')
+				return null
+			if(key == 'QuestionText')
+				return <th key={key+index}>Question Text</th>
+			if(key == 'FunctionName')
+				return <th key={key+index}>Function Name</th>
+			if(key == 'DifficultyRating')
+				return <th key={key+index}>Difficulty Rating</th>
             return <th key={key+index}>{key}</th>
         })
     }
@@ -68,8 +95,7 @@ class ShowQuestionBank extends Component {
 		if(this.props.buildForm) {
 			return items.map((row, index)=>{
             	return <tr key={index}>
-					<input type='checkbox' index={index} onChange={this.handleChange} value={this.state.checked[index]} />
-					<NumericInput data-key={'PointValue'+index} key={'PointValue'+index} min={0} max={50} value={this.state.pointValue['PointValue'+index]? this.state.pointValue['PointValue'+index] : this.defaultPointValue} onChange={this.pointValueChange} mobile />
+					<button index={index} onClick={this.handleChange}>+</button>
 					<RenderRow key={index} data={row} keys={keys}/>
 					</tr>
         	})
@@ -86,19 +112,29 @@ class ShowQuestionBank extends Component {
 				[input.getAttribute('data-key')] : valueAsNumber
 			} 
 		}));
+
+		let data = new URLSearchParams();
+		data.append("PointValue", valueAsNumber);
+		data.append("QuestionId", input.getAttribute('questionid'));
+		data.append("ExamId", this.state.selectedExam);
+
+		return fetch('https://cs490backend.peterpinto.dev/updatePointValue', {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Accept':'application/json',
+                'content-type': 'application/x-www-form-urlencoded'
+            },
+                body:data
+            }).then(res => res.json());
+        
 	}
 
 	handleChange(event) {
 		let index = event.target.getAttribute('index');
-		this.setState(prevState => ({
-			checked: {
-				...prevState.checked,
-				[index]:!prevState.checked[index]
-			}
-		}));
 
 		let questionData = this.state.data[index];
-		let pointValue = this.state.pointValue['PointValue'+index]? this.state.pointValue['PointValue'+index] : this.defaultPointValue
+		let pointValue = this.defaultPointValue
 		//Add question to exam
 	
 		var data = new URLSearchParams();
@@ -116,7 +152,9 @@ class ShowQuestionBank extends Component {
             },
 				body:data
             }).then(res => res.json());
-		} else {
+		} 
+
+		/*
 			return fetch('https://cs490backend.peterpinto.dev/removeQuestionFromExam', {
             method: 'POST',
             credentials: 'include',
@@ -126,11 +164,12 @@ class ShowQuestionBank extends Component {
             },
                 body:data
             }).then(res => res.json());
-		}
+		*/
 	}
 
-	selectExam(event) {
-		this.setState({selectedExam:event.target.getAttribute('examid')});
+	async selectExam(event) {
+		await this.setState({selectedExam:event.target.getAttribute('examid')});
+		this.getPointValues();
 	}
 
 	refreshExamList() {
@@ -142,12 +181,27 @@ class ShowQuestionBank extends Component {
             }
             }).then(res => res.json())
             .then(json => {
+				if(json.Result && json.Result != 'Success')
+                    this.props.navigate('/login');
                 this.setState({exams:json})
         	});
 	}
 
 	getExamButtons() {
+
+		function sortByProperty(property){  
+   			return function(a,b){  
+      			if(a[property] > b[property])  
+         			return 1;  
+      			else if(a[property] < b[property])  
+         			return -1;  
+  
+      			return 0;  
+   			}  
+		}
+
 		let items = this.state.exams;
+		items.sort(sortByProperty("ExamFriendlyName"));	
 		return (
 			items.map((row, index) => {
 				return <button className={this.state.selectedExam==row.ExamId? 'ExamButtonActive':'ExamButtonNonActive'} examid={row.ExamId} onClick={this.selectExam}>{row.ExamFriendlyName}</button>
@@ -155,20 +209,78 @@ class ShowQuestionBank extends Component {
 		);
 	}
 
+	getExamQuestions() {
+		if(this.state.selectedExam == -1)
+			return;
+		let d = new URLSearchParams();
+		d.append("ExamId", this.state.selectedExam);
+     	return fetch('https://cs490backend.peterpinto.dev/getAllQuestionsOnExam', {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Accept':'application/json',
+				'content-type': 'application/x-www-form-urlencoded'
+            }, body:d
+            }).then(res => res.json())
+            .then(json => {
+                if(json.Result && json.Result != 'Success')
+                    this.props.navigate('/login');
+				this.setState({examQuestions:json})
+            });
+
+
+	}
+
+	getPointValues() {
+		
+		let data = new URLSearchParams();
+		data.append("ExamId", this.state.selectedExam);
+
+		return fetch('https://cs490backend.peterpinto.dev/getPointValues', {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Accept':'application/json',
+                'content-type': 'application/x-www-form-urlencoded'
+            }, body:data
+            }).then(res => res.json())
+            .then(json => {
+                if(json.Result && json.Result != 'Success')
+                    this.props.navigate('/login');
+                	this.setState({QuestionPointValues:json})
+            });
+	}
+
+	renderExamQuestions() {
+		let items = this.state.examQuestions;
+		let keys = this.getKeys(items);
+		
+		return (  items.map((row, index) => {
+					return (<tr>
+								<NumericInput questionid={row.QuestionId} data-key={'PointValue'+index} key={'PointValue'+index} min={0} max={50} value={this.state.pointValue['PointValue'+index]? this.state.pointValue['PointValue'+index] : null} onChange={this.pointValueChange} size={5}/>
+								<RenderRow key={index} data={row} keys={keys}/>
+							</tr>
+					)}
+				)
+		)
+	}
+
 	componentDidMount() {
 		this.getQuestionData();
 		this.refreshExamList();
+		this.getExamQuestions();
 		this.interval = setInterval(this.getQuestionData, 3000);
 		this.interval2 = setInterval(this.refreshExamList, 3000);
+		this.interval3 = setInterval(this.getExamQuestions, 1000);
 	}
 
 	componentDidUpdate() {
-	
 	}
 
 	componentWillUnmount() {
 		clearInterval(this.interval);
 		clearInterval(this.interval2);
+		clearInterval(this.interval3);
 	}
 
 	render() {
@@ -177,28 +289,41 @@ class ShowQuestionBank extends Component {
 		}
 
 		return (
-			<div className="ShowQuestionBank">
-				{ !this.props.buildForm? null : 
-				 	<div className='ExamSelector'>
-						<h3>Select an Exam</h3>
-						{this.getExamButtons()}
-						<br/><br/>
-						<form onSubmit={this.createNewExam}>
-							<input type='text' placeholder="Exam Name" />
-							<button type='submit'>Create New Exam</button>
-						</form>
-						<br/><br/>
-					</div> 
+			<div className={this.props.buildForm? "ShowQuestionBankForm" : "ShowQuestionBankList"} >
+				{ !this.props.buildForm? null :
+					<div className='leftSplitScreen'>
+					 	<div className='ExamSelector'>
+							<h3>Select an Exam</h3>
+							{this.getExamButtons()}
+							<br/><br/>
+							<form onSubmit={this.createNewExam}>
+								<input type='text' placeholder="Exam Name" />
+								<button type='submit'>Create New Exam</button>
+							</form>
+							<br/><br/>
+						</div>
+						<table>
+						<thead><th>Point Value</th> {this.getHeader()} </thead>
+						<tbody>
+						{ this.props.buildForm && this.state.selectedExam != -1? this.renderExamQuestions() : null }	
+						</tbody>
+						</table>
+					</div>
 				}
-				<table>
-                    <thead>
-                        <tr>{this.props.buildForm? <th>Point Value</th>:null}{this.getHeader()}</tr>
-                    </thead>
-                    <tbody>
-                        {this.getRowsData()}
-                    </tbody>
-                </table>
+				<div className={this.props.buildForm? "rightSplitScreen" : "ShowQuestionBankList"}>
+					<h2>Question Bank</h2>
+					<table>
+                    	<thead>
+                    	    <tr>{this.props.buildForm? <th>Add</th>:null}{this.getHeader()}</tr>
+                    	</thead>
+						
+                    	<tbody>
+                        	{this.getRowsData()}
+						</tbody> 
+               		</table>
+				</div>
 			</div>
+
 		);
 	}
 }
@@ -206,8 +331,27 @@ class ShowQuestionBank extends Component {
 
 const RenderRow = (props) =>{
         return props.keys.map((key, index)=>{
-            return <td key={index+key+props.data[key]}>{props.data[key]}</td>
+           if(key == 'QuestionId')
+		   		return null
+		   if(key == 'DifficultyRating') {
+				if(props.data[key] == 1)
+					return <td key={index+key+props.data[key]}>Easy</td>
+				if(props.data[key] == 2)
+                    return <td key={index+key+props.data[key]}>Medium</td>
+				if(props.data[key] == 3)
+                    return <td key={index+key+props.data[key]}>Hard</td>
+		   }
+		   if(key == 'QuestionText')
+		   		return <td key={index+key+props.data[key]} title={props.data[key]}>(Hover to reveal)</td>
+		   return <td key={index+key+props.data[key]}>{props.data[key]}</td>
         })
     }
 
-export default ShowQuestionBank
+
+
+
+function WithNavigate(props) {
+    let navigate = useNavigate();
+    return <ShowQuestionBank {...props} navigate={navigate} />
+}
+export default WithNavigate

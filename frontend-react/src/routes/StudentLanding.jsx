@@ -28,6 +28,8 @@ class StudentLanding extends Component {
 		}, 
 		}).then(data => data.json())
 		.then(json => {
+			if(json.Result && json.Result != 'Success')
+            	this.props.navigate('/login');
 			json.forEach(obj => {
 				obj.takeExam='Take Exam Now';
 				obj.viewScores='View Scores';
@@ -149,7 +151,8 @@ class TakeExam extends Component {
         }, body: data
         }).then(data => data.json())
         .then(json => {
-            console.log(json)
+			if(json.Result && json.Result != 'Success')
+            	this.props.navigate('/login');
             this.setState({data:json});
         });
 
@@ -168,7 +171,8 @@ class TakeExam extends Component {
         }, body: data
         }).then(data => data.json())
         .then(json => {
-            console.log(json)
+			if(json.Result && json.Result != 'Success')
+            	this.props.navigate('/login');
 			this.setState({examSubmitted:true});
         });
 	}

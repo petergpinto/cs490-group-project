@@ -1,4 +1,5 @@
 import React, { Component, useState } from "react";
+//import './CreateQuestion.css';
 
 class CreateQuestion extends Component {
 
@@ -69,7 +70,8 @@ class CreateQuestion extends Component {
 		}
 		return ( arr.map((row, index)=> {
 			return <div>
-				<label>Test Case {index+1}</label>
+				<br/>
+				<label>Test Case {index+1} </label>
 				<input type='text' placeholder='Input'/> 
 				<select name='TestCaseInputType' id='TestCaseInputType'>
     				<option value='S'>String</option>
@@ -99,16 +101,22 @@ class CreateQuestion extends Component {
 			<div className="CreateQuestion">
 				<form onSubmit={this.submitQuestion}>
 					<label>Question Text</label>
-					<textarea type='text' size='100' id='QuestionText' key='QuestionText' />
 					<br/>
+					<textarea type='text' size='200' id='QuestionText' key='QuestionText' />
+					<br/><br/>
 					<label>Function Name</label>
+					<br/>
 					<input type='text' id='FunctionName' key='FunctionName' />
-					<br/>
-					<label>Difficulty Rating</label>
-					<input type='number' id='DifficultyRating' key='DifficultyRating' />
-					<br/>
+					<br/><br/>
+					<label>Difficulty Rating </label>
+					<select name='DifficultyRating'>
+						<option value='1'>Easy</option>
+						<option value='2'>Medium</option>
+						<option value='3'>Hard</option>
+					</select>
 					{ this.showTestCaseInput() }
-					<input type="submit" />
+					<br/>
+					<input type= 'submit' name = 'Submit' id = 'Submit' value = 'Submit' />
 				</form>
 			</div>
 		);

@@ -24,8 +24,6 @@ class App extends Component {
 	
     return (
 		<div className="App">
-			<Link to="/TeacherLanding">Teacher</Link> |{" "}
-        	<Link to="/StudentLanding">Student</Link>
       		<Login  setToken={this.props.setToken} />
 		</div>
     );
