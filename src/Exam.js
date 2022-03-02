@@ -1,24 +1,130 @@
+const process = require('child_process');
+const fs = require('fs');
 
 module.exports = function (app, pool, util) {
 
-app.get('/createNewExam', async function (request, response) {
-    if(!(await util.isUserLoggedIn(request.session, pool))) {
-        response.send('Please login');
+app.post('/triggerAutoGrader', async function(request, response) {
+	if(!(await util.isUserLoggedIn(request.session, pool))) {
+        response.json({'Result':'Please login'});
         response.end();
         return;
     }
 
+    let ExamId = request.body.ExamId;
+
+    if(!ExamId) {
+        response.json({'Result':'Invalid Request'});
+        response.end();
+        return;
+    }
+
+	autoGraderDataPromise = () => {
+        return new Promise((resolve, reject) => {
+            pool.query('SELECT * FROM StudentAnswers LEFT JOIN TestCases ON StudentAnswers.QuestionId=TestCases.QuestionId LEFT JOIN Questions on Questions.QuestionId=StudentAnswers.QuestionId WHERE ExamId=?', [ExamId],
+                (error, elements) => {
+                    if(error) return reject(error);
+                    return resolve(elements);
+                });
+        });
+    }
+
+	let autoGraderData = await autoGraderDataPromise();
+	let data = JSON.stringify(autoGraderData);
+
+	console.log(autoGraderData);
+
+	fs.writeFile('data.json', data, (err) => {
+    if (err) {
+        throw err;
+    }
+    	console.log("JSON data is saved.");
+	});
+
+	/*
+	const ls = process.exec('ls -l', function (error, stdout, stderr) {
+  	if (error) {
+    	console.log(error.stack);
+    	console.log('Error code: ' + error.code);
+    	console.log('Signal received: ' + error.signal);
+  	}
+  		console.log('Child Process STDOUT: ' + stdout);
+  		console.log('Child Process STDERR: ' + stderr);
+	});
+
+	ls.on('exit', function (code) {
+ 	 	console.log('Child process exited with exit code ' + code);
+	});
+	*/
+
+	response.end();
+
+});
+
+app.post('/createNewExam', async function (request, response) {
+    if(!(await util.isUserLoggedIn(request.session, pool))) {
+        response.json({'Result':'Please login'});
+        response.end();
+        return;
+    }
+
+	let ExamFriendlyName = request.body.ExamFriendlyName;
+
+	if(!ExamFriendlyName) {
+		response.json({'Result':'Invalid Request'});
+		response.end();
+		return;
+	}
+
     createExamPromise = () => {
         return new Promise((resolve, reject) => {
-            pool.query('CALL create_exam()',
+            pool.query('CALL create_exam(?)', [ExamFriendlyName],
                 (error, elements) => {
                     if(error) return reject(error);
                     return resolve(elements[0][0]);
                 });
         });
     }
+
     response.json(await createExamPromise());
     response.end();
+});
+
+app.post('/submitExam', async function (request, response) {
+	if(!(await util.isUserLoggedIn(request.session, pool))) {
+        response.json({'Result':'Please login'});
+        response.end();
+        return;
+    }
+
+	let ExamId = request.body.ExamId;
+	let UserId = request.session.UserData.UserId;
+
+	if(!ExamId) {
+		response.json({'Result':'Invalid Request'});
+        response.end();
+        return;
+	}
+
+	submitExamPromise = () => {
+        return new Promise((resolve, reject) => {
+            pool.query('INSERT INTO StudentSubmittedExam (UserId, ExamId) VALUES (?, ?)', [UserId, ExamId],
+			(error, elements) => {
+            	if(error) return reject(error);
+                    return resolve(elements);
+                });
+		});
+	}
+	
+	if(await submitExamPromise()) {
+        response.json({'Result':'Success'});
+        response.end();
+    } else {
+        response.json({'Result':'Error'});
+        response.end();
+    }
+
+
+
 });
 
 app.post('/releaseExamScore', async function (request, response) {
@@ -120,9 +226,12 @@ app.get('/getAllExams', async function(request, response) {
         return;
     }
 
+	let UserId = request.session.UserData.UserId;
+
+
     getAllExamsPromise = () => {
         return new Promise((resolve, reject) => {
-            pool.query('SELECT * FROM Exam',
+            pool.query('SELECT ExamFriendlyName, Exam.ExamId, ExamScoresReleased, IFNULL(Submitted, FALSE) as Submitted FROM Exam LEFT JOIN (SELECT ExamId, Submitted FROM StudentSubmittedExam WHERE UserId=?) AS T ON Exam.ExamId=T.ExamId', [UserId],
                 (error, elements) => {
                     if(error) return reject(error);
                     return resolve(elements);
