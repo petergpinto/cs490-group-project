@@ -1,6 +1,6 @@
 import React, { Component, useState } from "react";
 import NumericInput from 'react-numeric-input';
-//import './ShowQuestionBank.css';
+import './ShowQuestionBank.css';
 
 class ShowQuestionBank extends Component {
 
@@ -13,7 +13,8 @@ class ShowQuestionBank extends Component {
 		this.refreshExamList = this.refreshExamList.bind(this);
 		this.selectExam = this.selectExam.bind(this);
 		this.handleChange = this.handleChange.bind(this);
-		this.state = {data: [{'':''}], pointValue:{}, checked:{}, selectedExam:12};
+		this.createNewExam = this.createNewExam.bind(this);
+		this.state = {data: [{'':''}], pointValue:{}, checked:{}, selectedExam:-1, examResult:""};
 	}
 
 	getQuestionData() {
@@ -27,6 +28,27 @@ class ShowQuestionBank extends Component {
 			.then(json => {
 				this.setState({data:json})
 				});
+	}
+
+	createNewExam(event) {
+		event.preventDefault();
+		
+		let data = new URLSearchParams();
+		data.append('ExamFriendlyName', event.target[0].value);
+		event.target.reset();
+	
+		return fetch('https://cs490backend.peterpinto.dev/createNewExam', {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Accept':'application/json',
+            }, body:data
+            }).then(res => res.json())
+            .then(json => {
+                this.setState({examResult:json})
+				this.setState({selectedExam:json.ExamId});
+            });
+
 	}
 
 	getKeys() {
@@ -128,7 +150,7 @@ class ShowQuestionBank extends Component {
 		let items = this.state.exams;
 		return (
 			items.map((row, index) => {
-				return <button examid={row.ExamId} onClick={this.selectExam}>{row.ExamId}</button>
+				return <button className={this.state.selectedExam==row.ExamId? 'ExamButtonActive':'ExamButtonNonActive'} examid={row.ExamId} onClick={this.selectExam}>{row.ExamFriendlyName}</button>
 			})
 		);
 	}
@@ -157,7 +179,16 @@ class ShowQuestionBank extends Component {
 		return (
 			<div className="ShowQuestionBank">
 				{ !this.props.buildForm? null : 
-				 	<div className='ExamSelector'><h3>Select an Exam</h3>{this.getExamButtons()}<br/><br/></div> 
+				 	<div className='ExamSelector'>
+						<h3>Select an Exam</h3>
+						{this.getExamButtons()}
+						<br/><br/>
+						<form onSubmit={this.createNewExam}>
+							<input type='text' placeholder="Exam Name" />
+							<button type='submit'>Create New Exam</button>
+						</form>
+						<br/><br/>
+					</div> 
 				}
 				<table>
                     <thead>

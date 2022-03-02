@@ -18,17 +18,21 @@ class StudentExamList extends Component {
 		var keys = this.getKeys();
  		return keys.map((key, index)=>{
 			if(key == 'ExamId') {
-				return <th key={key}>Exam Id</th>
+				return null
 			} 
 			if(key == 'ExamScoresReleased') {
 				return (
-					<th key={key}>Exam Scores Released</th>
+					<th key={key}>Exam Scores Released?</th>
 				)
 			}
 			if(key == 'takeExam') {
 				return <th key={key}>Take Exam</th>
 			}
-			if(key == 'viewScores') {
+			if(key == 'ExamFriendlyName') {
+				return <th key={key}>Exam Name</th>
+			}
+
+			if(key == 'viewScores' || key == 'Submitted') {
 				return null 
 			}
  			return <th key={key}>{key.toUpperCase()}</th>
@@ -67,7 +71,10 @@ const RenderRow = (props) =>{
 				if(props.data['ExamScoresReleased'] == 1)
 					return <td key='viewScores'><button value={props.data['ExamId']} onClick={props.viewScore} >View Score</button></td>
 				else
-					return <td key='takeExam'><button value={props.data['ExamId']} onClick={props.takeExam} >Take Exam Now</button></td>
+					if(props.data['Submitted'] == 1) 
+						return <td>Exam Submitted!</td>
+					else 
+						return <td key='takeExam'><button value={props.data['ExamId']} onClick={props.takeExam} >Take Exam Now</button></td>
 			}
 			if(key == 'ExamScoresReleased') {
 				if(props.data[key] == 0) {
@@ -77,7 +84,7 @@ const RenderRow = (props) =>{
 				}
 			}
 
-			if(key == 'viewScores') {
+			if(key == 'viewScores' || key == 'Submitted' || key == 'ExamId') {
 				return null 
 			}
  			return <td key={props.data[key]}>{props.data[key]}</td>

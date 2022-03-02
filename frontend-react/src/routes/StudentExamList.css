@@ -2,4 +2,14 @@
 	flex: wrap;
 	flex-direction: column;
 	border:1px solid;
+	margin-left:auto;
+	margin-right:auto;
+	border-spacing:10px 10px;
+	border-collapse: collapse;
+}
+
+.StudentExamList td, th {
+	border: 1px solid black;
+	border-collapse: collapse;
+	text-align:center;
 }

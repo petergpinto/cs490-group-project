@@ -102,7 +102,8 @@ class TakeExam extends Component {
 		this.handleKeyDown = this.handleKeyDown.bind(this);
 		this.debounce = this.debounce.bind(this);
 		this.handleQuestionChange = this.handleQuestionChange.bind(this);
-		this.state = {data:[{'':''}]}
+		this.submitExam = this.submitExam.bind(this);
+		this.state = {data:[{'':''}], examSubmitted:false}
 	}
 
 	debounce(func, delay) {
@@ -155,7 +156,21 @@ class TakeExam extends Component {
 	}
 
 	submitExam() {
+		
+		var data = new URLSearchParams();
+		data.append('ExamId', this.props.ExamId);
 
+		return fetch('https://cs490backend.peterpinto.dev/submitExam', {
+		method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Accept':'application/json'
+        }, body: data
+        }).then(data => data.json())
+        .then(json => {
+            console.log(json)
+			this.setState({examSubmitted:true});
+        });
 	}
 
 	handleKeyDown(e) {
@@ -172,7 +187,7 @@ class TakeExam extends Component {
 	renderQuestions() {
 		let questions = this.state.data;
 		return questions.map((row, index) => {
-			return <div className="ExamQuestion"><h3>{row.QuestionText}</h3><textarea questionid={row.QuestionId} onChange={this.debounce(this.handleQuestionChange, 1000)} onKeyDown={this.handleKeyDown} /></div>
+			return <div className="ExamQuestion"><h3>{row.QuestionText}</h3><h4>{row.PointValue} {row.PointValue>1? 'Points':'Point'}</h4><textarea questionid={row.QuestionId} onChange={this.debounce(this.handleQuestionChange, 1000)} onKeyDown={this.handleKeyDown} /></div>
 		})
 	}
 
@@ -181,6 +196,10 @@ class TakeExam extends Component {
 	}
 
 	render() {
+		if(this.state.examSubmitted) {
+			return (<p>Exam Submitted</p>);
+		}
+
 		return (
 			<div className='TakeExam'>
 			{ this.renderQuestions() }
