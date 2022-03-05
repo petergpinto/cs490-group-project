@@ -103,7 +103,7 @@ app.post('/login', async function (request, response) {
 
 app.get('/logout', async function (request, response) {
 	request.session.destroy();
-	response.send('Logged out');
+	response.json({'Result':'Logged out'});
 	response.end();
 });
 

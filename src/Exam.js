@@ -3,6 +3,74 @@ const fs = require('fs');
 
 module.exports = function (app, pool, util) {
 
+app.post('/updatePointValue', async function(request, response) {
+	if(!(await util.isUserLoggedIn(request.session, pool))) {
+        response.json({'Result':'Please login'});
+        response.end();
+        return;
+    }
+
+	let PointValue = request.body.PointValue;
+	let ExamId = request.body.ExamId;
+	let QuestionId = request.body.QuestionId;
+
+	if(!PointValue || !ExamId || !QuestionId) {
+		response.json({'Result':'Invalid Request'});
+        response.end();
+        return;
+	}
+
+	updateScoresPromise = () => {
+        return new Promise((resolve, reject) => {
+            pool.query('UPDATE ExamQuestions SET PointValue=? WHERE ExamId=? AND QuestionId=?', [PointValue, ExamId, QuestionId],
+                (error, elements) => {
+                    if(error) return reject(error);
+                    return resolve(elements);
+                });
+        });
+    }
+
+	if(await updateScoresPromise()) {
+        response.json({'Result':'Success'});
+        response.end();
+    } else {
+        response.json({'Result':'Error'});
+        response.end();
+    }
+
+})
+
+app.post('/getPointValues', async function(request, response) {
+	if(!(await util.isUserLoggedIn(request.session, pool))) {
+        response.json({'Result':'Please login'});
+        response.end();
+        return;
+    }
+
+    let ExamId = request.body.ExamId;
+
+    if(!ExamId) {
+        response.json({'Result':'Invalid Request'});
+        response.end();
+        return;
+    }
+
+
+	    getPointValuesPromise = () => {
+        return new Promise((resolve, reject) => {
+            pool.query('SELECT QuestionId, PointValue FROM ExamQuestions WHERE ExamId=?', [ExamId],
+                (error, elements) => {
+                    if(error) return reject(error);
+                    return resolve(elements);
+                });
+        });
+    }
+
+	response.json(await getPointValuesPromise());
+	response.end();
+
+})
+
 app.post('/triggerAutoGrader', async function(request, response) {
 	if(!(await util.isUserLoggedIn(request.session, pool))) {
         response.json({'Result':'Please login'});
@@ -39,6 +107,8 @@ app.post('/triggerAutoGrader', async function(request, response) {
     }
     	console.log("JSON data is saved.");
 	});
+
+	process.exec('python3 grader.py data.json');
 
 	/*
 	const ls = process.exec('ls -l', function (error, stdout, stderr) {
@@ -129,7 +199,7 @@ app.post('/submitExam', async function (request, response) {
 
 app.post('/releaseExamScore', async function (request, response) {
     if(!(await util.isUserLoggedIn(request.session, pool))) {
-        response.send('Please login');
+        response.json({'Result':'Please login'});
         response.end();
         return;
     }
@@ -221,7 +291,7 @@ app.post('/updateStudentResponse', async function(request, response) {
 app.get('/getAllExams', async function(request, response) {
     //Get all the exams currently in the database
     if(!(await util.isUserLoggedIn(request.session, pool))) {
-        response.send("Please login");
+        response.json({"Result":"Please login"});
         response.end();
         return;
     }

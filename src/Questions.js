@@ -6,7 +6,7 @@ app.post('/insertQuestion', async function (request, response) {
 	//Must have following fields: QuestionText, FunctionName
 
 	if(!(await util.isUserLoggedIn(request.session, pool))) {
-		response.send('Please login');
+		response.json({"Result":'Please login'});
         response.end();
 		return;
 	} 
@@ -42,7 +42,7 @@ app.post('/insertQuestion', async function (request, response) {
 
 app.post('/addQuestionToExam', async function(request, response) {
     if(!(await util.isUserLoggedIn(request.session, pool))) {
-        response.send('Please login');
+        response.json({"Result":'Please login'});
         response.end();
         return;
     }
@@ -82,7 +82,7 @@ app.post('/addQuestionToExam', async function(request, response) {
   
 app.post('/removeQuestionFromExam', async function(request, response) {
     if(!(await util.isUserLoggedIn(request.session, pool))) {
-        response.send('Please login');
+        response.json({"Result":'Please login'});
         response.end();
         return;
     }
@@ -116,7 +116,7 @@ app.post('/removeQuestionFromExam', async function(request, response) {
   
 app.post('/getAllQuestionsOnExam', async function(request, response) {
 	if(!(await util.isUserLoggedIn(request.session, pool))) {
-        response.send("Please login");
+        response.json({"Result":"Please login"});
         response.end();
         return;
     }
@@ -141,14 +141,14 @@ app.post('/getAllQuestionsOnExam', async function(request, response) {
 app.get('/getAllQuestions', async function(request, response) {
 	//Get all questions in the database in JSON format
 	if(!(await util.isUserLoggedIn(request.session, pool))) {
-    	response.send("Please login");
+    	response.json({'Result':"Please login"});
 		response.end();
 		return;
 	}
 
 	getAllQuestionsPromise = () => {
 		return new Promise((resolve, reject) => {
-			pool.query('SELECT * FROM Questions', 
+			pool.query('SELECT QuestionId, FunctionName, QuestionText, DifficultyRating FROM Questions', 
 				(error, elements) => {
 					if(error) return reject(error);
 					return resolve(elements);

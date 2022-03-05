@@ -3,7 +3,7 @@ module.exports = function (app, pool, util) {
 
 	app.post('/insertTestCase', async function (request, response) {
 		if(!(await util.isUserLoggedIn(request.session, pool))) {
-			response.send('Please login');
+			response.json({"Result":'Please login'});
 			response.end();
 			return;
 		}
@@ -41,7 +41,7 @@ module.exports = function (app, pool, util) {
 
 	app.post('/getQuestionTestCases', async function(request, response) {
 		if(!(await util.isUserLoggedIn(request.session, pool))) {
-		response.send("Please login");
+		response.json({"Result":"Please login"});
 		response.end();
 		return;
 	    }

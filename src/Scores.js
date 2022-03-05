@@ -2,7 +2,7 @@ module.exports = function (app, pool, util) {
 
 app.post('/insertScore', async function(request, response) {
     if(!(await util.isUserLoggedIn(request.session, pool))) {
-        response.send("Please login");
+        response.json({"Result":"Please login"});
         response.end();
         return;
     }
@@ -35,7 +35,7 @@ app.post('/insertScore', async function(request, response) {
 
 app.post('/getScores', async function(request, response) {
     if(!(await util.isUserLoggedIn(request.session, pool))) {
-        response.send("Please login");
+        response.json({"Result":"Please login"});
         response.end();
         return;
     }
@@ -64,14 +64,14 @@ app.post('/getScores', async function(request, response) {
 
 app.post('/overrideScore', async function(request, response) {
     if(!(await util.isUserLoggedIn(request.session, pool))) {
-        response.send("Please login");
+        response.json({"Result":"Please login"});
         response.end();
         return;
     }
 
     //User must be an instructor
     if(request.session.UserData.AccountType != 'T') {
-        response.send({'Result':'Invalid Request'});
+        response.json({'Result':'Invalid Request'});
         response.end();
         return;
     }
