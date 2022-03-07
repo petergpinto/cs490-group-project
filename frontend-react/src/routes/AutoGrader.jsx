@@ -1,6 +1,6 @@
 import React, { Component, useState } from "react";
 import { useNavigate } from "react-router-dom";
-//import './CreateQuestion.css';
+import './AutoGrader.css';
 
 class AutoGrader extends Component {
 
@@ -48,7 +48,7 @@ class AutoGrader extends Component {
 		let items = this.state.exams;
 
 		return items.map((row, index) => {
-			return <button onClick={this.triggerAutoGrader} value={row.ExamId}>{row.ExamFriendlyName}</button>	
+			return <button name = 'ExamButton' id = 'ExamButton' onClick={this.triggerAutoGrader} value={row.ExamId}>{row.ExamFriendlyName}</button>	
 		})
 	}
 

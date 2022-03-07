@@ -1,0 +1,17 @@
+.AutoGraderButtons{
+	display:flex;
+	flex-direction:row;
+	padding: 14px 16px;
+	text-decoration: none;
+	justify-content: center;
+	align-items: center;
+}
+
+#ExamButton{
+	background-color: blue;
+	color: white;
+	padding: 14px 16px;
+	margin-left: 8px;
+	text-decoration: none;
+	font-size: 17px;
+}

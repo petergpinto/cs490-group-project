@@ -1,0 +1,11 @@
+.display-linebreak {
+  white-space: pre;
+  text-align: center;
+}
+
+.TestCaseTable table, .TestCaseTable tr, .TestCaseTable td, .TestCaseTable th{
+	border: 1px solid;
+	width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}

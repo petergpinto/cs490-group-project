@@ -23,6 +23,7 @@ h2{
 label{
     color: #black;
     font-size: 15px;
+    padding-right: 18px;
 }
 
 #username{
@@ -41,7 +42,7 @@ label{
 
 }
 #Log{
-    width: 300px;
+    width: 210px;
     height: 30px;
     border: none;
     background-color: blue;

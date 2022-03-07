@@ -77,3 +77,8 @@
   color: white;
 }
 
+.StudentTestCaseTable table, .StudentTestCaseTable tr, .StudentTestCaseTable td, .StudentTestCaseTable th {
+	border: 1px solid black;
+	margin-left: auto;
+	margin-right: auto;
+}

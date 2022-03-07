@@ -1,5 +1,5 @@
 import React, { Component, useState } from "react";
-//import './CreateQuestion.css';
+import './CreateQuestion.css';
 
 class CreateQuestion extends Component {
 
@@ -116,7 +116,7 @@ class CreateQuestion extends Component {
 					</select>
 					{ this.showTestCaseInput() }
 					<br/>
-					<input type= 'submit' name = 'Submit' id = 'Submit' value = 'Submit' />
+					<input type= 'submit' name = 'Submit2' id = 'Submit2' value = 'Add Question' />
 				</form>
 			</div>
 		);

@@ -62,11 +62,11 @@ class TeacherLanding extends Component {
 				<div className="TopNavigationBar">
 					<button onClick={this.resetPage}>Home</button>
 					<button onClick={this.createNewExam}>Create Exam</button>
-                    <button onClick={this.viewQuestionBank}>View Question Bank</button>
+                    			<button onClick={this.viewQuestionBank}>View Question Bank</button>
 					<button onClick={this.createQuestion}>Add new Question</button>
 					<button onClick={this.showAutoGrader}>Autograde Exams</button>
-                    <button onClick={this.reviewExams}>Review Student Exams</button>
-                    <button onClick={this.logout}>Logout</button>
+                    			<button onClick={this.reviewExams}>Review Student Exams</button>
+                    			<button onClick={this.logout}>Logout</button>
 				</div>
 				<CreateQuestion showElement={this.state.showElement.CreateQuestion} />
 				<ShowQuestionBank showElement={this.state.showElement.ShowQuestionBank} />

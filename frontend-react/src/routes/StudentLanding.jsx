@@ -9,14 +9,9 @@ class StudentLanding extends Component {
 		this.logout = this.logout.bind(this);
 		this.resetPage = this.resetPage.bind(this);
 		this.refreshExamList = this.refreshExamList.bind(this);
-		this.refreshScoresList = this.refreshScoresList.bind(this);
 		this.takeExamButton = this.takeExamButton.bind(this);
 		this.viewScoreButton = this.viewScoreButton.bind(this);
 		this.state = {data: [{'':''}], activeComponent: {StudentExamList:true, TakeExam:false, ViewScore:false}, activeExam:-1};
-	}
-
-	refreshScoresList() {
-		
 	}
 
 	refreshExamList() {
@@ -81,7 +76,7 @@ class StudentLanding extends Component {
 						<button onClick={this.refreshExamList}>Take Exam</button>
 						}
 						{ true? null:
-						<button onClick={this.refreshScoresList}>View Exam Scores</button>
+						<button >View Exam Scores</button>
 						}
 						<button onClick={this.logout}>Logout</button>
 					</div>
@@ -218,11 +213,113 @@ class TakeExam extends Component {
 class ViewScore extends Component {
 	constructor(props) {
         super(props);
+		this.getScore = this.getScore.bind(this);
+		this.renderScores = this.renderScores.bind(this);
+		this.getFunctionNameScores = this.getFunctionNameScores.bind(this);
+		this.state = {data:[], functions:[]};
+	}
+
+	getScore(examid) {
+		let data = new URLSearchParams();
+		data.append("ExamId", examid);
+		return fetch('https://cs490backend.peterpinto.dev/getScores', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Accept':'application/json'
+        }, body: data
+        }).then(data => data.json())
+        .then(json => {
+            if(json.Result && json.Result != 'Success')
+                this.props.navigate('/login');
+            this.setState({data:json});
+        });
+	}
+
+	getFunctionNameScores(examid) {
+		let data = new URLSearchParams();
+        data.append("ExamId", examid);
+        return fetch('https://cs490backend.peterpinto.dev/studentGetFunctionNameScores', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Accept':'application/json'
+        }, body: data
+        }).then(data => data.json())
+        .then(json => {
+            if(json.Result && json.Result != 'Success')
+                this.props.navigate('/login');
+            this.setState({functions:json});
+        });
+
+	}
+
+	componentDidMount() {
+		this.getScore(this.props.ExamId);
+		this.getFunctionNameScores(this.props.ExamId);
+	}
+
+	renderQuestion(questionId) {
+		let items = this.state.data;
+        let i = 1;
+
+		return items.map((row, index) => {
+            if(row.QuestionId != questionId)
+                return null
+            return <tr>
+                <td>Test Case {i++}: {row.AutoGraderScore == 1? 'Passed': 'Failed'}</td>
+                <td>{row.TestCaseInput}</td>
+                <td>{row.TestCaseOutput}</td>
+                <td>{row.AutoGraderOutput}</td>
+                {row.InstructorOverrideScore? <td>{row.InstructorOverrideScore}</td> : <td>{row.AutoGraderScore == 1? row.TestCasePointValue : 0}</td> }
+				<td>{row.InstructorComment? row.InstructorComment : null }</td>
+                </tr>
+        });
+	}
+
+	renderFunctionName(questionId) {
+		let items = this.state.functions;
+		for(let i in items) {
+			if(items[i].QuestionId == questionId)
+				return (
+					<tr>
+                		<td>Function Name</td><td style={{border:'none'}}></td><td style={{border:"none"}}></td><td>{items[i].CorrectFunctionName == 1? "Correct":"Incorrect"}</td><td>{items[i].CorrectFunctionName == 1? 0 : -1}</td>
+            		</tr>
+				)
+		}
+	}
+
+	renderScores() {
+		let items = this.state.data;
+		let questionIds = [];
+
+		console.log(items);
+		return items.map((row, index) => {
+			if(questionIds.indexOf(row.QuestionId) >= 0 )
+                return null
+            questionIds.push(row.QuestionId);
+
+			return (<div><div className="StudentTestCaseTable" >
+					<br/>
+					<h3 style={{'text-align':'center'}}>{row.FunctionName}</h3>
+					<table>
+					<thead>
+						<tr>
+							<th></th><th>Input</th><th>Expected Output</th><th>AutoGrader Output</th><th>Score</th><th>Instructor Comment</th>
+						</tr>
+					</thead>
+					{ this.renderQuestion(row.QuestionId) }
+					{ this.renderFunctionName(row.QuestionId) }
+					</table>
+				</div></div>
+			)
+		})
 	}
 
 	render() {
-		return ( 
-			<p>VIEW SCORE</p>
+		return ( <div>
+			{ this.renderScores() }
+			</div>
 		)
 	}
 }

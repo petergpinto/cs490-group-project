@@ -42,9 +42,15 @@
 	border: 2px solid black;
 }
 
-.ShowQuestionBankList table, td, th {
+.ShowQuestionBankList table, .ShowQuestionBankList td, .ShowQuestionBankList th {
     border: none;
 	text-align: center;
+	align: center;
+}
+
+.ShowQuestionBankList {
+	display:flex;
+	flex-direction:column;
 }
 
 #Submit{

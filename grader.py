@@ -26,12 +26,16 @@ for i in range(len(json_file)):
 	tmp = response.split("\n")[0]
 	is_def = tmp.find("def")
 	if(is_def != 0):
-		test_results.append({"UserId":user_id,"ExamId":exam_id,"QuestionId":q_id,"TestCaseId":case_id,"AutoGraderScore":0})
+		test_results.append({"UserId":user_id,"ExamId":exam_id,"QuestionId":q_id,"TestCaseId":case_id,"AutoGraderScore":0,"AutoGraderOutput":"Syntax Error"})
 		function_results.append({"UserId":user_id,"ExamId":exam_id,"QuestionId":q_id,"CorrectFunctionName":0})
 		continue;
 	is_func = tmp.split("(")[0][4:]
 	if(is_func == test_case):
 		function_results.append({"UserId":user_id,"ExamId":exam_id,"QuestionId":q_id,"CorrectFunctionName":1})
+	elif(len(is_func) == 0):
+		function_results.append({"UserId":user_id,"ExamId":exam_id,"QuestionId":q_id,"CorrectFunctionName":0})
+		test_results.append({"UserId":user_id,"ExamId":exam_id,"QuestionId":q_id,"TestCaseId":case_id,"AutoGraderScore":0,"AutoGraderOutput":"No Function Name"})
+		continue	
 	else:
 		function_results.append({"UserId":user_id,"ExamId":exam_id,"QuestionId":q_id,"CorrectFunctionName":0})
 		response = response[0:4] + test_case + response[len(is_func)+4:]
@@ -43,31 +47,31 @@ for i in range(len(json_file)):
 		test_input = float(test_input)
 	
 	tobexeced = response + "\noutput=" + test_case + "(" + "test_input" + ")"
-	exec(tobexeced)
-	
-	if(output == None):
-		test_results.append({"UserId":user_id,"ExamId":exam_id,"QuestionId":q_id,"TestCaseId":case_id,"AutoGraderScore":0})
+	try:
+		exec(tobexeced)
+	except:
+		test_results.append({"UserId":user_id,"ExamId":exam_id,"QuestionId":q_id,"TestCaseId":case_id,"AutoGraderScore":0,"AutoGraderOutput":"Runtime Error"})
 		continue
 	if(answer["TestCaseOutputType"] == "S"):
 		test_output = str(test_output)
 		if(type(output) == type("")):
 			if(test_output == output):
-				test_results.append({"UserId":user_id,"ExamId":exam_id,"QuestionId":q_id,"TestCaseId":case_id,"AutoGraderScore":1})
+				test_results.append({"UserId":user_id,"ExamId":exam_id,"QuestionId":q_id,"TestCaseId":case_id,"AutoGraderScore":1,"AutoGraderOutput":output})
 				continue
 	
 	elif(answer["TestCaseOutputType"] == "I"):
 		test_output = int(test_output)
 		if(type(output) == type(3)):
 			if(test_output == output):
-				test_results.append({"UserId":user_id,"ExamId":exam_id,"QuestionId":q_id,"TestCaseId":case_id,"AutoGraderScore":1})
+				test_results.append({"UserId":user_id,"ExamId":exam_id,"QuestionId":q_id,"TestCaseId":case_id,"AutoGraderScore":1,"AutoGraderOutput":output})
 				continue
 	else:
 		test_output = float(test_output)
 		if(type(output) == type(3.1)):
 			if(test_output == output):
-				test_results.append({"UserId":user_id,"ExamId":exam_id,"QuestionId":q_id,"TestCaseId":case_id,"AutoGraderScore":1})
+				test_results.append({"UserId":user_id,"ExamId":exam_id,"QuestionId":q_id,"TestCaseId":case_id,"AutoGraderScore":1,"AutoGraderOutput":output})
 				continue
-	test_results.append({"UserId":user_id,"ExamId":exam_id,"QuestionId":q_id,"TestCaseId":case_id,"AutoGraderScore":0})
+	test_results.append({"UserId":user_id,"ExamId":exam_id,"QuestionId":q_id,"TestCaseId":case_id,"AutoGraderScore":0,"AutoGraderOutput":output})
 	
 
 
@@ -80,14 +84,16 @@ db = mysql.connector.connect(
 	database="cs490"
 )
 cursor = db.cursor()
-sql = "REPLACE INTO Scores (UserId,ExamId,TestCaseId,AutoGraderScore) VALUES (%s,%s,%s,%s)"
+sql = "REPLACE INTO Scores (UserId,ExamId,TestCaseId,AutoGraderScore,AutoGraderOutput) VALUES (%s,%s,%s,%s,%s)"
 prepared_tests = []
 for item in test_results:
-	prepared_tests.append((item["UserId"],item["ExamId"],item["TestCaseId"],item["AutoGraderScore"]))	
+	prepared_tests.append((item["UserId"],item["ExamId"],item["TestCaseId"],item["AutoGraderScore"],item["AutoGraderOutput"]))	
 prepared_funcs = []
 for item in function_results:
 	prepared_funcs.append((item["UserId"],item["ExamId"],item["QuestionId"],item["CorrectFunctionName"]))
-print(prepared_tests)
+print(function_results)
+print("\n\n")
+print(test_results)
 try:
 	cursor.executemany(sql,prepared_tests)
 	db.commit()

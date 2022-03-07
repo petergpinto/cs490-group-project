@@ -95,7 +95,7 @@ class ShowQuestionBank extends Component {
 		if(this.props.buildForm) {
 			return items.map((row, index)=>{
             	return <tr key={index}>
-					<button index={index} onClick={this.handleChange}>+</button>
+					<button className="append" index={index} onClick={this.handleChange}>+</button>
 					<RenderRow key={index} data={row} keys={keys}/>
 					</tr>
         	})
@@ -112,7 +112,6 @@ class ShowQuestionBank extends Component {
 				[input.getAttribute('data-key')] : valueAsNumber
 			} 
 		}));
-
 		let data = new URLSearchParams();
 		data.append("PointValue", valueAsNumber);
 		data.append("QuestionId", input.getAttribute('questionid'));
@@ -138,11 +137,11 @@ class ShowQuestionBank extends Component {
 		//Add question to exam
 	
 		var data = new URLSearchParams();
-    	data.append('QuestionId', questionData.QuestionId);
     	data.append('ExamId', this.state.selectedExam);
 		data.append('PointValue', pointValue);
 	
-		if(!this.state.checked[index]) {
+		if(event.target.className==="append" && !this.state.checked[index]) {
+		data.append('QuestionId',questionData.QuestionId);
 		return fetch('https://cs490backend.peterpinto.dev/addQuestionToExam', {
             method: 'POST',
             credentials: 'include',
@@ -153,8 +152,8 @@ class ShowQuestionBank extends Component {
 				body:data
             }).then(res => res.json());
 		} 
-
-		/*
+		if(event.target.className==="delete"&&!this.state.checked[index]){
+			data.append('QuestionId',event.target.getAttribute('questionid'));
 			return fetch('https://cs490backend.peterpinto.dev/removeQuestionFromExam', {
             method: 'POST',
             credentials: 'include',
@@ -164,11 +163,12 @@ class ShowQuestionBank extends Component {
             },
                 body:data
             }).then(res => res.json());
-		*/
+		}
 	}
 
 	async selectExam(event) {
 		await this.setState({selectedExam:event.target.getAttribute('examid')});
+		this.setState({pointValue : {}});
 		this.getPointValues();
 	}
 
@@ -253,11 +253,11 @@ class ShowQuestionBank extends Component {
 
 	renderExamQuestions() {
 		let items = this.state.examQuestions;
-		let keys = this.getKeys(items);
-		
+		let keys = this.getKeys(items);	
 		return (  items.map((row, index) => {
 					return (<tr>
-								<NumericInput questionid={row.QuestionId} data-key={'PointValue'+index} key={'PointValue'+index} min={0} max={50} value={this.state.pointValue['PointValue'+index]? this.state.pointValue['PointValue'+index] : null} onChange={this.pointValueChange} size={5}/>
+								<button className="delete" index={index} questionid={row.QuestionId} onClick={this.handleChange}>-</button>
+								<NumericInput questionid={row.QuestionId} data-key={'PointValue'+index} key={'PointValue'+index} min={0} max={50} value={this.state.pointValue['PointValue'+index]? this.state.pointValue['PointValue'+index] : this.state.QuestionPointValues[index] ? this.state.QuestionPointValues[index]["PointValue"]:null} onChange={this.pointValueChange} size={5}/>
 								<RenderRow key={index} data={row} keys={keys}/>
 							</tr>
 					)}
