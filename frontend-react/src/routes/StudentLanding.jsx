@@ -61,7 +61,6 @@ class StudentLanding extends Component {
 	}
 
 	render() {
-		console.log(this.state.data);
 		let token = JSON.parse(localStorage.getItem('token'));	
 		if(!token || token.UserData.AccountType != 'S') {
 			return ( <Navigate to="/login" /> );
@@ -216,6 +215,8 @@ class ViewScore extends Component {
 		this.getScore = this.getScore.bind(this);
 		this.renderScores = this.renderScores.bind(this);
 		this.getFunctionNameScores = this.getFunctionNameScores.bind(this);
+		this.showTotalPoints = this.showTotalPoints.bind(this);
+		this.showExamTotalPoints = this.showExamTotalPoints.bind(this);
 		this.state = {data:[], functions:[]};
 	}
 
@@ -259,6 +260,74 @@ class ViewScore extends Component {
 		this.getFunctionNameScores(this.props.ExamId);
 	}
 
+	showTotalPoints(questionId) {
+        let points = 0;
+        let responses = this.state.data;
+
+        for(let i in responses) {
+
+            if(responses[i].QuestionId==questionId && responses[i].InstructorOverrideScore) {
+                points += responses[i].InstructorOverrideScore;
+            }
+            else if(responses[i].QuestionId==questionId && responses[i].AutoGraderScore == 1) {
+                points += responses[i].TestCasePointValue;
+            }
+        }
+        let items2 = this.state.functions;
+        for (let i in items2) {
+            if(items2[i].QuestionId==questionId && items2[i].CorrectFunctionName == 0) {
+                points -= 1;
+            }
+        }
+        if(points < 0)
+            points = 0;
+
+        return <tr><td>Total Points</td><td style={{border: 'none'}}></td><td style={{border: 'none'}}></td><td style={{border: 'none'}}></td><td>{points}</td></tr>
+    }
+
+	showExamTotalPoints(userId) {
+        let points = 0;
+        let totalPossible = 0;
+        let responses = this.state.data;
+        let small_map = {};
+
+        if(this.state.selectedExam == -1 || this.state.selectedUser == -1)
+            return;
+
+        for(let i in responses) {
+                if(responses[i].InstructorOverrideScore) {
+                    points += responses[i].InstructorOverrideScore;
+                }
+                else if(responses[i].AutoGraderScore == 1) {
+                    points += responses[i].TestCasePointValue;
+                }
+                else {
+                    if(responses[i].QuestionId in small_map){
+                        small_map[responses[i].QuestionId] += 1
+                    }
+                    else {
+                        small_map[responses[i].QuestionId] = 1
+                    }
+                }
+                totalPossible += responses[i].TestCasePointValue;
+        }
+        for( var key in small_map){
+            if(small_map[key]<2){
+                delete small_map[key];
+            }
+        }
+        let items2 = this.state.functions;
+        for (let i in items2) {
+            if(items2[i].CorrectFunctionName == 0 && !(items2[i].QuestionId in small_map)) {
+                points -= 1;
+            }
+        }
+        if(points < 0)
+            points = 0;
+
+        return <div className='TestCaseTable'><table><tr><td>Total Points</td><td>{points}</td></tr><tr><td>Total Possible Points</td><td>{totalPossible}</td></tr><tr><td>Percentage Score</td><td>{(points / totalPossible)*100}</td></tr></table></div>
+    }
+
 	renderQuestion(questionId) {
 		let items = this.state.data;
         let i = 1;
@@ -293,7 +362,6 @@ class ViewScore extends Component {
 		let items = this.state.data;
 		let questionIds = [];
 
-		console.log(items);
 		return items.map((row, index) => {
 			if(questionIds.indexOf(row.QuestionId) >= 0 )
                 return null
@@ -301,7 +369,7 @@ class ViewScore extends Component {
 
 			return (<div><div className="StudentTestCaseTable" >
 					<br/>
-					<h3 style={{'text-align':'center'}}>{row.FunctionName}</h3>
+					<h3 style={{'textAlign':'center'}}>{row.FunctionName}</h3>
 					<table>
 					<thead>
 						<tr>
@@ -310,6 +378,7 @@ class ViewScore extends Component {
 					</thead>
 					{ this.renderQuestion(row.QuestionId) }
 					{ this.renderFunctionName(row.QuestionId) }
+					{ this.showTotalPoints(row.QuestionId) }
 					</table>
 				</div></div>
 			)
@@ -319,6 +388,8 @@ class ViewScore extends Component {
 	render() {
 		return ( <div>
 			{ this.renderScores() }
+			<br/>
+			{ this.showExamTotalPoints() }
 			</div>
 		)
 	}

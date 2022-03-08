@@ -37,7 +37,6 @@ class ReviewExams extends Component {
 	refreshStudents(examid) {
 		let data = new URLSearchParams();
 		data.append("ExamId", examid);
-
 		return fetch('https://cs490backend.peterpinto.dev/getStudentsByExam', {
             method: 'POST',
             credentials: 'include',
@@ -97,7 +96,6 @@ class ReviewExams extends Component {
 		data.append("ExamId", event.target.getAttribute('examid'));
 		data.append("TestCaseId", event.target.getAttribute('testcaseid'));
 		data.append("InstructorOverrideScore", event.target.value);
-
 		return fetch('https://cs490backend.peterpinto.dev/overrideScore', {
             method: 'POST',
             credentials: 'include',
@@ -163,11 +161,14 @@ class ReviewExams extends Component {
         let items = this.state.exams;
 
         return items.map((row, index) => {
-            return <button onClick={this.selectExam} value={row.ExamId}>{row.ExamFriendlyName}</button>
-        })
+		return <button onClick={this.selectExam} value={row.ExamId}>{row.ExamFriendlyName}</button>
+        	//return <button name = 'ExamButtons' id = 'ExamButtons' onClick={this.selectExam} value={row.ExamId}>{row.ExamFriendlyName}</button>
+	})
     }
 	
 	selectUser(event) {
+		//Weird
+		//console.log(event.target.getAttribute('examid'));
 		this.setState({selectedUser:event.target.value});
 	}
 
@@ -175,6 +176,7 @@ class ReviewExams extends Component {
 		let items = this.state.students;
 		return items.map((row, index) => {
             return <button onClick={this.selectUser} value={row.UserId}>{row.Username}</button>
+		//return <button name = 'StudentButtons' id = 'StudentButtons' onClick={this.selectUser} value={row.UserId}>{row.Username}</button>
         })
 	}
 
@@ -194,7 +196,7 @@ class ReviewExams extends Component {
 				<div className="StudentResponse">{row.StudentResponse}</div>
 					<br/><div className="TestCaseTable">
 					<table>
-						<thead><tr><th></th><th>Input</th><th>Expected Output</th><th>AutoGrader Output</th><th>Points Awarded</th><th>Override Score</th><th>Comment</th></tr></thead>
+						<thead><tr><th></th><th>Input</th><th>Expected Output</th><th>AutoGrader Output</th><th>Points Possible</th><th>Points Awarded</th><th>Override Score</th><th>Comment</th></tr></thead>
 						<tbody>
 							{this.showTestCases(row.QuestionId, this.state.selectedUser)}
 							{this.showFunctionName(row.QuestionId, this.state.selectedUser)}
@@ -211,41 +213,65 @@ class ReviewExams extends Component {
 		let responses = this.state.responses;
 
 		for(let i in responses) {
-			if(responses[i].UserId==userId && responses[i].QuestionId==questionId && responses[i].AutoGraderScore == 1) {
+			
+			if(responses[i].UserId==userId && responses[i].QuestionId==questionId && responses[i].InstructorOverrideScore) {
+				//console.log("hello");
+				points += responses[i].InstructorOverrideScore;
+			}
+			else if(responses[i].UserId==userId && responses[i].QuestionId==questionId && responses[i].AutoGraderScore == 1) {
 				points += responses[i].TestCasePointValue;
 			}
 		}
 		let items2 = this.state.functions;
 		for (let i in items2) {
-			if(items2[i].UserId==userId && items2[i].QuestionId==questionId && items2[i].ExamId==this.state.selectedExam && items2[i].CorrectFunctionName == 0) {
+			if(items2[i].QuestionId==questionId && items2[i].ExamId==this.state.selectedExam && items2[i].CorrectFunctionName == 0) {
 				points -= 1;
 			}
 		}
 		if(points < 0)
 			points = 0;
 
-		return <tr><td>Total Points</td><td style={{border: 'none'}}></td><td style={{border: 'none'}}></td><td style={{border: 'none'}}></td><td>{points}</td></tr>
+		return <tr><td>Total Points</td><td style={{border: 'none'}}></td><td style={{border: 'none'}}></td><td style={{border: 'none'}}></td><td style={{border: 'none'}}></td><td>{points}</td></tr>
 	}
 
 	showExamTotalPoints(userId) {
 		let points = 0;
 		let totalPossible = 0;
         let responses = this.state.responses;
-
+		let small_map = {};
+		
+		//console.info(responses);
 		if(this.state.selectedExam == -1 || this.state.selectedUser == -1)
 			return;
 
         for(let i in responses) {
             if(responses[i].UserId==userId) {
-                if(responses[i].AutoGraderScore == 1) {
+                if(responses[i].InstructorOverrideScore) {
+					points += responses[i].InstructorOverrideScore;
+             	}
+				else if(responses[i].AutoGraderScore == 1) {
 					points += responses[i].TestCasePointValue;
-				}
-				totalPossible += responses[i].TestCasePointValue;
-            }
-        }
+            	}
+				else {
+					if(responses[i].QuestionId in small_map){
+						small_map[responses[i].QuestionId] += 1
+					}
+					else {
+						small_map[responses[i].QuestionId] = 1
+					}
+				}	
+				totalPossible += responses[i].TestCasePointValue;			
+        	}
+		}
+		console.info(small_map);
+		for( var key in small_map){
+			if(small_map[key]<2){
+				delete small_map[key];
+			}
+		}
         let items2 = this.state.functions;
         for (let i in items2) {
-            if(items2[i].UserId==userId && items2[i].ExamId==this.state.selectedExam && items2[i].CorrectFunctionName == 0) {
+            if(items2[i].UserId==userId && items2[i].ExamId==this.state.selectedExam && items2[i].CorrectFunctionName == 0 && !(items2[i].QuestionId in small_map)) {
                 points -= 1;
             }
         }
@@ -258,15 +284,16 @@ class ReviewExams extends Component {
 	showFunctionName(questionId, userId) {
 		let items = this.state.functions;
 		for (let i in items) {
-			console.log(items[i]);
+			//console.log(items[i]);
 			if(items[i].UserId==userId && items[i].QuestionId==questionId && items[i].ExamId==this.state.selectedExam) {
-				return <tr><td>Function Name</td><td style={{border: 'none'}}></td><td style={{border: 'none'}}></td><td>{items[i].CorrectFunctionName == 1? "Correct":"Incorrect"}</td><td>{items[i].CorrectFunctionName == 1? 0 : -1}</td><td style={{border: 'none'}}></td><td style={{border: 'none'}}></td></tr>
+				return <tr><td>Function Name</td><td style={{border: 'none'}}></td><td style={{border: 'none'}}></td><td style={{border: 'none'}}></td><td>{items[i].CorrectFunctionName == 1? "Correct":"Incorrect"}</td><td>{items[i].CorrectFunctionName == 1? 0 : -1}</td><td style={{border: 'none'}}></td><td style={{border: 'none'}}></td></tr>
 			}
 		}
 	}
 
 	showTestCases(questionId, userId) {
 		let items = this.state.responses;
+		//console.info(items);
 		let i = 1;
 		return items.map((row, index) => {
 			if(row.QuestionId != questionId || row.UserId != userId)
@@ -276,9 +303,10 @@ class ReviewExams extends Component {
 				<td>{row.TestCaseInput}</td>
 				<td>{row.TestCaseOutput}</td>
 				<td>{row.AutoGraderOutput}</td>
+				<td>{row.TestCasePointValue}</td>
 				<td>{row.AutoGraderScore == 1? row.TestCasePointValue : 0}</td>
-				<td><input examid={row.ExamId} userid={row.UserId} testcaseid={row.TestCaseId} onChange={this.overrideScore} type='number'/></td>
-				<td><input examid={row.ExamId} userid={row.UserId} testcaseid={row.TestCaseId} onChange={this.addComment} type='text' /></td></tr>
+				<td><input placeholder={row.InstructorOverrideScore ? row.InstructorOverrideScore : null}  examid={row.ExamId} userid={row.UserId} testcaseid={row.TestCaseId} onChange={this.overrideScore} type='number' min = {0} max={row.TestCasePointValue ? row.TestCasePointValue : null} step = "0.1"/></td>
+				<td><input value={row.InstructorComment ? row.InstructorComment : null} examid={row.ExamId} userid={row.UserId} testcaseid={row.TestCaseId} onChange={this.addComment} type='text' /></td></tr>
 		});
 	}
 
@@ -301,7 +329,7 @@ class ReviewExams extends Component {
 			<h2>Review Student Exam Responses</h2>
 			<div className="ReviewExamButtons">{ this.showExamButtons() }</div>
 			<br />
-			<button onClick={this.releaseScores} value={this.state.selectedExam}>Release Score to Students</button>
+			<button name = 'release' id = 'release' onClick={this.releaseScores} value={this.state.selectedExam}>Release Score to Students</button>
 			<br /><br />
 			<div className="ReviewExamStudentButtons">{ this.showStudentButtons() }</div>
 			<br />
@@ -309,6 +337,9 @@ class ReviewExams extends Component {
 			{ this.showResponses() }
 			<br/>
 			{ this.showExamTotalPoints(this.state.selectedUser) }
+			</div>
+			<br/>
+			<div className="save">	{ this.state.selectedExam != -1 && this.state.selectedUser != -1 ? <button onClick={() => this.refreshStudentResponses(this.state.selectedExam)}>Save Changes</button> : null}
 			</div>
 			</div>
 		)
