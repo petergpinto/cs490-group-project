@@ -298,7 +298,7 @@ class ShowQuestionBank extends Component {
 							{this.getExamButtons()}
 							<br/><br/>
 							<form onSubmit={this.createNewExam}>
-								<input type='text' placeholder="Exam Name" />
+								<input type='text' name = 'etext' id = 'etext' placeholder="Exam Name" />
 								<button type='submit' name = 'Submit' id = 'Submit'>Create New Exam</button>
 							</form>
 							<br/><br/>

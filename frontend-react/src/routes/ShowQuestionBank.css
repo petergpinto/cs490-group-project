@@ -53,7 +53,25 @@
 	flex-direction:column;
 }
 
+.ExamSelector input{
+	margin-left: 10px;
+
+}
+
+.ExamSelector button{
+	margin-left: 5px;
+}
+
 #Submit{
 	background-color: blue;
 	color: white;
+	border-radius: 12px;
 }
+
+.ExamSelector h3{
+	margin-left: 5px;
+}
+
+
+
+

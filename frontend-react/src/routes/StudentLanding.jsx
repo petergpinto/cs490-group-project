@@ -195,6 +195,7 @@ class TakeExam extends Component {
 
 	render() {
 		if(this.state.examSubmitted) {
+			window.location.reload();
 			return (<p>Exam Submitted</p>);
 		}
 
