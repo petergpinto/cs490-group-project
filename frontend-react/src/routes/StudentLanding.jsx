@@ -3,6 +3,10 @@ import { BrowserRouter, Routes, Route, useNavigate, Navigate } from "react-route
 import StudentExamList from './StudentExamList.jsx';
 import './StudentLanding.css';
 
+const SHOW_EXAM_LIST = "show_exam_list";
+const SHOW_TAKE_EXAM = "show_take_exam";
+const SHOW_VIEW_SCORE = "show_view_score";
+
 class StudentLanding extends Component {
 	constructor(props) {
 		super(props);
@@ -11,7 +15,7 @@ class StudentLanding extends Component {
 		this.refreshExamList = this.refreshExamList.bind(this);
 		this.takeExamButton = this.takeExamButton.bind(this);
 		this.viewScoreButton = this.viewScoreButton.bind(this);
-		this.state = {data: [{'':''}], activeComponent: {StudentExamList:true, TakeExam:false, ViewScore:false}, activeExam:-1};
+		this.state = {data: [{'':''}], activeComponent: SHOW_EXAM_LIST, activeExam:-1};
 	}
 
 	refreshExamList() {
@@ -34,7 +38,7 @@ class StudentLanding extends Component {
 	}
 
 	resetPage() {
-		this.setState({activeComponent: {TakeExam:false, StudentExamList:true, ViewScore:false}});
+		this.setState({activeComponent: SHOW_EXAM_LIST});
 		this.setState({activeExam:-1});
 		this.props.navigate('/StudentLanding');
 	}
@@ -50,13 +54,13 @@ class StudentLanding extends Component {
 
 	takeExamButton(event) {
 		event.preventDefault();
-		this.setState({activeComponent: {TakeExam:true, StudentExamList:false, ViewScore:false}});
+		this.setState({activeComponent: SHOW_TAKE_EXAM});
 		this.setState({activeExam:event.target.value});
 	}
 
 	viewScoreButton(event) {
 		event.preventDefault();
-		this.setState({activeComponent: {TakeExam:false, StudentExamList:false, ViewScore:true}});
+		this.setState({activeComponent: SHOW_VIEW_SCORE});
 		this.setState({activeExam:event.target.value});
 	}
 
@@ -79,9 +83,9 @@ class StudentLanding extends Component {
 						}
 						<button onClick={this.logout}>Logout</button>
 					</div>
-					{ this.state.activeComponent.StudentExamList? <StudentExamList data={this.state.data} takeExam={this.takeExamButton} viewScore={this.viewScoreButton} /> : null }
-					{ this.state.activeComponent.TakeExam? <TakeExam ExamId={this.state.activeExam} /> : null}
-					{ this.state.activeComponent.ViewScore? <ViewScore ExamId={this.state.activeExam} /> :null }
+					{ this.state.activeComponent === SHOW_EXAM_LIST? <StudentExamList data={this.state.data} takeExam={this.takeExamButton} viewScore={this.viewScoreButton} /> : null }
+					{ this.state.activeComponent === SHOW_TAKE_EXAM? <TakeExam ExamId={this.state.activeExam} /> : null}
+					{ this.state.activeComponent === SHOW_VIEW_SCORE? <ViewScore ExamId={this.state.activeExam} /> :null }
 					<div className="ScoresList">
 					</div>
       				<h2>Student Landing Page</h2>
