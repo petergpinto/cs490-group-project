@@ -5,7 +5,7 @@ class CreateQuestion extends Component {
 
 	constructor(props) {
 		super(props);
-		this.state = {inputLength:2}
+		this.state = {inputLength:3}
 		this.showTestCaseInput = this.showTestCaseInput.bind(this);
 	}
 
