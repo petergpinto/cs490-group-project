@@ -103,7 +103,10 @@ class TakeExam extends Component {
 		this.debounce = this.debounce.bind(this);
 		this.handleQuestionChange = this.handleQuestionChange.bind(this);
 		this.submitExam = this.submitExam.bind(this);
-		this.state = {data:[{'':''}], examSubmitted:false}
+		this.renderQuestionMinimap = this.renderQuestionMinimap.bind(this);
+		this.setActiveQuestion = this.setActiveQuestion.bind(this);
+
+		this.state = {data:[{'':''}], examSubmitted:false, activeQuestion:0}
 	}
 
 	debounce(func, delay) {
@@ -186,12 +189,24 @@ class TakeExam extends Component {
 		}
   	}
 
+	setActiveQuestion(event) {
+		this.setState({ activeQuestion: event.target.value });
+		console.log(event.target.value);
+	}
+
 	renderQuestions() {
 		let questions = this.state.data;
 		return questions.map((row, index) => {
 			return <div className="ExamQuestion"><h3>{row.QuestionText}</h3><h4>{row.PointValue} {row.PointValue>1? 'Points':'Point'}</h4><textarea questionid={row.QuestionId} onChange={this.debounce(this.handleQuestionChange, 1000)} onKeyDown={this.handleKeyDown} /></div>
 		})
 	}
+
+	renderQuestionMinimap() {
+		let questions = this.state.data;
+		return questions.map((row, index) => {
+			return <button value={index} onClick={this.setActiveQuestion}></button>
+        })
+    }
 
 	componentDidMount() {
 		this.fetchExamQuestions();
@@ -205,6 +220,7 @@ class TakeExam extends Component {
 
 		return (
 			<div className='TakeExam'>
+				{ this.renderQuestionMinimap() }
 			{ this.renderQuestions() }
 			<div className='ExamSubmitButton'>
 			<button onClick={this.submitExam}>Submit Exam for Grading</button>
@@ -213,6 +229,8 @@ class TakeExam extends Component {
 		)
 	}
 }
+
+
 
 class ViewScore extends Component {
 	constructor(props) {
