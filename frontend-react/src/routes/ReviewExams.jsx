@@ -96,6 +96,7 @@ class ReviewExams extends Component {
 		data.append("ExamId", event.target.getAttribute('examid'));
 		data.append("TestCaseId", event.target.getAttribute('testcaseid'));
 		data.append("InstructorOverrideScore", event.target.value);
+		this.refreshStudentResponses(this.state.selectedExam);
 		return fetch('https://cs490backend.peterpinto.dev/overrideScore', {
             method: 'POST',
             credentials: 'include',
