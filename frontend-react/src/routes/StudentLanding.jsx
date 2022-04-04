@@ -239,12 +239,12 @@ class TakeExam extends Component {
 		let html = [];
 		if (parseInt(this.state.activeQuestion) > 0) {
 			//show prev button
-			html.append(<button onClick={this.goToPrevQuestion}>Previous Question</button>);
+			html.push(<button onClick={this.goToPrevQuestion}>Previous Question</button>);
 		}
 
 		if (parseInt(this.state.activeQuestion) < this.state.data.length - 1) {
 			//show next button
-			html.append(<button onClick={this.goToNextQuestion}>Next Question</button>);
+			html.push(<button onClick={this.goToNextQuestion}>Next Question</button>);
 		}
 
 		return html;
