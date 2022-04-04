@@ -97,7 +97,7 @@ class ReviewExams extends Component {
 		data.append("ExamId", event.target.getAttribute('examid'));
 		data.append("TestCaseId", event.target.getAttribute('testcaseid'));
 		data.append("InstructorOverrideScore", event.target.value);
-		this.refreshStudentResponses(this.state.selectedExam);
+		
 		return fetch('https://cs490backend.peterpinto.dev/overrideScore', {
             method: 'POST',
             credentials: 'include',
@@ -107,7 +107,8 @@ class ReviewExams extends Component {
             }).then(res => res.json())
             .then(json => {
                 if(json.Result && json.Result != 'Success')
-                    this.props.navigate('/login');
+					this.props.navigate('/login');
+				this.refreshStudentResponses(this.state.selectedExam);
             });
 	}
 
