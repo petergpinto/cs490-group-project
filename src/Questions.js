@@ -150,7 +150,7 @@ app.get('/getAllQuestions', async function(request, response) {
 
 	getAllQuestionsPromise = () => {
 		return new Promise((resolve, reject) => {
-			pool.query('SELECT QuestionId, FunctionName, QuestionText, DifficultyRating FROM Questions', 
+			pool.query('SELECT QuestionId, FunctionName, QuestionText, DifficultyRating, Category, ConstraintType FROM Questions', 
 				(error, elements) => {
 					if(error) return reject(error);
 					return resolve(elements);

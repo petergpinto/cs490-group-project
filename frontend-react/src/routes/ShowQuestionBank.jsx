@@ -84,7 +84,9 @@ class ShowQuestionBank extends Component {
 			if(key == 'FunctionName')
 				return <th key={key+index}>Function Name</th>
 			if(key == 'DifficultyRating')
-				return <th key={key+index}>Difficulty Rating</th>
+				return <th key={key + index}>Difficulty Rating</th>
+			if (key == 'ConstraintType')
+				return <th key={key+index}>Constraint Type</th>
             return <th key={key+index}>{key}</th>
         })
     }
