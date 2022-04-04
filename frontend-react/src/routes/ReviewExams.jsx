@@ -16,6 +16,7 @@ class ReviewExams extends Component {
 		this.selectUser = this.selectUser.bind(this);
 		this.refreshFunctionNameScores = this.refreshFunctionNameScores.bind(this);
 		this.showExamTotalPoints = this.showExamTotalPoints.bind(this);
+		this.overrideScore = this.overrideScore.bind(this);
 		this.state = {exams:[], students:[], responses:[], selectedExam:-1, selectedUser:-1, points:0};
 	}
 
