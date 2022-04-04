@@ -7,17 +7,22 @@ class CreateQuestion extends Component {
 		super(props);
 		this.state = {inputLength:2}
 		this.showTestCaseInput = this.showTestCaseInput.bind(this);
+		this.updateButton = this.updateButton.bind(this);
 	}
-
-	submitQuestion(questionData) {
+	updateButton(){
+		this.setState(prevState => ({
+				inputLength: prevState.inputLength+1
+		}));
+	}
+	async submitQuestion(questionData) {
 		questionData.preventDefault();	
 		console.log(questionData.target);
 		var data = new URLSearchParams();
 		data.append('QuestionText', questionData.target[0].value);
 		data.append('FunctionName', questionData.target[1].value);
 		data.append('DifficultyRating', questionData.target[2].value);
-
-		fetch('https://cs490backend.peterpinto.dev/insertQuestion', {
+		
+		const response = await fetch('https://cs490backend.peterpinto.dev/insertQuestion', {
 			method: 'POST',
 			credentials: 'include',
 			headers: {
@@ -25,7 +30,26 @@ class CreateQuestion extends Component {
 				'content-type':'application/x-www-form-urlencoded'
 			},
 				body:data
-			}).then(res => res.json())
+			}).then(res => res.json());
+		for(let i = 3; i+4<questionData.target.length;i+=4)
+		{
+				let test1data = new URLSearchParams();
+				test1data.append('QuestionId', response[0].QuestionId);
+				test1data.append('TestCaseInput', questionData.target[i].value);
+				test1data.append('TestCaseInputType', questionData.target[i+1].value);
+				test1data.append('TestCaseOutput', questionData.target[i+2].value);
+                test1data.append('TestCaseOutputType', questionData.target[i+3].value);
+				fetch('https://cs490backend.peterpinto.dev/insertTestCase', {
+            		method: 'POST',
+            		credentials: 'include',
+           	 		headers: {
+                		'Accept':'application/json',
+                		'content-type':'application/x-www-form-urlencoded'
+            		},
+                		body:test1data
+            	});
+		}	
+			/*.then(res => res.json())
 			.then(json => {
 				console.log(json);
 				let test1data = new URLSearchParams();
@@ -61,6 +85,7 @@ class CreateQuestion extends Component {
                         body:test2data
                 }).then(res => res.json());
 			})
+			*/
 	}
 
 	showTestCaseInput() {
@@ -118,6 +143,7 @@ class CreateQuestion extends Component {
 					<br/>
 					<input type= 'submit' name = 'Submit2' id = 'Submit2' value = 'Add Question' />
 				</form>
+					<button onClick={this.updateButton}> Add Test Case</button>
 			</div>
 		);
 	}
