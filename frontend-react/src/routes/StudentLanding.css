@@ -91,3 +91,21 @@
 	align-self: center;
 	margin: 10px;
 }
+
+.NextPrevButtons button {
+	background-color: #04AA6D;
+	border: none;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+	font-size: 17px;
+}
+.NextPrevButtons button:hover {
+	background-color: #ddd;
+	color: black;
+}
+
+.NextPrevButtons button:active {
+	background-color: #04AA6D;
+	color: white;
+}

@@ -106,6 +106,8 @@ class TakeExam extends Component {
 		this.renderQuestionMinimap = this.renderQuestionMinimap.bind(this);
 		this.setActiveQuestion = this.setActiveQuestion.bind(this);
 		this.renderQuestion = this.renderQuestion.bind(this);
+		this.goToNextQuestion = this.goToNextQuestion.bind(this);
+		this.goToPrevQuestion = this.goToPrevQuestion.bind(this);
 
 		this.state = {data:[{'':''}], examSubmitted:false, activeQuestion:0}
 	}
@@ -195,6 +197,18 @@ class TakeExam extends Component {
 		console.log(event.target.value);
 	}
 
+	goToNextQuestion() {
+		this.setState({
+			activeQuestion: parseInt(this.state.activeQuestion) + 1
+		});
+	}
+
+	goToPrevQuestion() {
+		this.setState({
+			activeQuestion: parseInt(this.state.activeQuestion) - 1
+		});
+    }
+
 	renderQuestions() {
 		let questions = this.state.data;
 		return questions.map((row, index) => {
@@ -206,7 +220,7 @@ class TakeExam extends Component {
 		let questions = this.state.data;
 		return (
 			<div className="ExamQuestion">
-				<h2>Question {this.state.activeQuestion + 1}</h2>
+				<h2>Question {parseInt(this.state.activeQuestion) + 1}</h2>
 				<h3>{questions[this.state.activeQuestion].QuestionText}</h3>
 				<h4>{questions[this.state.activeQuestion].PointValue} {questions[this.state.activeQuestion].PointValue > 1 ? 'Points' : 'Point'}</h4>
 				<textarea questionid={questions[this.state.activeQuestion].QuestionId} onChange={this.debounce(this.handleQuestionChange, 1000)} onKeyDown={this.handleKeyDown} />
@@ -223,7 +237,15 @@ class TakeExam extends Component {
 	}
 
 	renderNextPrevButtons() {
+		if (parseInt(this.state.activeQuestion) > 0) {
+			//show prev button
+			<button onClick={this.goToPrevQuestion}>Previous Question</button>
+		}
 
+		if (parseInt(this.state.activeQuestion) < this.state.data.length - 1) {
+			//show next button
+			<button onClick={this.goToNextQuestion}>Next Question</button>
+        }
     }
 
 	componentDidMount() {
@@ -239,7 +261,8 @@ class TakeExam extends Component {
 		return (
 			<div className='TakeExam'>
 				<div className="QuestionMinimap">
-					{this.renderQuestionMinimap()}
+					<h4>Question Minimap</h4>
+					{ this.renderQuestionMinimap() }
 				</div>
 				{this.renderQuestion()}
 				<div className='NextPrevButtons'>
