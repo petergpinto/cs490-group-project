@@ -105,6 +105,7 @@ class TakeExam extends Component {
 		this.submitExam = this.submitExam.bind(this);
 		this.renderQuestionMinimap = this.renderQuestionMinimap.bind(this);
 		this.setActiveQuestion = this.setActiveQuestion.bind(this);
+		this.renderQuestion = this.renderQuestion.bind(this);
 
 		this.state = {data:[{'':''}], examSubmitted:false, activeQuestion:0}
 	}
@@ -201,11 +202,28 @@ class TakeExam extends Component {
 		})
 	}
 
+	renderQuestion() {
+		let questions = this.state.data;
+		return (
+			<div className="ExamQuestion">
+				<h2>Question {this.state.activeQuestion + 1}</h2>
+				<h3>{questions[this.state.activeQuestion].QuestionText}</h3>
+				<h4>{questions[this.state.activeQuestion].PointValue} {questions[this.state.activeQuestion].PointValue > 1 ? 'Points' : 'Point'}</h4>
+				<textarea questionid={questions[this.state.activeQuestion].QuestionId} onChange={this.debounce(this.handleQuestionChange, 1000)} onKeyDown={this.handleKeyDown} />
+			</div>
+		);
+    }
+
+
 	renderQuestionMinimap() {
 		let questions = this.state.data;
 		return questions.map((row, index) => {
-			return <button value={index} onClick={this.setActiveQuestion}></button>
+			return <button value={index} onClick={this.setActiveQuestion}>Question {index+1}</button>
         })
+	}
+
+	renderNextPrevButtons() {
+
     }
 
 	componentDidMount() {
@@ -220,11 +238,16 @@ class TakeExam extends Component {
 
 		return (
 			<div className='TakeExam'>
-				{ this.renderQuestionMinimap() }
-			{ this.renderQuestions() }
-			<div className='ExamSubmitButton'>
-			<button onClick={this.submitExam}>Submit Exam for Grading</button>
-			</div>
+				<div className="QuestionMinimap">
+					{this.renderQuestionMinimap()}
+				</div>
+				{this.renderQuestion()}
+				<div className='NextPrevButtons'>
+					{ this.renderNextPrevButtons() }
+				</div>
+				<div className='ExamSubmitButton'>
+					<button onClick={this.submitExam}>Submit Exam for Grading</button>
+				</div>
 			</div>
 		)
 	}
