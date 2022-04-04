@@ -50,7 +50,9 @@ class CreateQuestion extends Component {
             		},
                 		body:test1data
             	});
-		}	
+		}
+		//clear form at end
+		questionData.target.reset();
 			/*.then(res => res.json())
 			.then(json => {
 				console.log(json);
