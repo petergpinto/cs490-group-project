@@ -22,7 +22,7 @@ class CreateQuestion extends Component {
 		data.append('FunctionName', questionData.target[1].value);
 		data.append('DifficultyRating', questionData.target[2].value);
 		data.append('Category', questionData.target[3].value);
-		data.append('Constraint', questionData.target[4].value);
+		data.append('ConstraintType', questionData.target[4].value);
 		
 		const response = await fetch('https://cs490backend.peterpinto.dev/insertQuestion', {
 			method: 'POST',
