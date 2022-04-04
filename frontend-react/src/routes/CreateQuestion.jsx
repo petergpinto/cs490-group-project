@@ -105,13 +105,15 @@ class CreateQuestion extends Component {
 				<select name='TestCaseInputType' id='TestCaseInputType'>
     				<option value='S'>String</option>
     				<option value='I'>Integer</option>
-    				<option value='F'>Floating Point</option>
+					<option value='F'>Floating Point</option>
+					<option value='L'>List</option>
 				</select>
 				<input type='text' placeholder='Output'/>
 				<select name='TestCaseOutputType' id='TestCaseOutputType'>
     				<option value='S'>String</option>
     				<option value='I'>Integer</option>
-    				<option value='F'>Floating Point</option>
+					<option value='F'>Floating Point</option>
+					<option value='L'>List</option>
 				</select>
 				</div>
 			})
@@ -160,10 +162,12 @@ class CreateQuestion extends Component {
 						<option value="Recursion">Recursion</option>
 					</select>
 					{ this.showTestCaseInput() }
-					<br/>
+					<br />
+					<button onClick={this.updateButton}> Add Test Case</button>
+					<br />
 					<input type= 'submit' name = 'Submit2' id = 'Submit2' value = 'Add Question' />
 				</form>
-					<button onClick={this.updateButton}> Add Test Case</button>
+					
 			</div>
 		);
 	}
