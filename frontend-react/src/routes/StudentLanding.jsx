@@ -194,7 +194,6 @@ class TakeExam extends Component {
 
 	setActiveQuestion(event) {
 		this.setState({ activeQuestion: event.target.value });
-		console.log(event.target.value);
 	}
 
 	goToNextQuestion() {
