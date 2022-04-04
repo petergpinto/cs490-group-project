@@ -236,15 +236,18 @@ class TakeExam extends Component {
 	}
 
 	renderNextPrevButtons() {
+		let html = [];
 		if (parseInt(this.state.activeQuestion) > 0) {
 			//show prev button
-			<button onClick={this.goToPrevQuestion}>Previous Question</button>
+			html.append(<button onClick={this.goToPrevQuestion}>Previous Question</button>);
 		}
 
 		if (parseInt(this.state.activeQuestion) < this.state.data.length - 1) {
 			//show next button
-			<button onClick={this.goToNextQuestion}>Next Question</button>
-        }
+			html.append(<button onClick={this.goToNextQuestion}>Next Question</button>);
+		}
+
+		return html;
     }
 
 	componentDidMount() {
