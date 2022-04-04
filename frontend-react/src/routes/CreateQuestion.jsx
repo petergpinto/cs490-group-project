@@ -139,6 +139,22 @@ class CreateQuestion extends Component {
 						<option value='2'>Medium</option>
 						<option value='3'>Hard</option>
 					</select>
+					<label>Category</label>
+					<select name="Category">
+						<option value="For Loops">For Loops</option>
+						<option value="While Loops">While Loops</option>
+						<option value="Basic Math">Basic Math</option>
+						<option value="Recursion">Recursion</option>
+						<option value="Conditionals">Conditionals</option>
+						<option value="Advanced Math">Advanced Math</option>
+					</select>
+					<label>Constraint Type</label>
+					<select name="ConstraintType">
+						<option value="None">None</option>
+						<option value="For">For</option>
+						<option value="While">While</option>
+						<option value="Recursion">Recursion</option>
+					</select>
 					{ this.showTestCaseInput() }
 					<br/>
 					<input type= 'submit' name = 'Submit2' id = 'Submit2' value = 'Add Question' />

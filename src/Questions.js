@@ -14,14 +14,16 @@ app.post('/insertQuestion', async function (request, response) {
 	let QuestionText = request.body.QuestionText;
 	let FunctionName = request.body.FunctionName;
 	let DifficultyRating = request.body.DifficultyRating;
+	let ConstraintType = request.body.ConstraintType;
+	let Category = request.body.Category;
 
-	if(!FunctionName || !QuestionText || !DifficultyRating) {
+	if (!FunctionName || !QuestionText || !DifficultyRating || !Category || !ConstraintType) {
 		response.json({'Result':'Invalid Request'});
         response.end();
 	} else {
 		insertQuestionPromise = () => {
 			return new Promise((resolve, reject) => {
-				pool.query('call insert_question(?, ?, ?)', [QuestionText, FunctionName, DifficultyRating],
+				pool.query('call insert_question(?, ?, ?, ?, ?)', [QuestionText, FunctionName, DifficultyRating, Category, ConstraintType],
 					(error, elements) => {
 						if(error) return reject(error);
 						return resolve(elements[0]);
