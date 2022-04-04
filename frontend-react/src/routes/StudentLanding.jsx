@@ -241,7 +241,7 @@ class TakeExam extends Component {
 			//show prev button
 			html.push(<button onClick={this.goToPrevQuestion}>Previous Question</button>);
 		}
-
+		html.push(<span>&nbsp;&nbsp;&nbsp</span>)
 		if (parseInt(this.state.activeQuestion) < this.state.data.length - 1) {
 			//show next button
 			html.push(<button onClick={this.goToNextQuestion}>Next Question</button>);
