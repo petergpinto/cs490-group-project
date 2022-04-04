@@ -139,7 +139,39 @@ app.post('/getAllQuestionsOnExam', async function(request, response) {
 	response.end();
 
 });
-  
+
+app.post('/getStudentResponse', async function (request, response) {
+	if (!(await util.isUserLoggedIn(request.session, pool))) {
+		response.json({ 'Result': "Please login" });
+		response.end();
+		return;
+	}
+
+	let QuestionId = request.body.QuestionId;
+	let ExamId = request.body.ExamId;
+	let UserId = request.session.UserData.UserId;
+
+	if (!QuestionId || !ExamId) {
+		response.json({ 'Result': 'Invalid Request' });
+		response.end();
+		return;
+	}
+
+	getResponsePromise = () => {
+		return new Promise((resolve, reject) => {
+			pool.query("SELECT StudentResponse FROM StudentAnswers WHERE QuestionId=? AND ExamId=? AND UserId=?", [QuestionId, ExamId, UserId],
+				(error, elements) => {
+					if (error) return reject(error);
+					return resolve(elements);
+				});
+		});
+	}
+
+	response.json(await getResponsePromise());
+	response.end();
+
+})
+
 app.get('/getAllQuestions', async function(request, response) {
 	//Get all questions in the database in JSON format
 	if(!(await util.isUserLoggedIn(request.session, pool))) {
