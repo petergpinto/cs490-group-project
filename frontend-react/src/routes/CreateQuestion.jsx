@@ -33,7 +33,7 @@ class CreateQuestion extends Component {
 			},
 				body:data
 			}).then(res => res.json());
-		for(let i = 3; i+4<questionData.target.length;i+=4)
+		for(let i = 5; i+4<questionData.target.length;i+=4)
 		{
 				let test1data = new URLSearchParams();
 				test1data.append('QuestionId', response[0].QuestionId);
