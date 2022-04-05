@@ -42,7 +42,7 @@
 	border: 2px solid black;
 }
 
-.leftSplitScreen table, .leftSplitScreen td, .leftSplitScreen tr {
+.leftSplitScreen table, .leftSplitScreen td, .leftSplitScreen tr, .leftSplitScreen th {
 	border: 1px solid black;
 }
 
