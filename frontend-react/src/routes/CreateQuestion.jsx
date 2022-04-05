@@ -8,6 +8,7 @@ class CreateQuestion extends Component {
 		this.state = {inputLength:2}
 		this.showTestCaseInput = this.showTestCaseInput.bind(this);
 		this.updateButton = this.updateButton.bind(this);
+		this.submitQuestion = this.submitQuestion.bind(this);
 	}
 
 	updateButton(){
