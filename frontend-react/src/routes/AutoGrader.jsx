@@ -18,7 +18,8 @@ class AutoGrader extends Component {
 		this.setState({ loading: true });
 		setTimeout(() => {
 			this.setState({ loading: false })
-		}, 3000);
+			console.log(this.state.loading);
+		}, 5000);
 		let data = new URLSearchParams();
 		data.append("ExamId", event.target.value);
 		return fetch('https://cs490backend.peterpinto.dev/triggerAutoGrader', {
