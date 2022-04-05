@@ -310,13 +310,13 @@ class ShowQuestionBank extends Component {
 				{ !this.props.buildForm? null :
 					<div className='leftSplitScreen'>
 						<div className='ExamSelector'>
+							<br /><br />
 							<form onSubmit={this.createNewExam}>
 								<input type='text' name='etext' id='etext' placeholder="Exam Name" />
 								<button type='submit' name='Submit' id='Submit'>Create New Exam</button>
 							</form>
 							<h3>Select an Exam</h3>
 							{this.getExamButtons()}
-							<br/><br/>
 							<br/><br/>
 						</div>
 						<table>
