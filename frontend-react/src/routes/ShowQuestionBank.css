@@ -46,6 +46,10 @@
 	border: 1px solid black;
 }
 
+.rightSplitScreen table, .rightSplitScreen td, .rightSplitScreen tr, .rightSplitScreen th {
+	border: 1px solid black;
+}
+
 .ShowQuestionBankList table, .ShowQuestionBankList td, .ShowQuestionBankList th {
     border: none;
 	text-align: center;
