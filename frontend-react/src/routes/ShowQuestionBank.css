@@ -15,7 +15,7 @@
   font-size: 17px;
 }
 
-.ShowQuestionBankForm table, td, th {
+.ShowQuestionBankForm table, .ShowQuestionBankForm td, .ShowQuestionBankForm th {
 	border: none;
 }
 
@@ -42,10 +42,13 @@
 	border: 2px solid black;
 }
 
+.leftSplitScreen table, .leftSplitScreen td, .leftSplitScreen tr {
+	border: 1px solid black;
+}
+
 .ShowQuestionBankList table, .ShowQuestionBankList td, .ShowQuestionBankList th {
     border: none;
 	text-align: center;
-	align: center;
 }
 
 .ShowQuestionBankList {
