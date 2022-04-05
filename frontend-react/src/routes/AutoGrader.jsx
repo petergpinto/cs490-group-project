@@ -1,5 +1,6 @@
 import React, { Component, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Dimmer, Loader } from "semantic-ui-react";
 import './AutoGrader.css';
 
 class AutoGrader extends Component {
