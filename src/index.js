@@ -89,17 +89,16 @@ app.post('/login', async function (request, response) {
 			});
 		}
 		let loginResult = await checkLoginPromise();
-		if(loginResult.Result == "Success") {
-			request.session.loggedin = true;
-			request.session.UserData = loginResult.UserData;
-		}
+	if(loginResult.Result == "Success") {
+		request.session.loggedin = true;
+		request.session.UserData = loginResult.UserData;	
 		response.json(loginResult);
 		response.end();
 	} else {
-		response.send('Please enter Username and Password!');
+		response.json({'Result':'Invalid Username/password'});
         response.end();
 	}
-	
+	}	
 });
 
 app.get('/logout', async function (request, response) {
