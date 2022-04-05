@@ -65,7 +65,8 @@ class ShowQuestionBank extends Component {
 				if(json.Result && json.Result != 'Success')
 					this.props.navigate('/login');
                 this.setState({examResult:json})
-				this.setState({selectedExam:json.ExamId});
+				this.setState({ selectedExam: json.ExamId });
+				this.refreshExamList();
             });
 
 	}
@@ -152,7 +153,10 @@ class ShowQuestionBank extends Component {
 				'content-type': 'application/x-www-form-urlencoded'
             },
 				body:data
-            }).then(res => res.json());
+		}).then(res => {
+			this.getExamQuestions();
+			return res.json();
+		});
 		} 
 		if(event.target.className==="delete"&&!this.state.checked[index]){
 			data.append('QuestionId',event.target.getAttribute('questionid'));
@@ -164,7 +168,10 @@ class ShowQuestionBank extends Component {
                 'content-type': 'application/x-www-form-urlencoded'
             },
                 body:data
-            }).then(res => res.json());
+			}).then(res => {
+				this.getExamQuestions();
+				return res.json();
+			});
 		}
 	}
 
@@ -272,18 +279,18 @@ class ShowQuestionBank extends Component {
 		this.getQuestionData();
 		this.refreshExamList();
 		this.getExamQuestions();
-		this.interval = setInterval(this.getQuestionData, 3000);
-		this.interval2 = setInterval(this.refreshExamList, 3000);
-		this.interval3 = setInterval(this.getExamQuestions, 1000);
+		//this.interval = setInterval(this.getQuestionData, 3000);
+		//this.interval2 = setInterval(this.refreshExamList, 3000);
+		//this.interval3 = setInterval(this.getExamQuestions, 1000);
 	}
 
 	componentDidUpdate() {
 	}
 
 	componentWillUnmount() {
-		clearInterval(this.interval);
-		clearInterval(this.interval2);
-		clearInterval(this.interval3);
+		//clearInterval(this.interval);
+		//clearInterval(this.interval2);
+		//clearInterval(this.interval3);
 	}
 
 	render() {
