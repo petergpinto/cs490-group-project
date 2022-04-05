@@ -286,7 +286,7 @@ class ShowQuestionBank extends Component {
 		this.refreshExamList();
 		this.getExamQuestions();
 		this.setState({ loading: false });
-		//this.interval = setInterval(this.getQuestionData, 3000);
+		this.interval = setInterval(this.getQuestionData, 1000);
 		//this.interval2 = setInterval(this.refreshExamList, 3000);
 		//this.interval3 = setInterval(this.getExamQuestions, 1000);
 	}
@@ -295,7 +295,7 @@ class ShowQuestionBank extends Component {
 	}
 
 	componentWillUnmount() {
-		//clearInterval(this.interval);
+		clearInterval(this.interval);
 		//clearInterval(this.interval2);
 		//clearInterval(this.interval3);
 	}
