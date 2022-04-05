@@ -157,7 +157,7 @@ class ShowQuestionBank extends Component {
 				body:data
 		}).then(res => {
 			this.getExamQuestions();
-			this.setState({ loading: false; })
+			this.setState({ loading: false })
 			return res.json();
 		});
 		} 
