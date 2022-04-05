@@ -65,7 +65,7 @@ class CreateQuestion extends Component {
 		return ( arr.map((row, index)=> {
 			return <div>
 				<br/>
-				<label>Test Case {index+1} </label>
+				<label>Test Case {index+1}:</label>
 				<input type='text' placeholder='Input'/> 
 				<select name='TestCaseInputType' id='TestCaseInputType'>
     				<option value='S'>String</option>
@@ -96,6 +96,7 @@ class CreateQuestion extends Component {
 		return (
 			<div className="CreateQuestion">
 				<form onSubmit={this.submitQuestion}>
+					<br/>
 					<label>Question Text</label>
 					<br/>
 					<textarea type='text' size='1500' id='QuestionText' key='QuestionText' />
