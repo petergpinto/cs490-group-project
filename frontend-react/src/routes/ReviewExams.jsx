@@ -2,6 +2,7 @@ import React, { Component, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import './ReviewExams.css';
 
+
 class ReviewExams extends Component {
 
 	constructor(props) {
@@ -321,12 +322,23 @@ class ReviewExams extends Component {
 	componentWillUnmount() {
 		clearInterval(this.interval);
 	}
+/*
+	constructor(props) {
+		super(props);
+		this.state = {
+    			render: false;
+		}
+		this.alertHi = this.alertHi.bind(this);
+	}
 
+	alertHi() {
+ 		this.setState({render: !this.state.render});
+	}	
+*/
 	render() {
 		if (!this.props.showElement) {
-            return <div></div>
-        }
-
+            		return <div></div>
+        	}
 		return (
 			<div className='ReviewExams'>
 			<h2>Review Student Exam Responses</h2>
@@ -343,6 +355,7 @@ class ReviewExams extends Component {
 			</div>
 			<br/>
 			<div className="save">	{ this.state.selectedExam != -1 && this.state.selectedUser != -1 ? <button onClick={() => this.refreshStudentResponses(this.state.selectedExam)}>Save Changes</button> : null}
+			
 			</div>
 			</div>
 		)

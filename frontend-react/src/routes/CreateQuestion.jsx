@@ -98,7 +98,7 @@ class CreateQuestion extends Component {
 				<form onSubmit={this.submitQuestion}>
 					<label>Question Text</label>
 					<br/>
-					<textarea type='text' size='200' id='QuestionText' key='QuestionText' />
+					<textarea type='text' size='1500' id='QuestionText' key='QuestionText' />
 					<br/><br/>
 					<label>Function Name</label>
 					<br/>
