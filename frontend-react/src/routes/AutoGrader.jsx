@@ -10,11 +10,14 @@ class AutoGrader extends Component {
 
 		this.showExamButtons = this.showExamButtons.bind(this);
 		this.refreshExamButtons = this.refreshExamButtons.bind(this);
-		this.state = {exams:[]};
+		this.state = {exams:[], loading:false};
 	}
 
 	triggerAutoGrader(event) {
-
+		this.setState({ loading: true });
+		setTimeout(() => {
+			this.setState({ loading: false })
+		}, 3000);
 		let data = new URLSearchParams();
 		data.append("ExamId", event.target.value);
 		return fetch('https://cs490backend.peterpinto.dev/triggerAutoGrader', {
@@ -70,6 +73,7 @@ class AutoGrader extends Component {
 
 		return (
 			<div className='AutoGrader'>
+				{this.state.loading ? <div className="Loader"><Dimmer active inverted size="massive"><Loader inverted>Loading</Loader></Dimmer></div> : null}
 			<h2>Select an Exam to Autograde</h2>
 				<div className='AutoGraderButtons'>
 					{ this.showExamButtons() }	
