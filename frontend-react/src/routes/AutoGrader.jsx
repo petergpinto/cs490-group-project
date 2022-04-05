@@ -10,6 +10,7 @@ class AutoGrader extends Component {
 
 		this.showExamButtons = this.showExamButtons.bind(this);
 		this.refreshExamButtons = this.refreshExamButtons.bind(this);
+		this.triggerAutoGrader = this.triggerAutoGrader.bind(this);
 		this.state = {exams:[], loading:false};
 	}
 
