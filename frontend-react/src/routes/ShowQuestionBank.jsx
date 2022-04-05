@@ -183,6 +183,7 @@ class ShowQuestionBank extends Component {
 		await this.setState({selectedExam:event.target.getAttribute('examid')});
 		this.setState({pointValue : {}});
 		this.getPointValues();
+		this.getExamQuestions();
 	}
 
 	refreshExamList() {
