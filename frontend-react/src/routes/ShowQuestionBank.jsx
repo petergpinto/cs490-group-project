@@ -1,6 +1,7 @@
 import React, { Component, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import NumericInput from 'react-numeric-input';
+import { Dimmer, Loader } from "semantic-ui-react";
 import './ShowQuestionBank.css';
 
 function sortByProperty(property){
@@ -29,7 +30,7 @@ class ShowQuestionBank extends Component {
 		this.createNewExam = this.createNewExam.bind(this);
 		this.getExamQuestions = this.getExamQuestions.bind(this);
 		this.getPointValues = this.getPointValues.bind(this);
-		this.state = {data: [{'':''}], QuestionPointValues:[], examQuestions: [{'':''}], pointValue:{}, checked:{}, selectedExam:-1, examResult:""};
+		this.state = {data: [{'':''}], QuestionPointValues:[], examQuestions: [{'':''}], pointValue:{}, checked:{}, selectedExam:-1, examResult:"", loading:true};
 	}
 
 	getQuestionData() {
@@ -133,6 +134,7 @@ class ShowQuestionBank extends Component {
 	}
 
 	handleChange(event) {
+		this.setState({loading:true})
 		let index = event.target.getAttribute('index');
 
 		let questionData = this.state.data[index];
@@ -155,6 +157,7 @@ class ShowQuestionBank extends Component {
 				body:data
 		}).then(res => {
 			this.getExamQuestions();
+			this.setState({ loading: false; })
 			return res.json();
 		});
 		} 
@@ -170,6 +173,7 @@ class ShowQuestionBank extends Component {
                 body:data
 			}).then(res => {
 				this.getExamQuestions();
+				this.setState({ loading: false })
 				return res.json();
 			});
 		}
@@ -279,6 +283,7 @@ class ShowQuestionBank extends Component {
 		this.getQuestionData();
 		this.refreshExamList();
 		this.getExamQuestions();
+		this.setState({ loading: false });
 		//this.interval = setInterval(this.getQuestionData, 3000);
 		//this.interval2 = setInterval(this.refreshExamList, 3000);
 		//this.interval3 = setInterval(this.getExamQuestions, 1000);
@@ -299,7 +304,8 @@ class ShowQuestionBank extends Component {
 		}
 
 		return (
-			<div className={this.props.buildForm? "ShowQuestionBankForm" : "ShowQuestionBankList"} >
+			<div className={this.props.buildForm ? "ShowQuestionBankForm" : "ShowQuestionBankList"} >
+				{ this.state.loading ? <div className="Loader"><Dimmer active inverted size="massive"><Loader inverted>Loading</Loader></Dimmer></div> : null }
 				{ !this.props.buildForm? null :
 					<div className='leftSplitScreen'>
 					 	<div className='ExamSelector'>
