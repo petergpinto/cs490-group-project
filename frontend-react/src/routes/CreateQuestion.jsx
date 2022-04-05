@@ -55,6 +55,7 @@ class CreateQuestion extends Component {
 		//clear form at end
 		questionData.target.reset();
 		this.setState({ inputLength: 2 });
+		this.props.navigate('/TeacherLanding');
 	}
 
 	showTestCaseInput() {
