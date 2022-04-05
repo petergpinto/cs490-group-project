@@ -309,14 +309,14 @@ class ShowQuestionBank extends Component {
 				{ this.state.loading ? <div className="Loader"><Dimmer active inverted size="massive"><Loader inverted>Loading</Loader></Dimmer></div> : null }
 				{ !this.props.buildForm? null :
 					<div className='leftSplitScreen'>
-					 	<div className='ExamSelector'>
+						<div className='ExamSelector'>
+							<form onSubmit={this.createNewExam}>
+								<input type='text' name='etext' id='etext' placeholder="Exam Name" />
+								<button type='submit' name='Submit' id='Submit'>Create New Exam</button>
+							</form>
 							<h3>Select an Exam</h3>
 							{this.getExamButtons()}
 							<br/><br/>
-							<form onSubmit={this.createNewExam}>
-								<input type='text' name = 'etext' id = 'etext' placeholder="Exam Name" />
-								<button type='submit' name = 'Submit' id = 'Submit'>Create New Exam</button>
-							</form>
 							<br/><br/>
 						</div>
 						<table>
