@@ -75,7 +75,7 @@ class AutoGrader extends Component {
 
 		return (
 			<div className='AutoGrader'>
-				<div className="Loader"><Dimmer active inverted size="massive"><Loader inverted>Loading</Loader></Dimmer></div>
+				{false ? <div className="Loader"><Dimmer active inverted size="massive"><Loader inverted>Loading</Loader></Dimmer></div> : null}
 			<h2>Select an Exam to Autograde</h2>
 				<div className='AutoGraderButtons'>
 					{ this.showExamButtons() }	
