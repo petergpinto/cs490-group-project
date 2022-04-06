@@ -47,7 +47,7 @@ class ShowQuestionBank extends Component {
 			loading: true,
 			categoryFilter: "",
 			constraintFitler: "",
-			difficultyFilter: "",
+			difficultyFilter: 0,
 			keywordFilter: ""
 		};
 	}
@@ -400,29 +400,31 @@ class ShowQuestionBank extends Component {
 				}
 				<div className={this.props.buildForm? "rightSplitScreen" : "ShowQuestionBankList"}>
 					<h2>Question Bank</h2>
-					<select onChange={this.updateCategoryFilter} name="categoryFilter">
-						<option value="">All</option>
-						<option value="For Loops">For Loops</option>
-						<option value="While Loops">While Loops</option>
-						<option value="Basic Math">Basic Math</option>
-						<option value="Recursion">Recursion</option>
-						<option value="Conditionals">Conditionals</option>
-						<option value="Advanced Math">Advanced Math</option>
-					</select>
-					<select onChange={this.updateConstraintFilter} name="constraintFilter">
-						<option value="">All</option>
-						<option value="None">None</option>
-						<option value="For">For</option>
-						<option value="While">While</option>
-						<option value="Recursion">Recursion</option>
-					</select>
-					<select onChange={this.updateDifficultyFilter} name="difficultyFilter">
-						<option value='0'>All</option>
-						<option value='1'>Easy</option>
-						<option value='2'>Medium</option>
-						<option value='3'>Hard</option>
-					</select>
-					<label>Keyword</label><input type="text" onChange={this.updateKeywordFilter} />
+					<div className="filteringOptions">
+						<select onChange={this.updateCategoryFilter} name="categoryFilter">
+							<option value="">All</option>
+							<option value="For Loops">For Loops</option>
+							<option value="While Loops">While Loops</option>
+							<option value="Basic Math">Basic Math</option>
+							<option value="Recursion">Recursion</option>
+							<option value="Conditionals">Conditionals</option>
+							<option value="Advanced Math">Advanced Math</option>
+						</select>
+						<select onChange={this.updateConstraintFilter} name="constraintFilter">
+							<option value="">All</option>
+							<option value="None">None</option>
+							<option value="For">For</option>
+							<option value="While">While</option>
+							<option value="Recursion">Recursion</option>
+						</select>
+						<select onChange={this.updateDifficultyFilter} name="difficultyFilter">
+							<option value='0'>All</option>
+							<option value='1'>Easy</option>
+							<option value='2'>Medium</option>
+							<option value='3'>Hard</option>
+						</select>
+						<label>Keyword</label><input type="text" onChange={this.updateKeywordFilter} />
+					</div>
 					<table>
                     	<thead>
                     	    <tr>{this.props.buildForm? <th>Add</th>:null}{this.getHeader()}</tr>
