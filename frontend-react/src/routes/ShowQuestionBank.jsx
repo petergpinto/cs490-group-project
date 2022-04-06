@@ -136,12 +136,13 @@ class ShowQuestionBank extends Component {
 				return true;
 		});
 
+		/*
 		items = items.filter(function (el) {
 			if (el.DifficultyRating) {
 				return el.DifficultyRating === difficultyFilter;
 			} else
 				return true;
-		});
+		});*/
 
 		items = items.filter(function (el) {
 			if (el.QuestionText && el.FunctionName) {
