@@ -117,6 +117,7 @@ class ShowQuestionBank extends Component {
 
 		items = items.filter(function (el) {
 			if (el.Category)
+				console.log(el, el.Category.includes(categoryFilter))
 				return el.Category.includes(categoryFilter);
 			else
 				return true;
