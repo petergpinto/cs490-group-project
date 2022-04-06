@@ -113,9 +113,11 @@ class ShowQuestionBank extends Component {
         var items = this.state.data;
 		var keys = this.getKeys();
 
+		let categoryFilter = this.state.categoryFilter
+
 		items = items.filter(function (el) {
 			if (el.Category)
-				return el.Category.includes(this.state.categoryFilter);
+				return el.Category.includes(categoryFilter);
 			else
 				return true;
 		});
