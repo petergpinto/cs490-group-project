@@ -87,3 +87,10 @@
 	height: 100%;
 	z-index: 9999;
 }
+
+.filteringOptions {
+	display:flex;
+	flex-direction:row;
+	align-items:center;
+	justify-content:center;
+}

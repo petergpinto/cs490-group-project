@@ -401,6 +401,7 @@ class ShowQuestionBank extends Component {
 				<div className={this.props.buildForm? "rightSplitScreen" : "ShowQuestionBankList"}>
 					<h2>Question Bank</h2>
 					<div className="filteringOptions">
+						<label>Category</label>
 						<select onChange={this.updateCategoryFilter} name="categoryFilter">
 							<option value="">All</option>
 							<option value="For Loops">For Loops</option>
@@ -410,6 +411,7 @@ class ShowQuestionBank extends Component {
 							<option value="Conditionals">Conditionals</option>
 							<option value="Advanced Math">Advanced Math</option>
 						</select>
+						<label>Constraint</label>
 						<select onChange={this.updateConstraintFilter} name="constraintFilter">
 							<option value="">All</option>
 							<option value="None">None</option>
@@ -417,6 +419,7 @@ class ShowQuestionBank extends Component {
 							<option value="While">While</option>
 							<option value="Recursion">Recursion</option>
 						</select>
+						<label>Difficulty</label>
 						<select onChange={this.updateDifficultyFilter} name="difficultyFilter">
 							<option value='0'>All</option>
 							<option value='1'>Easy</option>
