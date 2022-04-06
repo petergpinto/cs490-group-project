@@ -111,6 +111,23 @@ class ShowQuestionBank extends Component {
 				return <th key={key+index}>Constraint</th>
             return <th key={key+index}>{key}</th>
         })
+	}
+
+	getHeaderNoQText() {
+		var keys = this.getKeys();
+		return keys.map((key, index) => {
+			if (key == 'QuestionId')
+				return null
+			if (key == 'QuestionText')
+				return null;
+			if (key == 'FunctionName')
+				return <th key={key + index}>Function Name</th>
+			if (key == 'DifficultyRating')
+				return <th key={key + index}>Difficulty</th>
+			if (key == 'ConstraintType')
+				return <th key={key + index}>Constraint</th>
+			return <th key={key + index}>{key}</th>
+		})
     }
 
 	getRowsData() {
@@ -391,7 +408,7 @@ class ShowQuestionBank extends Component {
 							<br/><br/>
 						</div>
 						<table>
-						<thead><th>Point Value</th> {this.getHeader()} </thead>
+						<thead><th>Point Value</th> {this.getHeaderNoQText()} </thead>
 						<tbody>
 						{ this.props.buildForm && this.state.selectedExam != -1? this.renderExamQuestions() : null }	
 						</tbody>
@@ -461,7 +478,7 @@ const RenderRow = (props) =>{
 				if (props.showquestiontext)
 					return <td key={index + key + props.data[key]}>{props.data[key]}</td>
 				else
-					return <td></td>
+					return null
 				//return <td key={index+key+props.data[key]} title={props.data[key]}>(Hover to reveal)</td>
 		   return <td key={index+key+props.data[key]}>{props.data[key]}</td>
         })
