@@ -66,7 +66,6 @@ class TeacherLanding extends Component {
 			<div className="TeacherLanding">
     		<main className="Main">
 				<div className="TopNavigationBar">
-					<button onClick={this.resetPage}>Home</button>
 					<button onClick={this.createNewExam}>Create Exam</button>
                     <button onClick={this.viewQuestionBank}>View Question Bank</button>
 					<button onClick={this.createQuestion}>Add new Question</button>
