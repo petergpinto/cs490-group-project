@@ -57,6 +57,7 @@
 .ShowQuestionBankList table, .ShowQuestionBankList td, .ShowQuestionBankList th {
     border: none;
 	text-align: center;
+	border: 1px solid black;
 }
 
 .ShowQuestionBankList {
