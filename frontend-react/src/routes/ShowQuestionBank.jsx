@@ -155,7 +155,7 @@ class ShowQuestionBank extends Component {
 			return items.map((row, index)=>{
             	return <tr key={index}>
 					<button className="append" index={index} onClick={this.handleChange}>+</button>
-					<RenderRow key={index} data={row} keys={keys} />
+					<RenderRow key={index} data={row} keys={keys} showquestiontext/>
 					</tr>
         	})
 		}
