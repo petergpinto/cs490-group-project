@@ -9,11 +9,16 @@
 .Main {
 	padding: "1rem 0";
 	background-color: white;
+	display:flex;
+	flex-direction:column;
 }
 
 .TopNavigationBar {
 	background-color: #333;
 	overflow: hidden;
+	align-self:stretch;
+	display:flex;
+	justify-content:center;
 }
 
 .TopNavigationBar button {
