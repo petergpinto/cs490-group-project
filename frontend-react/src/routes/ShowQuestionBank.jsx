@@ -116,10 +116,11 @@ class ShowQuestionBank extends Component {
 		let categoryFilter = this.state.categoryFilter
 
 		items = items.filter(function (el) {
-			if (el.Category)
+			console.log(el, el.Category.includes(categoryFilter))
+			if (el.Category) {
 				console.log(el, el.Category.includes(categoryFilter))
 				return el.Category.includes(categoryFilter);
-			else
+			} else
 				return true;
 		});
 		if(this.props.buildForm) {
