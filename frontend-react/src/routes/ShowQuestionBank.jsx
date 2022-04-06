@@ -136,17 +136,17 @@ class ShowQuestionBank extends Component {
 				return true;
 		});
 
-		/*
+		
 		items = items.filter(function (el) {
 			if (el.DifficultyRating) {
-				return el.DifficultyRating === difficultyFilter;
+				return el.DifficultyRating == difficultyFilter;
 			} else
 				return true;
-		});*/
+		});
 
 		items = items.filter(function (el) {
 			if (el.QuestionText && el.FunctionName) {
-				return el.QuestionText.includes(keywordFilter) || el.FunctionName.includes(keywordFilter);
+				return el.QuestionText.toLowerCase().includes(keywordFilter.toLowerCase()) || el.FunctionName.toLowerCase().includes(keywordFilter.toLowerCase());
 			} else
 				return true;
 		});
