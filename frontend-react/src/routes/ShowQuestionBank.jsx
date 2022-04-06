@@ -31,6 +31,8 @@ class ShowQuestionBank extends Component {
 		this.getExamQuestions = this.getExamQuestions.bind(this);
 		this.getPointValues = this.getPointValues.bind(this);
 		this.updateCategoryFilter = this.updateCategoryFilter.bind(this);
+		this.getRowsData = this.getRowsData.bind(this);
+
 		this.state = {
 			data: [{ '': '' }],
 			QuestionPointValues: [],
