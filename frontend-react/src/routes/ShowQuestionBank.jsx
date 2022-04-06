@@ -138,8 +138,8 @@ class ShowQuestionBank extends Component {
 
 		
 		items = items.filter(function (el) {
-			if (el.DifficultyRating) {
-				return el.DifficultyRating == difficultyFilter;
+			if (el.DifficultyRating && difficultyFitler !== 0) {
+				return el.DifficultyRating === difficultyFilter;
 			} else
 				return true;
 		});
@@ -247,7 +247,7 @@ class ShowQuestionBank extends Component {
 	}
 
 	updateDifficultyFilter(event) {
-		this.setState({ difficultyFilter: event.target.value })
+		this.setState({ difficultyFilter: parseInt(event.target.value) })
     }
 
 	async selectExam(event) {
@@ -417,6 +417,7 @@ class ShowQuestionBank extends Component {
 						<option value="Recursion">Recursion</option>
 					</select>
 					<select onChange={this.updateDifficultyFilter} name="difficultyFilter">
+						<option value='0'>All</option>
 						<option value='1'>Easy</option>
 						<option value='2'>Medium</option>
 						<option value='3'>Hard</option>
