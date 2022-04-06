@@ -46,7 +46,7 @@ class ShowQuestionBank extends Component {
 			examResult: "",
 			loading: true,
 			categoryFilter: "",
-			constraintFitler: "",
+			constraintFilter: "",
 			difficultyFilter: 0,
 			keywordFilter: ""
 		};
@@ -118,7 +118,7 @@ class ShowQuestionBank extends Component {
 		var keys = this.getKeys();
 
 		let categoryFilter = this.state.categoryFilter;
-		let constraintFilter = this.state.constraintFitler;
+		let constraintFilter = this.state.constraintFilter;
 		let difficultyFilter = this.state.difficultyFilter;
 		let keywordFilter = this.state.keywordFilter;
 
