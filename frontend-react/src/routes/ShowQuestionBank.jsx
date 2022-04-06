@@ -43,6 +43,7 @@ class ShowQuestionBank extends Component {
 			examResult: "",
 			loading: true,
 			categoryFilter: "",
+			constraintFitler: "",
 			difficultyFilter: "",
 			keywordFilter: ""
 		};
@@ -113,15 +114,39 @@ class ShowQuestionBank extends Component {
         var items = this.state.data;
 		var keys = this.getKeys();
 
-		let categoryFilter = this.state.categoryFilter
+		let categoryFilter = this.state.categoryFilter;
+		let constraintFilter = this.state.constraintFitler;
+		let difficultyFilter = this.state.difficultyFilter;
+		let keywordFilter = this.state.keywordFilter;
 
 		items = items.filter(function (el) {
 			if (el.Category) {
-				console.log(el, el.Category.includes(categoryFilter))
 				return el.Category.includes(categoryFilter);
 			} else
 				return true;
 		});
+
+		items = items.filter(function (el) {
+			if (el.ConstraintType) {
+				return el.ConstraintType.includes(constraintFilter);
+			} else
+				return true;
+		});
+
+		items = items.filter(function (el) {
+			if (el.DifficultyRating) {
+				return el.DifficultyRating === difficultyFilter;
+			} else
+				return true;
+		});
+
+		items = items.filter(function (el) {
+			if (el.QuestionText && el.FunctionName) {
+				return el.QuestionText.includes(keywordFilter) || el.FunctionName.includes(keywordFilter);
+			} else
+				return true;
+		});
+
 		if(this.props.buildForm) {
 			return items.map((row, index)=>{
             	return <tr key={index}>
@@ -207,6 +232,18 @@ class ShowQuestionBank extends Component {
 
 	updateCategoryFilter(event) {
 		this.setState({ categoryFilter:event.target.value })
+	}
+
+	updateConstraintFilter(event) {
+		this.setState({ constraintFilter: event.target.value })
+	}
+
+	updateKeywordFilter(event) {
+		this.setState({ keywordFilter: event.target.value })
+	}
+
+	updateDifficultyFilter(event) {
+		this.setState({ difficultyFilter: event.target.value })
     }
 
 	async selectExam(event) {
@@ -368,6 +405,19 @@ class ShowQuestionBank extends Component {
 						<option value="Conditionals">Conditionals</option>
 						<option value="Advanced Math">Advanced Math</option>
 					</select>
+					<select onChange={this.updateConstraintFilter} name="constraintFilter">
+						<option value="">All</option>
+						<option value="None">None</option>
+						<option value="For">For</option>
+						<option value="While">While</option>
+						<option value="Recursion">Recursion</option>
+					</select>
+					<select onChange={this.updateDifficultyFilter} name="difficultyFilter">
+						<option value='1'>Easy</option>
+						<option value='2'>Medium</option>
+						<option value='3'>Hard</option>
+					</select>
+					<label>Keyword</label><input type="text" onChange={this.updateKeywordFilter} />
 					<table>
                     	<thead>
                     	    <tr>{this.props.buildForm? <th>Add</th>:null}{this.getHeader()}</tr>
