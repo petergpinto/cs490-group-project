@@ -30,7 +30,19 @@ class ShowQuestionBank extends Component {
 		this.createNewExam = this.createNewExam.bind(this);
 		this.getExamQuestions = this.getExamQuestions.bind(this);
 		this.getPointValues = this.getPointValues.bind(this);
-		this.state = {data: [{'':''}], QuestionPointValues:[], examQuestions: [{'':''}], pointValue:{}, checked:{}, selectedExam:-1, examResult:"", loading:true};
+		this.state = {
+			data: [{ '': '' }],
+			QuestionPointValues: [],
+			examQuestions: [{ '': '' }],
+			pointValue: {},
+			checked: {},
+			selectedExam: -1,
+			examResult: "",
+			loading: true,
+			categoryFilter: "",
+			difficultyFilter: "",
+			keywordFilter: ""
+		};
 	}
 
 	getQuestionData() {
@@ -96,7 +108,11 @@ class ShowQuestionBank extends Component {
 
 	getRowsData() {
         var items = this.state.data;
-        var keys = this.getKeys();
+		var keys = this.getKeys();
+
+		items = items.filter(function (el) {
+			return el.Category.includes(this.state.categoryFilter);
+		});
 		if(this.props.buildForm) {
 			return items.map((row, index)=>{
             	return <tr key={index}>
@@ -179,6 +195,10 @@ class ShowQuestionBank extends Component {
 			});
 		}
 	}
+
+	updateCategoryFilter(event) {
+		this.setState({ categoryFilter:event.target.values })
+    }
 
 	async selectExam(event) {
 		await this.setState({selectedExam:event.target.getAttribute('examid')});
@@ -330,6 +350,15 @@ class ShowQuestionBank extends Component {
 				}
 				<div className={this.props.buildForm? "rightSplitScreen" : "ShowQuestionBankList"}>
 					<h2>Question Bank</h2>
+					<select onChange={this.updateCategoryFilter} name="categoryFilter">
+						<option value="">All</option>
+						<option value="For Loops">For Loops</option>
+						<option value="While Loops">While Loops</option>
+						<option value="Basic Math">Basic Math</option>
+						<option value="Recursion">Recursion</option>
+						<option value="Conditionals">Conditionals</option>
+						<option value="Advanced Math">Advanced Math</option>
+					</select>
 					<table>
                     	<thead>
                     	    <tr>{this.props.buildForm? <th>Add</th>:null}{this.getHeader()}</tr>
