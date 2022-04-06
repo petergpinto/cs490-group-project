@@ -206,7 +206,7 @@ class ShowQuestionBank extends Component {
 	}
 
 	updateCategoryFilter(event) {
-		this.setState({ categoryFilter:event.target.values })
+		this.setState({ categoryFilter:event.target.value })
     }
 
 	async selectExam(event) {
