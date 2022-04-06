@@ -138,7 +138,7 @@ class ShowQuestionBank extends Component {
 
 		
 		items = items.filter(function (el) {
-			if (el.DifficultyRating && difficultyFitler !== 0) {
+			if (el.DifficultyRating && difficultyFilter !== 0) {
 				return el.DifficultyRating === difficultyFilter;
 			} else
 				return true;
