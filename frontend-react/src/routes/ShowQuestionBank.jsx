@@ -457,8 +457,11 @@ const RenderRow = (props) =>{
 				if(props.data[key] == 3)
                     return <td key={index+key+props.data[key]}>Hard</td>
 		   }
-		   if(key == 'QuestionText' && props.showquestiontext)
-			   return <td key={index + key + props.data[key]}>{props.data[key]}</td>
+			if (key == 'QuestionText')
+				if (props.showquestiontext)
+					return <td key={index + key + props.data[key]}>{props.data[key]}</td>
+				else
+					return <td></td>
 				//return <td key={index+key+props.data[key]} title={props.data[key]}>(Hover to reveal)</td>
 		   return <td key={index+key+props.data[key]}>{props.data[key]}</td>
         })
