@@ -155,12 +155,12 @@ class ShowQuestionBank extends Component {
 			return items.map((row, index)=>{
             	return <tr key={index}>
 					<button className="append" index={index} onClick={this.handleChange}>+</button>
-					<RenderRow key={index} data={row} keys={keys}/>
+					<RenderRow key={index} data={row} keys={keys} showquestiontext={false} />
 					</tr>
         	})
 		}
         return items.map((row, index)=>{
-            return <tr key={index}><RenderRow key={index} data={row} keys={keys}/></tr>
+			return <tr key={index}><RenderRow key={index} data={row} keys={keys} showquestiontext={true}/></tr>
         })
     }
 
@@ -457,7 +457,7 @@ const RenderRow = (props) =>{
 				if(props.data[key] == 3)
                     return <td key={index+key+props.data[key]}>Hard</td>
 		   }
-		   if(key == 'QuestionText')
+		   if(key == 'QuestionText' && props.showquestiontext)
 			   return <td key={index + key + props.data[key]}>{props.data[key]}</td>
 				//return <td key={index+key+props.data[key]} title={props.data[key]}>(Hover to reveal)</td>
 		   return <td key={index+key+props.data[key]}>{props.data[key]}</td>
