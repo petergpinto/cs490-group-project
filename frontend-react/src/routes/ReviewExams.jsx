@@ -345,9 +345,10 @@ class ReviewExams extends Component {
 				<h2>Review Student Exam Responses</h2>
 				<div className="ReviewExamButtons">{ this.showExamButtons() }</div>
 				<br />
-				{ this.state.selectedExam !== -1? <h4>Click here to release exam scores to students</h4> : null }
+				{this.state.selectedExam !== -1 ? <h4 style={{"text-align":"center"}}>Click here to release exam scores to students</h4> : null }
 				{ this.state.selectedExam !== -1? <button name = 'release' id = 'release' onClick={this.releaseScores} value={this.state.selectedExam}>Release Score to Students</button> : null }
 				<br /><br />
+				{this.state.selectedUser !== -1 ? <h4 style={{ "text-align": "center" }}>Click on the buttons below to select a student's exam for review</h4>}
 				<div className="ReviewExamStudentButtons">{ this.showStudentButtons() }</div>
 				<br />
 				<div className="display-linebreak">
