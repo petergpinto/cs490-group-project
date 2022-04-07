@@ -92,7 +92,7 @@ input:out-of-range {
 }
 
 .ActiveStudent {
-	background-color: firebrick;
+	background-color: red;
 	color: white;
 	padding: 12px 14px;
 	margin-left: 8px;
@@ -101,7 +101,7 @@ input:out-of-range {
 }
 
 .NotActiveStudent {
-	background-color: red;
+	background-color: firebrick;
 	color: white;
 	padding: 12px 14px;
 	margin-left: 8px;
