@@ -18,7 +18,6 @@ class CreateQuestion extends Component {
 	}
 	async submitQuestion(questionData) {
 		questionData.preventDefault();	
-		console.log(questionData.target);
 		var data = new URLSearchParams();
 		data.append('QuestionText', questionData.target[0].value);
 		data.append('FunctionName', questionData.target[1].value);

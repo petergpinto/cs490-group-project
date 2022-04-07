@@ -356,7 +356,6 @@ class ShowQuestionBank extends Component {
 	renderExamQuestions() {
 		let items = this.state.examQuestions;
 		let keys = this.getKeys(items);
-		console.info(items);	
 		return (  items.map((row, index) => {
 					return (<tr>
 								<button className="delete" index={index} questionid={row.QuestionId} onClick={this.handleChange}>-</button>

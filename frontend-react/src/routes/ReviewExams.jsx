@@ -92,8 +92,7 @@ class ReviewExams extends Component {
 
 	overrideScore(event) {
 		event.preventDefault();
-		console.log(event);
-		let data = new URLSearchParams();
+]		let data = new URLSearchParams();
 		data.append("UserId", event.target.getAttribute('userid'));
 		data.append("ExamId", event.target.getAttribute('examid'));
 		data.append("TestCaseId", event.target.getAttribute('testcaseid'));
@@ -165,7 +164,6 @@ class ReviewExams extends Component {
         let items = this.state.exams;
 
 		return items.map((row, index) => {
-			console.log(this.state.selectedExam, parseInt(row.ExamId), this.state.selectedExam == parseInt(row.ExamId))
 			return <button onClick={this.selectExam} value={row.ExamId} className={this.state.selectedExam == parseInt(row.ExamId)? "ActiveExam":"NotActiveExam"} >{row.ExamFriendlyName}</button>
         	//return <button name = 'ExamButtons' id = 'ExamButtons' onClick={this.selectExam} value={row.ExamId}>{row.ExamFriendlyName}</button>
 	})
@@ -173,7 +171,6 @@ class ReviewExams extends Component {
 	
 	selectUser(event) {
 		//Weird
-		//console.log(event.target.getAttribute('examid'));
 		this.setState({selectedUser:event.target.value});
 	}
 
@@ -220,7 +217,6 @@ class ReviewExams extends Component {
 		for(let i in responses) {
 			
 			if(responses[i].UserId==userId && responses[i].QuestionId==questionId && responses[i].InstructorOverrideScore) {
-				//console.log("hello");
 				points += responses[i].InstructorOverrideScore;
 			}
 			else if(responses[i].UserId==userId && responses[i].QuestionId==questionId && responses[i].AutoGraderScore == 1) {
@@ -288,9 +284,7 @@ class ReviewExams extends Component {
 
 	showFunctionName(questionId, userId) {
 		let items = this.state.functions;
-		for (let i in items) {
-			//console.log(items[i]);
-			if(items[i].UserId==userId && items[i].QuestionId==questionId && items[i].ExamId==this.state.selectedExam) {
+		for (let i in items) 			if(items[i].UserId==userId && items[i].QuestionId==questionId && items[i].ExamId==this.state.selectedExam) {
 				return <tr><td>Function Name</td><td style={{border: 'none'}}></td><td style={{border: 'none'}}></td><td style={{border: 'none'}}></td><td>{items[i].CorrectFunctionName == 1? "Correct":"Incorrect"}</td><td>{items[i].CorrectFunctionName == 1? 0 : -1}</td><td style={{border: 'none'}}></td><td style={{border: 'none'}}></td></tr>
 			}
 		}
@@ -298,7 +292,6 @@ class ReviewExams extends Component {
 
 	showTestCases(questionId, userId) {
 		let items = this.state.responses;
-		//console.info(items);
 		let i = 1;
 		return items.map((row, index) => {
 			if(row.QuestionId != questionId || row.UserId != userId)
