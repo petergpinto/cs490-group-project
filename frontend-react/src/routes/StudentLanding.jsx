@@ -108,6 +108,7 @@ class TakeExam extends Component {
 		this.renderQuestion = this.renderQuestion.bind(this);
 		this.goToNextQuestion = this.goToNextQuestion.bind(this);
 		this.goToPrevQuestion = this.goToPrevQuestion.bind(this);
+		this.saveQuestionInfo = this.saveQuestionInfo.bind(this);
 
 		this.state = {data:[{'':''}], examSubmitted:false, activeQuestion:0}
 	}
@@ -125,8 +126,6 @@ class TakeExam extends Component {
 
 	handleQuestionChange(event) {
 		event.persist();
-		
-
 		var data = new URLSearchParams();
 		data.append("QuestionId", event.target.getAttribute('questionid'));
 		data.append("ExamId", this.props.ExamId)
@@ -193,20 +192,39 @@ class TakeExam extends Component {
   	}
 
 	setActiveQuestion(event) {
-		this.setState({ activeQuestion: event.target.value });
+		//console.log(this.state.data[event.target.value]);
+		this.setState({ 
+			activeQuestion: event.target.value,
+			value: this.state.data[event.target.value] ? this.state.data[event.target.value].user_text : ""
+		});
 	}
 
 	goToNextQuestion() {
+		console.log(this.state.activeQuestion);
 		this.setState({
-			activeQuestion: parseInt(this.state.activeQuestion) + 1
+			activeQuestion: parseInt(this.state.activeQuestion) + 1,
+			value: this.state.data[parseInt(this.state.activeQuestion)+1] ? this.state.data[parseInt(this.state.activeQuestion)+1].user_text : ""
 		});
 	}
 
 	goToPrevQuestion() {
 		this.setState({
-			activeQuestion: parseInt(this.state.activeQuestion) - 1
+			activeQuestion: parseInt(this.state.activeQuestion) - 1,
+			value: this.state.data[parseInt(this.state.activeQuestion)-1] ? this.state.data[parseInt(this.state.activeQuestion)-1].user_text : ""
 		});
     }
+	saveQuestionInfo(event)	{
+		//console.log(this.state.data);
+		var newState = Object.assign([], this.state.data);
+		//console.log(newState);
+		newState[this.state.activeQuestion]["user_text"] = event.target.value;
+		//console.log(newState);
+		this.setState({
+			data: newState,
+			value: event.target.value
+		});
+
+	}
 
 	renderQuestions() {
 		let questions = this.state.data;
@@ -222,7 +240,7 @@ class TakeExam extends Component {
 				<h2>Question {parseInt(this.state.activeQuestion) + 1}</h2>
 				<h3>{questions[this.state.activeQuestion].QuestionText}</h3>
 				<h4>{questions[this.state.activeQuestion].PointValue} {questions[this.state.activeQuestion].PointValue > 1 ? 'Points' : 'Point'}</h4>
-				<textarea questionid={questions[this.state.activeQuestion].QuestionId} onChange={this.debounce(this.handleQuestionChange, 1000)} onKeyDown={this.handleKeyDown} />
+				<textarea questionid={questions[this.state.activeQuestion].QuestionId} value = {this.state.value || ""} onChange={e => {this.debounce(this.handleQuestionChange(e), 1000),this.saveQuestionInfo(e)}} onKeyDown={this.handleKeyDown} />
 			</div>
 		);
     }

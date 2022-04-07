@@ -69,6 +69,12 @@
 	margin-left: 10px;
 
 }
+.filteringOptions select{
+	margin-left: 2px;
+}
+.filteringOptions label{
+	margin-bottom: 5px;
+}
 
 .ExamSelector button{
 	margin-left: 5px;
