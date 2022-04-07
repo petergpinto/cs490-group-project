@@ -92,6 +92,7 @@ class ReviewExams extends Component {
 
 	overrideScore(event) {
 		event.preventDefault();
+		
 		let data = new URLSearchParams();
 		data.append("UserId", event.target.getAttribute('userid'));
 		data.append("ExamId", event.target.getAttribute('examid'));
