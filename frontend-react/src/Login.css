@@ -5,6 +5,14 @@ body
     background-color: #282b2e;
     font-family: 'Verdana';
 }
+
+h1{
+	color: #f7c62e;
+	font-size: 48px;
+	font-weight: bold;
+	font-style: italic;
+	margin-bottom: -60px;
+}
 .login{
 	position: fixed;
 	transform: translate(-50%, -50%);
