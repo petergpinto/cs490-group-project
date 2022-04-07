@@ -167,13 +167,13 @@ class CreateQuestion extends Component {
 					<input type='text' id='FunctionName' key='FunctionName' onChange={this.updateFunctionNameState} value={this.state.functionName}/>
 					<br/><br/>
 					<label>Difficulty Rating </label>
-					<select name='DifficultyRating' onChange={this.updateDifficultyState}>
-						<option value='1' selected={ this.state.difficulty == 1 }>Easy</option>
-						<option value='2' selected={ this.state.difficulty == 2 }>Medium</option>
-						<option value='3' selected={ this.state.difficulty == 3 }>Hard</option>
+					<select name='DifficultyRating' onChange={this.updateDifficultyState} value={this.state.difficulty}>
+						<option value='1'>Easy</option>
+						<option value='2'>Medium</option>
+						<option value='3'>Hard</option>
 					</select>
 					<label>Category</label>
-					<select name="Category" onChange={this.updateCategoryState}>
+					<select name="Category" onChange={this.updateCategoryState} value={this.state.category}>
 						<option value="For Loops">For Loops</option>
 						<option value="While Loops">While Loops</option>
 						<option value="Basic Math">Basic Math</option>
@@ -182,7 +182,7 @@ class CreateQuestion extends Component {
 						<option value="Advanced Math">Advanced Math</option>
 					</select>
 					<label>Constraint Type</label>
-					<select name="ConstraintType" onChange={this.updateConstraintState}>
+					<select name="ConstraintType" onChange={this.updateConstraintState} value={this.state.constraint}>
 						<option value="None">None</option>
 						<option value="For">For</option>
 						<option value="While">While</option>
