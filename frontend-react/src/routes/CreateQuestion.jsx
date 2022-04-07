@@ -5,10 +5,28 @@ class CreateQuestion extends Component {
 
 	constructor(props) {
 		super(props);
-		this.state = {inputLength:2}
+		this.state = {
+			inputLength: 2,
+			questionText: "",
+			functionName: "",
+			difficulty: 0,
+			category: "For Loops",
+			constraint: "None",
+			testCaseData: [{ input: "", inputType: "S", output: "", outputType: "S" }, { input: "", inputType: "S", output: "", outputType: "S" }]
+		}
 		this.showTestCaseInput = this.showTestCaseInput.bind(this);
 		this.updateButton = this.updateButton.bind(this);
 		this.submitQuestion = this.submitQuestion.bind(this);
+		this.updateQuestionTextState = this.updateQuestionTextState.bind(this);
+		this.updateFunctionNameState = this.updateFunctionNameState.bind(this);
+		this.updateDifficultyState = this.updateDifficultyState.bind(this);
+		this.updateCategoryState = this.updateCategoryState.bind(this);
+		this.updateConstraintState = this.updateConstraintState.bind(this);
+		this.updateTestCaseInputState = this.updateTestCaseInputState.bind(this);
+		this.updateTestCaseInputTypeState = this.updateTestCaseInputTypeState.bind(this);
+		this.updateTestCaseOutputState = this.updateTestCaseOutputState.bind(this);
+		this.updateTestCaseOutputTypeState = this.updateTestCaseOutputTypeState.bind(this);
+
 	}
 
 	updateButton(){
@@ -55,8 +73,43 @@ class CreateQuestion extends Component {
 		//clear form at end
 		questionData.target.reset();
 		this.setState({ inputLength: 2 });
-		this.props.navigate('/TeacherLanding');
 	}
+
+	updateQuestionTextState(event) {
+		this.setState({ questionText: event.target.value });
+	}
+
+	updateFunctionNameState(event) {
+		this.setState({ functionName: event.target.value });
+	}
+
+	updateDifficultyState(event) {
+		this.setState({ difficulty: event.target.value });
+	}
+
+	updateCategoryState(event) {
+		this.setState({ category: event.target.value });
+	}
+
+	updateConstraintState(event) {
+		this.setState({ constraint: event.target.value });
+    }
+
+	updateTestCaseInputState(event) {
+
+	}
+
+	updateTestCaseInputTypeState(event) {
+
+	}
+
+	updateTestCaseOutputState(event) {
+
+	}
+
+	updateTestCaseOutputTypeState(event) {
+
+    }
 
 	showTestCaseInput() {
 		let arr = [];
@@ -100,20 +153,20 @@ class CreateQuestion extends Component {
 					<br/>
 					<label>Question Text</label>
 					<br/>
-					<textarea type='text' size='1500' id='QuestionText' key='QuestionText' />
+					<textarea type='text' size='1500' id='QuestionText' key='QuestionText' onChange={this.updateQuestionTextState}>{this.state.questionText}</textarea>
 					<br/><br/>
 					<label>Function Name</label>
 					<br/>
-					<input type='text' id='FunctionName' key='FunctionName' />
+					<input type='text' id='FunctionName' key='FunctionName' onChange={this.updateFunctionNameState} />
 					<br/><br/>
 					<label>Difficulty Rating </label>
-					<select name='DifficultyRating'>
+					<select name='DifficultyRating' onChange={this.updateDifficultyState}>
 						<option value='1'>Easy</option>
 						<option value='2'>Medium</option>
 						<option value='3'>Hard</option>
 					</select>
 					<label>Category</label>
-					<select name="Category">
+					<select name="Category" onChange={this.updateCategoryState}>
 						<option value="For Loops">For Loops</option>
 						<option value="While Loops">While Loops</option>
 						<option value="Basic Math">Basic Math</option>
@@ -122,7 +175,7 @@ class CreateQuestion extends Component {
 						<option value="Advanced Math">Advanced Math</option>
 					</select>
 					<label>Constraint Type</label>
-					<select name="ConstraintType">
+					<select name="ConstraintType" onChange={this.updateConstraintState}>
 						<option value="None">None</option>
 						<option value="For">For</option>
 						<option value="While">While</option>
