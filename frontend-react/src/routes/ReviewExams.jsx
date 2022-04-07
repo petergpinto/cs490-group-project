@@ -114,6 +114,7 @@ class ReviewExams extends Component {
 
 	addComment(event) {
 		event.preventDefault();
+		console.log(event);
 		let data = new URLSearchParams();
         data.append("UserId", event.target.getAttribute('userid'));
         data.append("ExamId", event.target.getAttribute('examid'));
