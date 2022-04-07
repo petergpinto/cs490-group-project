@@ -165,7 +165,7 @@ class ReviewExams extends Component {
         let items = this.state.exams;
 
         return items.map((row, index) => {
-		return <button onClick={this.selectExam} value={row.ExamId}>{row.ExamFriendlyName}</button>
+			return <button onClick={this.selectExam} value={row.ExamId} className={this.state.selectedExam === row.ExamId? "ActiveExam":"NotActiveExam"} >{row.ExamFriendlyName}</button>
         	//return <button name = 'ExamButtons' id = 'ExamButtons' onClick={this.selectExam} value={row.ExamId}>{row.ExamFriendlyName}</button>
 	})
     }
