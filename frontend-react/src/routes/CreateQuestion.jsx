@@ -51,7 +51,8 @@ class CreateQuestion extends Component {
 				'content-type':'application/x-www-form-urlencoded'
 			},
 				body:data
-			}).then(res => res.json());
+		}).then(res => res.json());
+		console.log(response);
 		for(let i = 5; i+4<questionData.target.length;i+=4)
 		{
 				let test1data = new URLSearchParams();
