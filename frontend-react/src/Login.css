@@ -6,12 +6,16 @@ body
     font-family: 'Verdana';
 }
 
-h1{
-	color: #f7c62e;
-	font-size: 48px;
-	font-weight: bold;
-	font-style: italic;
-	margin-bottom: -60px;
+h1 {
+    color: #f7c62e;
+    font-size: 48px;
+    font-weight: bold;
+    font-style: italic;
+    margin-bottom: -60px;
+    top: 15%;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 .login{
 	position: fixed;
