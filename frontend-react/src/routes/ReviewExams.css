@@ -89,3 +89,9 @@ input:out-of-range {
 	font-size: 17px;
 }
 
+.StudentResponse {
+	text-align: start;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
