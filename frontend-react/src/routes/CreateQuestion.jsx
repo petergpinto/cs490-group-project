@@ -73,6 +73,12 @@ class CreateQuestion extends Component {
 		}
 		//clear form at end
 		questionData.target.reset();
+		this.setState({ questionText: "" });
+		this.setState({ functionName: "" });
+		this.setState({ difficulty: 0 });
+		this.setState({ category: "For Loops" });
+		this.setState({ constraint: "None" });
+		this.setState({ testCaseData: [{ input: "", inputType: "S", output: "", outputType: "S" }, { input: "", inputType: "S", output: "", outputType: "S" }]})
 		this.setState({ inputLength: 2 });
 	}
 
@@ -154,17 +160,17 @@ class CreateQuestion extends Component {
 					<br/>
 					<label>Question Text</label>
 					<br/>
-					<textarea type='text' size='1500' id='QuestionText' key='QuestionText' onChange={this.updateQuestionTextState}>{this.state.questionText}</textarea>
+					<textarea type='text' size='1500' id='QuestionText' key='QuestionText' onChange={this.updateQuestionTextState} value={ this.state.questionText }/>
 					<br/><br/>
 					<label>Function Name</label>
 					<br/>
-					<input type='text' id='FunctionName' key='FunctionName' onChange={this.updateFunctionNameState} />
+					<input type='text' id='FunctionName' key='FunctionName' onChange={this.updateFunctionNameState} value={this.state.functionName}/>
 					<br/><br/>
 					<label>Difficulty Rating </label>
 					<select name='DifficultyRating' onChange={this.updateDifficultyState}>
-						<option value='1'>Easy</option>
-						<option value='2'>Medium</option>
-						<option value='3'>Hard</option>
+						<option value='1' selected={ this.state.difficulty == 1 }>Easy</option>
+						<option value='2' selected={ this.state.difficulty == 2 }>Medium</option>
+						<option value='3' selected={ this.state.difficulty == 3 }>Hard</option>
 					</select>
 					<label>Category</label>
 					<select name="Category" onChange={this.updateCategoryState}>
