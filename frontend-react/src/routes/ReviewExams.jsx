@@ -341,22 +341,21 @@ class ReviewExams extends Component {
         	}
 		return (
 			<div className='ReviewExams'>
-			<h2>Review Student Exam Responses</h2>
-			<div className="ReviewExamButtons">{ this.showExamButtons() }</div>
-			<br />
-			<button name = 'release' id = 'release' onClick={this.releaseScores} value={this.state.selectedExam}>Release Score to Students</button>
-			<br /><br />
-			<div className="ReviewExamStudentButtons">{ this.showStudentButtons() }</div>
-			<br />
-			<div className="display-linebreak">
-			{ this.showResponses() }
-			<br/>
-			{ this.showExamTotalPoints(this.state.selectedUser) }
-			</div>
-			<br/>
-			<div className="save">	{ this.state.selectedExam != -1 && this.state.selectedUser != -1 ? <button onClick={() => this.refreshStudentResponses(this.state.selectedExam)}>Save Changes</button> : null}
-			
-			</div>
+				<h2>Review Student Exam Responses</h2>
+				<div className="ReviewExamButtons">{ this.showExamButtons() }</div>
+				<br />
+
+				{ this.state.selectedExam !== -1? <button name = 'release' id = 'release' onClick={this.releaseScores} value={this.state.selectedExam}>Release Score to Students</button> : null }
+				<br /><br />
+				<div className="ReviewExamStudentButtons">{ this.showStudentButtons() }</div>
+				<br />
+				<div className="display-linebreak">
+						{ this.showResponses() }
+					<br/>
+					{ this.showExamTotalPoints(this.state.selectedUser) }
+				</div>
+				<br/>
+				<div className="save">	{ this.state.selectedExam != -1 && this.state.selectedUser != -1 ? <button onClick={() => this.refreshStudentResponses(this.state.selectedExam)}>Save Changes</button> : null}</div>
 			</div>
 		)
 	}
