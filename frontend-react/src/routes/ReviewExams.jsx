@@ -356,7 +356,6 @@ class ReviewExams extends Component {
 					{ this.showExamTotalPoints(this.state.selectedUser) }
 				</div>
 				<br/>
-				<div className="save">	{ this.state.selectedExam != -1 && this.state.selectedUser != -1 ? <button onClick={() => this.refreshStudentResponses(this.state.selectedExam)}>Save Changes</button> : null}</div>
 			</div>
 		)
 	}
