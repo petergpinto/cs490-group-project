@@ -50,12 +50,7 @@ input:out-of-range {
 }
 
 .ReviewExamStudentButtons button{
-	background-color: red;
-        color: white;
-        padding: 12px 14px;
-        margin-left: 8px;
-        text-decoration: none;
-        font-size: 17px;
+	
 
 }
 
@@ -94,4 +89,22 @@ input:out-of-range {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+}
+
+.ActiveStudent {
+	background-color: firebrick;
+	color: white;
+	padding: 12px 14px;
+	margin-left: 8px;
+	text-decoration: none;
+	font-size: 17px;
+}
+
+.NotActiveStudent {
+	background-color: red;
+	color: white;
+	padding: 12px 14px;
+	margin-left: 8px;
+	text-decoration: none;
+	font-size: 17px;
 }

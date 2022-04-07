@@ -180,7 +180,7 @@ class ReviewExams extends Component {
 	showStudentButtons() {
 		let items = this.state.students;
 		return items.map((row, index) => {
-            return <button onClick={this.selectUser} value={row.UserId}>{row.Username}</button>
+			return <button onClick={this.selectUser} value={row.UserId}>{row.Username} className={this.state.selectedUser == parseInt(row.UserId)? "ActiveStudent":"NotActiveStudent"}</button>
 		//return <button name = 'StudentButtons' id = 'StudentButtons' onClick={this.selectUser} value={row.UserId}>{row.Username}</button>
         })
 	}
