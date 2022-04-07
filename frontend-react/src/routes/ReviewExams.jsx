@@ -323,19 +323,6 @@ class ReviewExams extends Component {
 	componentWillUnmount() {
 		clearInterval(this.interval);
 	}
-/*
-	constructor(props) {
-		super(props);
-		this.state = {
-    			render: false;
-		}
-		this.alertHi = this.alertHi.bind(this);
-	}
-
-	alertHi() {
- 		this.setState({render: !this.state.render});
-	}	
-*/
 	render() {
 		if (!this.props.showElement) {
             		return <div></div>
@@ -345,7 +332,7 @@ class ReviewExams extends Component {
 				<h2>Review Student Exam Responses</h2>
 				<div className="ReviewExamButtons">{ this.showExamButtons() }</div>
 				<br />
-				{this.state.selectedExam !== -1 ? <h4 style={{"text-align":"center"}}>Click here to release exam scores to students</h4> : null }
+				{this.state.selectedExam !== -1 ? <h4 style={{"text-align":"center"}}>Click here to release the currently selected Exam to students</h4> : null }
 				{ this.state.selectedExam !== -1? <button name = 'release' id = 'release' onClick={this.releaseScores} value={this.state.selectedExam}>Release Score to Students</button> : null }
 				<br /><br />
 				{this.state.selectedExam !== -1 ? <h4 style={{ "text-align": "center" }}>Click on the buttons below to select a student's exam for review</h4> : null}
