@@ -262,7 +262,7 @@ class ReviewExams extends Component {
 		if(points < 0)
 			points = 0;
 
-		return <tr><td>Total Points</td><td style={{border: 'none'}}></td><td style={{border: 'none'}}></td><td style={{border: 'none'}}></td><td style={{border: 'none'}}></td><td>{points}</td></tr>
+		return <tr><td>Total Points</td><td style={{ border: 'none' }}></td><td style={{ border: 'none' }}></td><td style={{ border: 'none' }}></td><td style={{ border: 'none' }}></td><td>{points.toFixed(1)}</td></tr>
 	}
 
 	showExamTotalPoints(userId) {
