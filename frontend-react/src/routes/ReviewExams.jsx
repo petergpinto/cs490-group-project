@@ -316,7 +316,7 @@ class ReviewExams extends Component {
         if(points < 0)
             points = 0;
 
-		return <div className='TestCaseTable'><table><tr><td>Total Points</td><td>{points}</td></tr><tr><td>Total Possible Points</td><td>{totalPossible}</td></tr><tr><td>Percentage Score</td><td>{((points / totalPossible) * 100).toFixed(2)}</td></tr></table></div>
+		return <div className='TestCaseTable'><table><tr><td>Total Points</td><td>{points.toFixed(1)}</td></tr><tr><td>Total Possible Points</td><td>{totalPossible.toFixed(1)}</td></tr><tr><td>Percentage Score</td><td>{((points.toFixed(1) / totalPossible.toFixed(1)) * 100).toFixed(2)}</td></tr></table></div>
 	}
 
 	showFunctionName(questionId, userId) {
