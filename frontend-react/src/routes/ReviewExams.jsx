@@ -218,7 +218,7 @@ class ReviewExams extends Component {
 
 		for(let i in responses) {
 			
-			if(responses[i].UserId==userId && responses[i].QuestionId==questionId && responses[i].InstructorOverrideScore) {
+			if (responses[i].UserId == userId && responses[i].QuestionId == questionId && (responses[i].InstructorOverrideScore || responses[i].InstructorOverrideScore === 0)) {
 				points += responses[i].InstructorOverrideScore;
 			}
 			else if(responses[i].UserId==userId && responses[i].QuestionId==questionId && responses[i].AutoGraderScore == 1) {
@@ -249,7 +249,7 @@ class ReviewExams extends Component {
 
         for(let i in responses) {
             if(responses[i].UserId==userId) {
-                if(responses[i].InstructorOverrideScore) {
+				if (responses[i].InstructorOverrideScore || responses[i].InstructorOverrideScore === 0) {
 					points += responses[i].InstructorOverrideScore;
              	}
 				else if(responses[i].AutoGraderScore == 1) {
