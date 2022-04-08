@@ -18,11 +18,21 @@ label{
 #Submit2{
 	width: 100px;
 	height: 30px;
+	border: none;
 	background-color: blue;
 	border-radius: 12px;
 	color: white;
 	font-size: 12px;
 	margin-left: 20px;
+}
+
+#Submit2:hover{
+	background-color: #1799fa;
+}
+
+#Submit2:active{
+	background-color: #1799fa;
+	color: black;
 }
 
 select{
@@ -44,9 +54,20 @@ select{
         border-radius: 12px;
         color: white;
 	font-size: 12px;
+	border: none;
         margin-left: 20px;
 
 }
+
+.CreateQuestion button:hover{
+	background-color: #1799fa;
+}
+
+.CreateQuestion button:active{
+	background-color: #1799fa;
+	color: black;
+}
+
 .CreateQuestion select{
 	margin-right: 50px;
 }

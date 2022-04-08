@@ -289,7 +289,7 @@ class TakeExam extends Component {
 					{ this.renderNextPrevButtons() }
 				</div>
 				<div className='ExamSubmitButton'>
-					<button onClick={this.submitExam}>Submit Exam for Grading</button>
+					<button onClick={this.submitExam}>Submit Exam</button>
 				</div>
 			</div>
 		)

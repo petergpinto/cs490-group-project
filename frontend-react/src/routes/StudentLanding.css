@@ -109,3 +109,27 @@
 	background-color: #04AA6D;
 	color: white;
 }
+
+.QuestionMinimap {
+	background-color: #999999;
+
+}
+
+.QuestionMinimap button{
+   	width: 100px;
+        height: 30px;
+	border: none;
+        background-color: blue;
+        border-radius: 12px;
+        color: white;
+        font-size: 14px;
+	margin-left: 10px;
+}
+
+.QuestionMinimap button:hover{
+	background-color: #1799fa;
+}
+
+
+
+
