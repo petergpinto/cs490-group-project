@@ -309,7 +309,7 @@ class ReviewExams extends Component {
 				<td>{row.AutoGraderOutput}</td>
 				<td>{row.TestCasePointValue}</td>
 				<td>{row.AutoGraderScore == 1? row.TestCasePointValue : 0}</td>
-				<td><input placeholder={row.InstructorOverrideScore ? row.InstructorOverrideScore : null}  examid={row.ExamId} userid={row.UserId} testcaseid={row.TestCaseId} onChange={this.overrideScore} type='number' min = {0} max={row.TestCasePointValue ? row.TestCasePointValue : null} step = "0.1"/></td>
+				<td><input placeholder={row.InstructorOverrideScore ? row.InstructorOverrideScore : null}  examid={row.ExamId} userid={row.UserId} testcaseid={row.TestCaseId} onChange={this.overrideScore} type='number' min = {0} step = "0.1"/></td>
 				<td><input value={row.InstructorComment ? row.InstructorComment : null} examid={row.ExamId} userid={row.UserId} testcaseid={row.TestCaseId} onChange={this.addComment} type='text' /></td></tr>
 		});
 	}
