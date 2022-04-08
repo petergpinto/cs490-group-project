@@ -16,6 +16,7 @@ class ReviewExams extends Component {
 		this.showTestCases = this.showTestCases.bind(this);
 		this.selectUser = this.selectUser.bind(this);
 		this.refreshFunctionNameScores = this.refreshFunctionNameScores.bind(this);
+		this.refreshConstraintScores = this.refreshConstraintScores.bind(this);
 		this.showExamTotalPoints = this.showExamTotalPoints.bind(this);
 		this.overrideScore = this.overrideScore.bind(this);
 		this.state = {exams:[], students:[], responses:[], selectedExam:-1, selectedUser:-1, points:0};
@@ -90,6 +91,24 @@ class ReviewExams extends Component {
             });
 	}
 
+	refreshConstraintScores(examid) {
+		let data = new URLSearchParams();
+		data.append("ExamId", examid);
+
+		return fetch('https://cs490backend.peterpinto.dev/getConstraintScores', {
+			method: 'POST',
+			credentials: 'include',
+			headers: {
+				'Accept': 'application/json',
+			}, body: data
+		}).then(res => res.json())
+			.then(json => {
+				if (json.Result && json.Result != 'Success')
+					this.props.navigate('/login');
+				this.setState({ constraints: json });
+			});
+	}
+
 	overrideScore(event) {
 		event.preventDefault();
 		
@@ -160,6 +179,7 @@ class ReviewExams extends Component {
 		this.refreshStudents(event.target.value);
 		this.refreshStudentResponses(event.target.value);
 		this.refreshFunctionNameScores(event.target.value);
+		this.refreshConstraintScores(event.target.value);
 	}
 
 	showExamButtons() {
@@ -204,6 +224,7 @@ class ReviewExams extends Component {
 						<tbody>
 							{this.showTestCases(row.QuestionId, this.state.selectedUser)}
 							{this.showFunctionName(row.QuestionId, this.state.selectedUser)}
+							{this.showConstraint(row.QuestionId, this.state.selectedUser)}
 							{this.showTotalPoints(row.QuestionId, this.state.selectedUser) }
 						</tbody>
 					</table>
@@ -277,7 +298,14 @@ class ReviewExams extends Component {
             if(items2[i].UserId==userId && items2[i].ExamId==this.state.selectedExam && items2[i].CorrectFunctionName == 0 && !(items2[i].QuestionId in small_map)) {
                 points -= 1;
             }
-        }
+		}
+
+		let items3 = this.state.constraints;
+		for (let i in items2) {
+			if (items3[i].UserId == userId && items3[i].ExamId == this.state.selectedExam && items3[i].CorrectFunctionName == 0 && !(items3[i].QuestionId in small_map)) {
+				points -= 1;
+			}
+		}
         if(points < 0)
             points = 0;
 
@@ -292,6 +320,15 @@ class ReviewExams extends Component {
 			}
 		}
 	}
+
+	showConstraint(questionId, userId) {
+		let items = this.state.constraints;
+		for (let i in items) {
+			if (items[i].UserId == userId && items[i].QuestionId == questionId && items[i].ExamId == this.state.selectedExam) {
+				return <tr><td>Constraint Followed</td><td style={{ border: 'none' }}></td><td style={{ border: 'none' }}></td><td style={{ border: 'none' }}></td><td>{items[i].ConstraintFollowed == 1 ? "Followed" : "Not Followed"}</td><td>{items[i].ConstraintFollowed == 1 ? 0 : -1}</td><td style={{ border: 'none' }}></td><td style={{ border: 'none' }}></td></tr>
+			}
+		}
+    }
 
 	showTestCases(questionId, userId) {
 		let items = this.state.responses;
