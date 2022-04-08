@@ -356,7 +356,6 @@ class ShowQuestionBank extends Component {
 	renderExamQuestions() {
 		let items = this.state.examQuestions;
 		let keys = this.getKeys(items);
-		console.info(items);	
 		return (  items.map((row, index) => {
 					return (<tr>
 								<button className="delete" index={index} questionid={row.QuestionId} onClick={this.handleChange}>-</button>
@@ -419,6 +418,7 @@ class ShowQuestionBank extends Component {
 					<h2>Question Bank</h2>
 					<div className="filteringOptions">
 						<label>Category</label>
+						<br/>
 						<select onChange={this.updateCategoryFilter} name="categoryFilter">
 							<option value="">All</option>
 							<option value="For Loops">For Loops</option>
@@ -429,6 +429,7 @@ class ShowQuestionBank extends Component {
 							<option value="Advanced Math">Advanced Math</option>
 						</select>
 						<label>Constraint</label>
+						<br/><br/>
 						<select onChange={this.updateConstraintFilter} name="constraintFilter">
 							<option value="">All</option>
 							<option value="None">None</option>
@@ -437,6 +438,7 @@ class ShowQuestionBank extends Component {
 							<option value="Recursion">Recursion</option>
 						</select>
 						<label>Difficulty</label>
+						<br/>
 						<select onChange={this.updateDifficultyFilter} name="difficultyFilter">
 							<option value='0'>All</option>
 							<option value='1'>Easy</option>

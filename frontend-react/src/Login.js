@@ -43,7 +43,9 @@ export default function Login({ setToken }) {
 		}
   	}
 
-	return ( 
+	return (
+	<body>
+		<h1>ExaminIt</h1> 
 		<div className="login">
                	{ invalid? <InvalidLogin /> : null }
 				<form onSubmit={handleSubmit}>
@@ -63,6 +65,7 @@ export default function Login({ setToken }) {
                     </div>
                 </form>
         </div>
+</body>
 	);
 }	
 

@@ -61,13 +61,20 @@
 }
 
 .ShowQuestionBankList {
-	display:flex;
-	flex-direction:column;
+	display: flex;
+	flex-direction: column;
+	max-width: 1000px;
 }
 
 .ExamSelector input{
 	margin-left: 10px;
 
+}
+.filteringOptions select{
+	margin-left: 2px;
+}
+.filteringOptions label{
+	margin-bottom: 5px;
 }
 
 .ExamSelector button{

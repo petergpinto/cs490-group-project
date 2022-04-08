@@ -28,20 +28,6 @@ input:out-of-range {
         align-items: center;
 }
 
-.ReviewExamButtons button{
-	background-color: blue;
-        color: white;
-        padding: 14px 16px;
-        margin-left: 8px;
-        text-decoration: none;
-        font-size: 17px;
-
-}
-
-.ReviewExamButtona button:hover{
-	background-color: #56abff;
-}
-
 #release{
 	display: block;
 	margin: 0 auto;
@@ -64,12 +50,7 @@ input:out-of-range {
 }
 
 .ReviewExamStudentButtons button{
-	background-color: red;
-        color: white;
-        padding: 12px 14px;
-        margin-left: 8px;
-        text-decoration: none;
-        font-size: 17px;
+	
 
 }
 
@@ -85,6 +66,45 @@ input:out-of-range {
 
 
 
+.ActiveExam {
+	background-color: green;
+	color: white;
+	padding: 14px 16px;
+	margin-left: 8px;
+	text-decoration: none;
+	font-size: 17px;
+}
 
+.NotActiveExam {
+	background-color: blue;
+	color: white;
+	padding: 14px 16px;
+	margin-left: 8px;
+	text-decoration: none;
+	font-size: 17px;
+}
 
+.StudentResponse {
+	text-align: start;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
 
+.ActiveStudent {
+	background-color: red;
+	color: white;
+	padding: 12px 14px;
+	margin-left: 8px;
+	text-decoration: none;
+	font-size: 17px;
+}
+
+.NotActiveStudent {
+	background-color: firebrick;
+	color: white;
+	padding: 12px 14px;
+	margin-left: 8px;
+	text-decoration: none;
+	font-size: 17px;
+}

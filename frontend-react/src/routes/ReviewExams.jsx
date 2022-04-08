@@ -92,7 +92,7 @@ class ReviewExams extends Component {
 
 	overrideScore(event) {
 		event.preventDefault();
-		console.log(event);
+		
 		let data = new URLSearchParams();
 		data.append("UserId", event.target.getAttribute('userid'));
 		data.append("ExamId", event.target.getAttribute('examid'));
@@ -115,6 +115,7 @@ class ReviewExams extends Component {
 
 	addComment(event) {
 		event.preventDefault();
+		console.log(event);
 		let data = new URLSearchParams();
         data.append("UserId", event.target.getAttribute('userid'));
         data.append("ExamId", event.target.getAttribute('examid'));
@@ -164,22 +165,21 @@ class ReviewExams extends Component {
 	showExamButtons() {
         let items = this.state.exams;
 
-        return items.map((row, index) => {
-		return <button onClick={this.selectExam} value={row.ExamId}>{row.ExamFriendlyName}</button>
+		return items.map((row, index) => {
+			return <button onClick={this.selectExam} value={row.ExamId} className={this.state.selectedExam == parseInt(row.ExamId)? "ActiveExam":"NotActiveExam"} >{row.ExamFriendlyName}</button>
         	//return <button name = 'ExamButtons' id = 'ExamButtons' onClick={this.selectExam} value={row.ExamId}>{row.ExamFriendlyName}</button>
 	})
     }
 	
 	selectUser(event) {
 		//Weird
-		//console.log(event.target.getAttribute('examid'));
 		this.setState({selectedUser:event.target.value});
 	}
 
 	showStudentButtons() {
 		let items = this.state.students;
 		return items.map((row, index) => {
-            return <button onClick={this.selectUser} value={row.UserId}>{row.Username}</button>
+			return <button onClick={this.selectUser} value={row.UserId} className={this.state.selectedUser == parseInt(row.UserId) ? "ActiveStudent" : "NotActiveStudent"}>{row.Username}</button>
 		//return <button name = 'StudentButtons' id = 'StudentButtons' onClick={this.selectUser} value={row.UserId}>{row.Username}</button>
         })
 	}
@@ -219,7 +219,6 @@ class ReviewExams extends Component {
 		for(let i in responses) {
 			
 			if(responses[i].UserId==userId && responses[i].QuestionId==questionId && responses[i].InstructorOverrideScore) {
-				//console.log("hello");
 				points += responses[i].InstructorOverrideScore;
 			}
 			else if(responses[i].UserId==userId && responses[i].QuestionId==questionId && responses[i].AutoGraderScore == 1) {
@@ -288,8 +287,7 @@ class ReviewExams extends Component {
 	showFunctionName(questionId, userId) {
 		let items = this.state.functions;
 		for (let i in items) {
-			//console.log(items[i]);
-			if(items[i].UserId==userId && items[i].QuestionId==questionId && items[i].ExamId==this.state.selectedExam) {
+			if (items[i].UserId == userId && items[i].QuestionId == questionId && items[i].ExamId == this.state.selectedExam) {
 				return <tr><td>Function Name</td><td style={{border: 'none'}}></td><td style={{border: 'none'}}></td><td style={{border: 'none'}}></td><td>{items[i].CorrectFunctionName == 1? "Correct":"Incorrect"}</td><td>{items[i].CorrectFunctionName == 1? 0 : -1}</td><td style={{border: 'none'}}></td><td style={{border: 'none'}}></td></tr>
 			}
 		}
@@ -297,7 +295,6 @@ class ReviewExams extends Component {
 
 	showTestCases(questionId, userId) {
 		let items = this.state.responses;
-		//console.info(items);
 		let i = 1;
 		return items.map((row, index) => {
 			if(row.QuestionId != questionId || row.UserId != userId)
@@ -322,41 +319,27 @@ class ReviewExams extends Component {
 	componentWillUnmount() {
 		clearInterval(this.interval);
 	}
-/*
-	constructor(props) {
-		super(props);
-		this.state = {
-    			render: false;
-		}
-		this.alertHi = this.alertHi.bind(this);
-	}
-
-	alertHi() {
- 		this.setState({render: !this.state.render});
-	}	
-*/
 	render() {
 		if (!this.props.showElement) {
             		return <div></div>
         	}
 		return (
 			<div className='ReviewExams'>
-			<h2>Review Student Exam Responses</h2>
-			<div className="ReviewExamButtons">{ this.showExamButtons() }</div>
-			<br />
-			<button name = 'release' id = 'release' onClick={this.releaseScores} value={this.state.selectedExam}>Release Score to Students</button>
-			<br /><br />
-			<div className="ReviewExamStudentButtons">{ this.showStudentButtons() }</div>
-			<br />
-			<div className="display-linebreak">
-			{ this.showResponses() }
-			<br/>
-			{ this.showExamTotalPoints(this.state.selectedUser) }
-			</div>
-			<br/>
-			<div className="save">	{ this.state.selectedExam != -1 && this.state.selectedUser != -1 ? <button onClick={() => this.refreshStudentResponses(this.state.selectedExam)}>Save Changes</button> : null}
-			
-			</div>
+				<h2>Review Student Exam Responses</h2>
+				<div className="ReviewExamButtons">{ this.showExamButtons() }</div>
+				<br />
+				{this.state.selectedExam !== -1 ? <h4 style={{"text-align":"center"}}>Click here to release the currently selected Exam to students</h4> : null }
+				{ this.state.selectedExam !== -1? <button name = 'release' id = 'release' onClick={this.releaseScores} value={this.state.selectedExam}>Release Score to Students</button> : null }
+				<br /><br />
+				{this.state.selectedExam !== -1 ? <h4 style={{ "text-align": "center" }}>Click on the buttons below to select a student's exam for review</h4> : null}
+				<div className="ReviewExamStudentButtons">{ this.showStudentButtons() }</div>
+				<br />
+				<div className="display-linebreak">
+						{ this.showResponses() }
+					<br/>
+					{ this.showExamTotalPoints(this.state.selectedUser) }
+				</div>
+				<br/>
 			</div>
 		)
 	}

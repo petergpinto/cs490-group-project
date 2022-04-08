@@ -5,15 +5,30 @@ body
     background-color: #282b2e;
     font-family: 'Verdana';
 }
+
+h1 {
+    color: #f7c62e;
+    font-size: 48px;
+    font-weight: bold;
+    font-style: italic;
+    margin-bottom: -60px;
+    top: 15%;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
 .login{
-    width: 300px;
-    margin: auto;
-    margin: 20 0 0 450px;
-    padding: 50px;
-    background: #f3f6f4;
-    border-radius: 15px;
-    margin-left: 770px;
-    margin-top: 200px;
+	position: fixed;
+	transform: translate(-50%, -50%);
+	top: 50%;
+	left: 50%;
+	width: 300px;
+	position: absolute;
+    	margin: auto;
+    	padding: 50px;
+    	background: #f3f6f4;
+    	border-radius: 15px;
+    	
 }
 h2{
     text-align: center;
