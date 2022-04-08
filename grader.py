@@ -11,6 +11,7 @@ with open(sys.argv[1]) as file:
 # TODO Add RECURSION/WHILE/FOR USECASE
 test_results = []
 function_results = []
+constraint_results = []
 for i in range(len(json_file)):
 	answer = json_file[i]
 	user_id = answer["UserId"]
@@ -21,7 +22,13 @@ for i in range(len(json_file)):
 	test_case = answer["FunctionName"]
 	test_input = answer["TestCaseInput"]
 	test_output = answer["TestCaseOutput"]
-	
+	constraint = answer["ConstraintType"]
+	if(constraint == "Recursion"):
+		constraint_results.append({"UserId":user_id,"ExamId":exam_id,"QuestionId":q_id,"ConstraintFollowed":0})
+	elif(constraint == "While"):
+		constraint_results.append({"UserId":user_id,"ExamId":exam_id,"QuestionId":q_id,"ConstraintFollowed":0})
+	elif(constraint == "For"):
+		constraint_results.append({"UserId":user_id,"ExamId":exam_id,"QuestionId":q_id,"ConstraintFollowed":0})
 	#String Search
 	tmp = response.split("\n")[0]
 	is_def = tmp.find("def")
@@ -38,14 +45,19 @@ for i in range(len(json_file)):
 		continue	
 	else:
 		function_results.append({"UserId":user_id,"ExamId":exam_id,"QuestionId":q_id,"CorrectFunctionName":0})
-		response = response[0:4] + test_case + response[len(is_func)+4:]
+		response = response.replace(is_func,test_case)
 	if(answer["TestCaseInputType"] == "S"):
 		test_input = str(test_input)
 	elif(answer["TestCaseInputType"] == "I"):
 		test_input = int(test_input)
 	else:
 		test_input = float(test_input)
-	
+	if(constraint == "Recursion"):
+		constraint_results.append({"UserId":user_id,"ExamId":exam_id,"QuestionId":q_id,"ConstraintFollowed":response.count(test_case) > 1})
+	elif(constraint == "While"):
+		constraint_results.append({"UserId":user_id,"ExamId":exam_id,"QuestionId":q_id,"ConstraintFollowed":response.find("while") != -1})
+	elif(constraint == "For"):
+		constraint_results.append({"UserId":user_id,"ExamId":exam_id,"QuestionId":q_id,"ConstraintFollowed":response.find("for") != -1})
 	tobexeced = response + "\noutput=" + test_case + "(" + "test_input" + ")"
 	try:
 		exec(tobexeced)
@@ -91,17 +103,24 @@ for item in test_results:
 prepared_funcs = []
 for item in function_results:
 	prepared_funcs.append((item["UserId"],item["ExamId"],item["QuestionId"],item["CorrectFunctionName"]))
-print(function_results)
-print("\n\n")
-print(test_results)
+prepared_constraints = []
+for item in constraint_results:
+	prepared_constraints.append((item["UserId"],item["ExamId"],item["QuestionId"],item["ConstraintFollowed"]))
+print(constraint_results)
 try:
 	cursor.executemany(sql,prepared_tests)
 	db.commit()
 	sql = "REPLACE INTO FunctionNameScores (UserId,ExamId,QuestionId,CorrectFunctionName) VALUES (%s,%s,%s,%s)"
 	cursor.executemany(sql,prepared_funcs)
 	db.commit()
+	sql = "REPLACE INTO ConstraintScores (UserId,ExamId,QuestionId,ConstraintFollowed) VALUES (%s,%s,%s,%s)"
+	cursor.executemany(sql,prepared_constraints)
+	db.commit()
 except:
 	sql = "REPLACE INTO FunctionNameScores (UserId,ExamId,QuestionId,CorrectFunctionName) VALUES (%s,%s,%s,%s)"
 	cursor.executemany(sql,prepared_funcs)
+	db.commit()	
+	sql = "REPLACE INTO ConstraintScores (UserId,ExamId,QuestionId,ConstraintFollowed) VALUES (%s,%s,%s,%s)"
+	cursor.executemany(sql,prepared_constraints)
 	db.commit()
 	
