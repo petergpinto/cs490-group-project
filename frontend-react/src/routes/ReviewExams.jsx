@@ -194,7 +194,7 @@ class ReviewExams extends Component {
 			questionIds.push(row.QuestionId);
 			if(this.state.selectedUser == -1)
 				return null
-            return <div>
+            return <div className="ShowResponses">
 				<h2>{row.FunctionName}</h2>
 				<h3>{row.QuestionText}</h3>
 				<div className="StudentResponse">{row.StudentResponse}</div>

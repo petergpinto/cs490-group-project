@@ -89,6 +89,8 @@ input:out-of-range {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	border: 1px solid black;
+	margin: 20px;
 }
 
 .ActiveStudent {
@@ -107,4 +109,16 @@ input:out-of-range {
 	margin-left: 8px;
 	text-decoration: none;
 	font-size: 17px;
+}
+
+.ShowResponses {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.ShowResponses h3 {
+	max-width: 1000px;
+	white-space: normal;
+	text-align: center;
 }
