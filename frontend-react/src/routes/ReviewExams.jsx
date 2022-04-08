@@ -252,6 +252,13 @@ class ReviewExams extends Component {
 				points -= 1;
 			}
 		}
+
+		let items3 = this.state.functions;
+		for (let i in items3) {
+			if (items3[i].QuestionId == questionId && items3[i].ExamId == this.state.selectedExam && items3[i].ConstraintFollowed == 0) {
+				points -= 1;
+			}
+		}
 		if(points < 0)
 			points = 0;
 
@@ -302,7 +309,7 @@ class ReviewExams extends Component {
 
 		let items3 = this.state.constraints;
 		for (let i in items3) {
-			if (items3[i].UserId == userId && items3[i].ExamId == this.state.selectedExam && items3[i].CorrectFunctionName == 0 && !(items3[i].QuestionId in small_map)) {
+			if (items3[i].UserId == userId && items3[i].ExamId == this.state.selectedExam && items3[i].ConstraintFollowed == 0 && !(items3[i].QuestionId in small_map)) {
 				points -= 1;
 			}
 		}
