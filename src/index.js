@@ -15,12 +15,12 @@ const pool = mysql.createPool({
   connectionLimit : 10,
 });
 
-const fifteenMinutes = 1000 * 60 * 15;
+const oneDay = 1000 * 60 * 60 * 24;
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: true,
     saveUninitialized: true,
-    cookie: { maxAge: fifteenMinutes, sameSite: 'strict' }
+    cookie: { maxAge: oneDay, sameSite: 'strict' }
 }));
 app.use(cors({ origin:"https://cs490.peterpinto.dev", credentials:true}));
 app.use(bodyParser.json());
