@@ -248,14 +248,14 @@ class ReviewExams extends Component {
 		}
 		let items2 = this.state.functions;
 		for (let i in items2) {
-			if(items2[i].QuestionId==questionId && items2[i].ExamId==this.state.selectedExam && items2[i].CorrectFunctionName == 0) {
+			if(items2[i].QuestionId==questionId && items2[i].ExamId==this.state.selectedExam && items2[i].UserId==userId && items2[i].CorrectFunctionName == 0) {
 				points -= 1;
 			}
 		}
 
 		let items3 = this.state.constraints;
 		for (let i in items3) {
-			if (items3[i].QuestionId == questionId && items3[i].ExamId == this.state.selectedExam && items3[i].ConstraintFollowed == 0) {
+			if (items3[i].QuestionId == questionId && items3[i].ExamId == this.state.selectedExam && items3[i].UserId==userId && items3[i].ConstraintFollowed == 0) {
 				points -= 1;
 			}
 		}
