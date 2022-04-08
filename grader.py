@@ -1,5 +1,6 @@
 import sys
 import json
+import ast
 import mysql.connector
 if(len(sys.argv) != 2):
 	print("FILE NOT PROVIDED")
@@ -50,15 +51,20 @@ for i in range(len(json_file)):
 		test_input = str(test_input)
 	elif(answer["TestCaseInputType"] == "I"):
 		test_input = int(test_input)
-	else:
+	elif(answer["TestCaseInputType"] == "F"):
 		test_input = float(test_input)
+	elif(answer["TestCaseInputType"] == "L"):
+		test_input = ast.literal_eval(test_input)
 	if(constraint == "Recursion"):
 		constraint_results.append({"UserId":user_id,"ExamId":exam_id,"QuestionId":q_id,"ConstraintFollowed":response.count(test_case) > 1})
 	elif(constraint == "While"):
 		constraint_results.append({"UserId":user_id,"ExamId":exam_id,"QuestionId":q_id,"ConstraintFollowed":response.find("while") != -1})
 	elif(constraint == "For"):
 		constraint_results.append({"UserId":user_id,"ExamId":exam_id,"QuestionId":q_id,"ConstraintFollowed":response.find("for") != -1})
-	tobexeced = response + "\noutput=" + test_case + "(" + "test_input" + ")"
+	if (answer["TestCaseInputType"] == "L"):
+		tobexeced = response + "\noutput=" + test_case + "(" + "*test_input" + ")"
+	else:
+		tobexeced = response + "\noutput=" + test_case + "(" + "test_input" + ")"
 	try:
 		exec(tobexeced)
 	except:
