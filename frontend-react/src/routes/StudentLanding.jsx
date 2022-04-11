@@ -598,7 +598,9 @@ class ViewScore extends Component {
 	}
 
 	render() {
-		return ( <div>
+		return (<div>
+			{this.showExamTotalPoints()}
+			<br/ >
 			{this.showResponses()}
 			<br />
 			{this.showExamTotalPoints()}
