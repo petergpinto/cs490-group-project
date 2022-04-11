@@ -302,7 +302,6 @@ class ViewScore extends Component {
 	constructor(props) {
         super(props);
 		this.getScore = this.getScore.bind(this);
-		this.renderScores = this.renderScores.bind(this);
 		this.getFunctionNameScores = this.getFunctionNameScores.bind(this);
 		this.showTotalPoints = this.showTotalPoints.bind(this);
 		this.showExamTotalPoints = this.showExamTotalPoints.bind(this);
