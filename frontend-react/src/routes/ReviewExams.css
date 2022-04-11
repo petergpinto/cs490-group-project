@@ -31,13 +31,21 @@ input:out-of-range {
 #release{
 	display: block;
 	margin: 0 auto;
-	background-color: #04AA6D;
+	background-color: green;
 	color: white;
 	padding: 10px 12px;
 	border-radius: 10px;
 
 }
 
+#release:hover{
+	background-color: #04AA6D;
+}
+
+#release:active{
+	background-color: #04AA6D;
+	color: black;
+}
 
 .ReviewExamStudentButtons{
 	display:flex;
@@ -67,8 +75,8 @@ input:out-of-range {
 
 
 .ActiveExam {
-	background-color: green;
-	color: white;
+	background-color: #1799fa;
+	color: black;
 	padding: 14px 16px;
 	margin-left: 8px;
 	text-decoration: none;
@@ -84,6 +92,10 @@ input:out-of-range {
 	font-size: 17px;
 }
 
+.NotActiveExam:hover{
+	background-color: #1799fa;
+}
+
 .StudentResponse {
 	text-align: start;
 	display: flex;
@@ -95,7 +107,7 @@ input:out-of-range {
 
 .ActiveStudent {
 	background-color: red;
-	color: white;
+	color: black;
 	padding: 12px 14px;
 	margin-left: 8px;
 	text-decoration: none;
@@ -110,6 +122,11 @@ input:out-of-range {
 	text-decoration: none;
 	font-size: 17px;
 }
+
+.NotActiveStudent:hover{
+	background-color: red;
+}
+
 
 .ShowResponses {
 	display: flex;

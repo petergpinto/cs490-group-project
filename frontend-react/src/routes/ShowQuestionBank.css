@@ -87,6 +87,15 @@
 	border-radius: 12px;
 }
 
+#Submit:hover{
+	background-color: #1799fa;
+}
+
+#Submit:active{
+	background-color: #1799fa;
+	color: black;
+}
+
 .ExamSelector h3{
 	margin-left: 5px;
 }

@@ -65,6 +65,24 @@ label{
     padding-left: 7px;
     color: white;
 
-
 }
+
+#Log:hover{
+	background-color: #1799fa;
+}
+
+#Log:active{
+	background-color: #1799fa;
+	color: black;
+}
+
+
+
+
+
+
+
+
+
+
 
