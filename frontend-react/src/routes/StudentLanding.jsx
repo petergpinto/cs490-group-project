@@ -488,12 +488,13 @@ class ViewScore extends Component {
 		let responses = this.state.data;
 
 		for (let i in responses) {
-			totalPoints += responses[i].TestCasePointValue;
 			if (responses[i].QuestionId == questionId && (responses[i].InstructorOverrideScore || responses[i].InstructorOverrideScore === 0)) {
 				points += responses[i].InstructorOverrideScore;
+				totalPoints += responses[i].TestCasePointValue;
 			}
 			else if (responses[i].QuestionId == questionId && responses[i].AutoGraderScore == 1) {
 				points += responses[i].TestCasePointValue;
+				totalPoints += responses[i].TestCasePointValue;
 			}
 		}
 		let items2 = this.state.functions;
