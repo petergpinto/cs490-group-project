@@ -370,32 +370,8 @@ class ViewScore extends Component {
 	componentDidMount() {
 		this.getScore(this.props.ExamId);
 		this.getFunctionNameScores(this.props.ExamId);
+		this.getConstraintScores(this.props.ExamId);
 	}
-
-	showTotalPoints(questionId) {
-        let points = 0;
-        let responses = this.state.data;
-
-        for(let i in responses) {
-
-            if(responses[i].QuestionId==questionId && responses[i].InstructorOverrideScore) {
-                points += responses[i].InstructorOverrideScore;
-            }
-            else if(responses[i].QuestionId==questionId && responses[i].AutoGraderScore == 1) {
-                points += responses[i].TestCasePointValue;
-            }
-        }
-        let items2 = this.state.functions;
-        for (let i in items2) {
-            if(items2[i].QuestionId==questionId && items2[i].CorrectFunctionName == 0) {
-                points -= 1;
-            }
-        }
-        if(points < 0)
-            points = 0;
-
-        return <tr><td>Total Points</td><td style={{border: 'none'}}></td><td style={{border: 'none'}}></td><td style={{border: 'none'}}></td><td>{points}</td></tr>
-    }
 
 	showExamTotalPoints(userId) {
         let points = 0;
