@@ -448,7 +448,7 @@ class ViewScore extends Component {
             if(row.QuestionId != questionId)
                 return null
             return <tr>
-                <td>Test Case {i++}: {row.AutoGraderScore == 1? 'Passed': 'Failed'}</td>
+				<td style={{'white-space':'nowrap'}}>Test Case {i++}: {row.AutoGraderScore == 1? 'Passed': 'Failed'}</td>
                 <td>{row.TestCaseInput}</td>
                 <td>{row.TestCaseOutput}</td>
                 <td>{row.AutoGraderOutput}</td>
