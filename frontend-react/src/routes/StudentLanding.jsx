@@ -543,9 +543,65 @@ class ViewScore extends Component {
 		})
 	}
 
+	showExamTotalPoints() {
+		let points = 0;
+		let totalPossible = 0;
+		let responses = this.state.data;
+		let small_map = {};
+
+		//console.info(responses);
+		if (this.state.selectedExam == -1 || this.state.selectedUser == -1)
+			return;
+
+		for (let i in responses) {
+			if (true) {
+				if (responses[i].InstructorOverrideScore || responses[i].InstructorOverrideScore === 0) {
+					points += responses[i].InstructorOverrideScore;
+				}
+				else if (responses[i].AutoGraderScore == 1) {
+					points += responses[i].TestCasePointValue;
+				}
+				else {
+					if (responses[i].QuestionId in small_map) {
+						small_map[responses[i].QuestionId] += 1
+					}
+					else {
+						small_map[responses[i].QuestionId] = 1
+					}
+				}
+				totalPossible += responses[i].TestCasePointValue;
+			}
+		}
+		console.info(small_map);
+		for (var key in small_map) {
+			if (small_map[key] < 2) {
+				delete small_map[key];
+			}
+		}
+		let items2 = this.state.functions;
+		for (let i in items2) {
+			if (items2[i].ExamId == this.state.selectedExam && items2[i].CorrectFunctionName == 0 && !(items2[i].QuestionId in small_map)) {
+				points -= 1;
+			}
+		}
+
+		let items3 = this.state.constraints;
+		for (let i in items3) {
+			if (items3[i].ExamId == this.state.selectedExam && items3[i].ConstraintFollowed == 0 && !(items3[i].QuestionId in small_map)) {
+				points -= 1;
+			}
+		}
+		if (points < 0)
+			points = 0;
+
+		return <div className='TestCaseTable'><table><tr><td>Total Points</td><td>{points.toFixed(1)}</td></tr><tr><td>Total Possible Points</td><td>{totalPossible.toFixed(1)}</td></tr><tr><td>Percentage Score</td><td>{((points.toFixed(1) / totalPossible.toFixed(1)) * 100).toFixed(2)}</td></tr></table></div>
+	}
+
 	render() {
 		return ( <div>
-			{ this.showResponses() }
+			{this.showResponses()}
+			<br />
+			{this.showExamTotalPoints()}
 			</div>
 		)
 	}
