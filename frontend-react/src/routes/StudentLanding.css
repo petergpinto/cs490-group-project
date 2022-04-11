@@ -155,7 +155,9 @@
 
 .TestCaseTable table, .TestCaseTable tr, .TestCaseTable td, .TestCaseTable th {
 	border: 1px solid;
-	width: 50%;
+	width: 100%;
 	margin-left: auto;
 	margin-right: auto;
+	white-space: pre;
+	text-align: center;
 }
