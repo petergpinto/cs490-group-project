@@ -149,4 +149,12 @@
 	justify-content: center;
 	border: 1px solid black;
 	margin: 20px;
+	white-space: pre;
+}
+
+.TestCaseTable table, .TestCaseTable tr, .TestCaseTable td, .TestCaseTable th {
+	border: 1px solid;
+	width: 50%;
+	margin-left: auto;
+	margin-right: auto;
 }
