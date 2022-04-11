@@ -306,6 +306,12 @@ class ViewScore extends Component {
 		this.getFunctionNameScores = this.getFunctionNameScores.bind(this);
 		this.showTotalPoints = this.showTotalPoints.bind(this);
 		this.showExamTotalPoints = this.showExamTotalPoints.bind(this);
+		this.showResponses = this.showResponses.bind(this);
+		this.showTestCases = this.showTestCases.bind(this);
+		this.showFunctionName = this.showFunctionName.bind(this);
+		this.showConstraint = this.showConstraint.bind(this);
+		this.showTotalPoints = this.showTotalPoints.bind(this);
+
 		this.state = {data:[], functions:[]};
 	}
 
@@ -344,6 +350,24 @@ class ViewScore extends Component {
 
 	}
 
+	getConstraintScores(examid) {
+		let data = new URLSearchParams();
+		data.append("ExamId", examid);
+
+		return fetch('https://cs490backend.peterpinto.dev/getConstraintScores', {
+			method: 'POST',
+			credentials: 'include',
+			headers: {
+				'Accept': 'application/json',
+			}, body: data
+		}).then(res => res.json())
+			.then(json => {
+				if (json.Result && json.Result != 'Success')
+					this.props.navigate('/login');
+				this.setState({ constraints: json });
+			});
+	}
+
 	componentDidMount() {
 		this.getScore(this.props.ExamId);
 		this.getFunctionNameScores(this.props.ExamId);
@@ -380,7 +404,7 @@ class ViewScore extends Component {
         let responses = this.state.data;
         let small_map = {};
 
-        if(this.state.selectedExam == -1 || this.state.selectedUser == -1)
+        if(this.props.ExamId == -1 || this.state.selectedUser == -1)
             return;
 
         for(let i in responses) {
@@ -415,7 +439,7 @@ class ViewScore extends Component {
             points = 0;
 
         return <div className='TestCaseTable'><table><tr><td>Total Points</td><td>{points}</td></tr><tr><td>Total Possible Points</td><td>{totalPossible}</td></tr><tr><td>Percentage Score</td><td>{(points / totalPossible)*100}</td></tr></table></div>
-    }
+	}
 
 	renderQuestion(questionId) {
 		let items = this.state.data;
@@ -474,11 +498,106 @@ class ViewScore extends Component {
 		})
 	}
 
+	showTestCases(questionId) {
+		let items = this.state.data;
+		let i = 1;
+		return items.map((row, index) => {
+			if (row.QuestionId != questionId)
+				return null
+			return <tr>
+				<td>Test Case {i++}: {row.AutoGraderScore == 1 ? 'Passed' : 'Failed'}</td>
+				<td>{row.TestCaseInput}</td>
+				<td>{row.TestCaseOutput}</td>
+				<td>{row.AutoGraderOutput}</td>
+				<td>{row.TestCasePointValue}</td>
+				<td>{row.AutoGraderScore == 1 ? row.TestCasePointValue : 0}</td>
+				<td><input placeholder={row.InstructorOverrideScore || row.InstructorOverrideScore === 0 ? row.InstructorOverrideScore : null} examid={row.ExamId} userid={row.UserId} testcaseid={row.TestCaseId} onChange={this.overrideScore} type='number' min={0} step="0.1" /></td>
+				<td><input value={row.InstructorComment ? row.InstructorComment : null} examid={row.ExamId} userid={row.UserId} testcaseid={row.TestCaseId} onChange={this.addComment} type='text' /></td></tr>
+		});
+	}
+
+	showFunctionName(questionId) {
+		let items = this.state.functions;
+		for (let i in items) {
+			if (items[i].QuestionId == questionId && items[i].ExamId == this.props.ExamId) {
+				return <tr><td>Function Name</td><td style={{ border: 'none' }}></td><td style={{ border: 'none' }}></td><td style={{ border: 'none' }}></td><td>{items[i].CorrectFunctionName == 1 ? "Correct" : "Incorrect"}</td><td>{items[i].CorrectFunctionName == 1 ? 0 : -1}</td><td style={{ border: 'none' }}></td><td style={{ border: 'none' }}></td></tr>
+			}
+		}
+	}
+
+	showConstraint(questionId) {
+		let items = this.state.constraints;
+		for (let i in items) {
+			if (items[i].QuestionId == questionId && items[i].ExamId == this.props.ExamId) {
+				return <tr><td>Constraint Followed</td><td style={{ border: 'none' }}></td><td style={{ border: 'none' }}></td><td style={{ border: 'none' }}></td><td>{items[i].ConstraintFollowed == 1 ? "Followed" : "Not Followed"}</td><td>{items[i].ConstraintFollowed == 1 ? 0 : -1}</td><td style={{ border: 'none' }}></td><td style={{ border: 'none' }}></td></tr>
+			}
+		}
+	}
+
+	showTotalPoints(questionId) {
+		let points = 0;
+		let responses = this.state.data;
+
+		for (let i in responses) {
+
+			if (responses[i].UserId == userId && responses[i].QuestionId == questionId && (responses[i].InstructorOverrideScore || responses[i].InstructorOverrideScore === 0)) {
+				points += responses[i].InstructorOverrideScore;
+			}
+			else if (responses[i].UserId == userId && responses[i].QuestionId == questionId && responses[i].AutoGraderScore == 1) {
+				points += responses[i].TestCasePointValue;
+			}
+		}
+		let items2 = this.state.functions;
+		for (let i in items2) {
+			if (items2[i].QuestionId == questionId && items2[i].ExamId == this.props.ExamId && items2[i].UserId == userId && items2[i].CorrectFunctionName == 0) {
+				points -= 1;
+			}
+		}
+
+		let items3 = this.state.constraints;
+		for (let i in items3) {
+			if (items3[i].QuestionId == questionId && items3[i].ExamId == this.props.ExamId && items3[i].UserId == userId && items3[i].ConstraintFollowed == 0) {
+				points -= 1;
+			}
+		}
+		if (points < 0)
+			points = 0;
+
+		return <tr><td>Total Points</td><td style={{ border: 'none' }}></td><td style={{ border: 'none' }}></td><td style={{ border: 'none' }}></td><td style={{ border: 'none' }}></td><td>{points.toFixed(1)}</td></tr>
+	}
+
+	showResponses() {
+		let items = this.state.data;
+		let questionIds = [];
+
+		return items.map((row, index) => {
+			if (questionIds.indexOf(row.QuestionId) >= 0)
+				return null
+			questionIds.push(row.QuestionId);
+			if (this.state.selectedUser == -1)
+				return null
+			return <div className="ShowResponses">
+				<h2>{row.FunctionName}</h2>
+				<h3>{row.QuestionText}</h3>
+				<div className="StudentResponse">{row.StudentResponse}</div>
+				<br /><div className="TestCaseTable">
+					<table>
+						<thead><tr><th></th><th>Input</th><th>Expected Output</th><th>AutoGrader Output</th><th>Points Possible</th><th>Points Awarded</th><th>Override Score</th><th>Comment</th></tr></thead>
+						<tbody>
+							{this.showTestCases(row.QuestionId)}
+							{this.showFunctionName(row.QuestionId)}
+							{this.showConstraint(row.QuestionId)}
+							{this.showTotalPoints(row.QuestionId, this.state.selectedUser)}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		})
+	}
+
 	render() {
 		return ( <div>
-			{ this.renderScores() }
-			<br/>
-			{ this.showExamTotalPoints() }
+			{ this.showResponses() }
 			</div>
 		)
 	}
