@@ -599,7 +599,6 @@ class ViewScore extends Component {
 
 	render() {
 		return (<div>
-			{this.showExamTotalPoints()}
 			<br/ >
 			{this.showResponses()}
 			<br />
