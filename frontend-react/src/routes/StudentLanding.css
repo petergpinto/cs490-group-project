@@ -151,6 +151,7 @@
 	border: 1px solid black;
 	margin: 20px;
 	white-space: pre;
+	padding: 10px;
 }
 
 .TestCaseTable table, .TestCaseTable tr, .TestCaseTable td, .TestCaseTable th {
