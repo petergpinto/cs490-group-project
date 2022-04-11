@@ -59,6 +59,62 @@ app.post('/getFunctionNameScores', async function(request, response) {
 
 })
 
+app.post('/getConstraintScores', async function(request, response) {
+    if(!(await util.isUserLoggedIn(request.session, pool))) {
+        response.json({"Result":"Please login"});
+        response.end();
+        return;
+    }
+
+    let ExamId = request.body.ExamId;
+    if(!ExamId) {
+        response.json({'Result':"Invalid Request"});
+        response.end();
+        return;
+    }
+
+    getFunctionScoresPromise = () => {
+        return new Promise((resolve, reject) => {
+            pool.query('SELECT * FROM ConstraintScores WHERE ExamId=?', [ExamId],
+                (error, elements) => {
+                    if(error) return reject(error);
+                    return resolve(elements);
+                });
+        });
+    }
+
+    response.json(await getFunctionScoresPromise());
+
+})
+
+app.post('/studentGetConstraintScores', async function(request, response) {
+    if(!(await util.isUserLoggedIn(request.session, pool))) {
+        response.json({"Result":"Please login"});
+        response.end();
+        return;
+    }
+
+    let ExamId = request.body.ExamId;
+    if(!ExamId) {
+        response.json({'Result':"Invalid Request"});
+        response.end();
+        return;
+    }
+    let UserId = request.session.UserData.UserId;
+
+    getFunctionScoresPromise = () => {
+        return new Promise((resolve, reject) => {
+            pool.query('SELECT * FROM ConstraintScores WHERE ExamId=? AND UserId=?', [ExamId, UserId],
+                (error, elements) => {
+                    if(error) return reject(error);
+                    return resolve(elements);
+                });
+        });
+    }
+
+    response.json(await getFunctionScoresPromise());
+
+});
 
 app.post('/getStudentResponsesAndScores', async function(request, response) {
 	if(!(await util.isUserLoggedIn(request.session, pool))) {
