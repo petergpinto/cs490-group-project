@@ -311,7 +311,7 @@ class ViewScore extends Component {
 		this.showConstraint = this.showConstraint.bind(this);
 		this.showTotalPoints = this.showTotalPoints.bind(this);
 
-		this.state = {data:[], functions:[]};
+		this.state = {data:[], functions:[], constraints:[]};
 	}
 
 	getScore(examid) {
@@ -535,7 +535,7 @@ class ViewScore extends Component {
 							{this.showTestCases(row.QuestionId)}
 							{this.showFunctionName(row.QuestionId)}
 							{this.showConstraint(row.QuestionId)}
-							{this.showTotalPoints(row.QuestionId, this.state.selectedUser)}
+							{this.showTotalPoints(row.QuestionId)}
 						</tbody>
 					</table>
 				</div>
