@@ -471,33 +471,6 @@ class ViewScore extends Component {
 		}
 	}
 
-	renderScores() {
-		let items = this.state.data;
-		let questionIds = [];
-
-		return items.map((row, index) => {
-			if(questionIds.indexOf(row.QuestionId) >= 0 )
-                return null
-            questionIds.push(row.QuestionId);
-
-			return (<div><div className="StudentTestCaseTable" >
-					<br/>
-					<h3 style={{'textAlign':'center'}}>{row.FunctionName}</h3>
-					<table>
-					<thead>
-						<tr>
-							<th></th><th>Input</th><th>Expected Output</th><th>AutoGrader Output</th><th>Score</th><th>Instructor Comment</th>
-						</tr>
-					</thead>
-					{ this.renderQuestion(row.QuestionId) }
-					{ this.renderFunctionName(row.QuestionId) }
-					{ this.showTotalPoints(row.QuestionId) }
-					</table>
-				</div></div>
-			)
-		})
-	}
-
 	showTestCases(questionId) {
 		let items = this.state.data;
 		let i = 1;
@@ -540,23 +513,23 @@ class ViewScore extends Component {
 
 		for (let i in responses) {
 
-			if (responses[i].UserId == userId && responses[i].QuestionId == questionId && (responses[i].InstructorOverrideScore || responses[i].InstructorOverrideScore === 0)) {
+			if (responses[i].QuestionId == questionId && (responses[i].InstructorOverrideScore || responses[i].InstructorOverrideScore === 0)) {
 				points += responses[i].InstructorOverrideScore;
 			}
-			else if (responses[i].UserId == userId && responses[i].QuestionId == questionId && responses[i].AutoGraderScore == 1) {
+			else if (responses[i].QuestionId == questionId && responses[i].AutoGraderScore == 1) {
 				points += responses[i].TestCasePointValue;
 			}
 		}
 		let items2 = this.state.functions;
 		for (let i in items2) {
-			if (items2[i].QuestionId == questionId && items2[i].ExamId == this.props.ExamId && items2[i].UserId == userId && items2[i].CorrectFunctionName == 0) {
+			if (items2[i].QuestionId == questionId && items2[i].ExamId == this.props.ExamId && items2[i].CorrectFunctionName == 0) {
 				points -= 1;
 			}
 		}
 
 		let items3 = this.state.constraints;
 		for (let i in items3) {
-			if (items3[i].QuestionId == questionId && items3[i].ExamId == this.props.ExamId && items3[i].UserId == userId && items3[i].ConstraintFollowed == 0) {
+			if (items3[i].QuestionId == questionId && items3[i].ExamId == this.props.ExamId && items3[i].ConstraintFollowed == 0) {
 				points -= 1;
 			}
 		}
