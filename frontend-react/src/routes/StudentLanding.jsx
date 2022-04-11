@@ -484,10 +484,11 @@ class ViewScore extends Component {
 
 	showTotalPoints(questionId) {
 		let points = 0;
+		let totalPoints = 0;
 		let responses = this.state.data;
 
 		for (let i in responses) {
-
+			totalPoints += responses[i].TestCasePointValue;
 			if (responses[i].QuestionId == questionId && (responses[i].InstructorOverrideScore || responses[i].InstructorOverrideScore === 0)) {
 				points += responses[i].InstructorOverrideScore;
 			}
@@ -511,7 +512,7 @@ class ViewScore extends Component {
 		if (points < 0)
 			points = 0;
 
-		return <tr><td>Total Points</td><td style={{ border: 'none' }}></td><td style={{ border: 'none' }}></td><td style={{ border: 'none' }}></td><td style={{ border: 'none' }}></td><td>{points.toFixed(1)}</td></tr>
+		return <tr><td>Total Points</td><td style={{ border: 'none' }}></td><td style={{ border: 'none' }}></td><td style={{ border: 'none' }}></td><td>{totalPoints.toFixed(1)}</td><td>{points.toFixed(1)}</td></tr>
 	}
 
 	showResponses() {
