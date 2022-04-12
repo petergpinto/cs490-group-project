@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Dimmer, Loader } from "semantic-ui-react";
 import './AutoGrader.css';
 import { Alert } from "react-alert";
+import Checkmark from './Checkmark.svg';
 
 class AutoGrader extends Component {
 
@@ -76,7 +77,7 @@ class AutoGrader extends Component {
 			<h2>Select an Exam to Autograde</h2>
 				<div className='AutoGraderButtons'>
 					{this.showExamButtons()}
-					<ReactLogo />
+					<img src={Checkmark} />
 				</div>
 			</div>
 		)
