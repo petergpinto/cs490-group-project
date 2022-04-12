@@ -394,7 +394,7 @@ class ShowQuestionBank extends Component {
 		this.refreshExamList();
 		this.getExamQuestions();
 		this.setState({ loading: false });
-		this.interval = setInterval(this.getQuestionData, 1000);
+		this.interval = setInterval(this.getQuestionData, 10000);
 		//this.interval2 = setInterval(this.refreshExamList, 3000);
 		//this.interval3 = setInterval(this.getExamQuestions, 1000);
 	}
