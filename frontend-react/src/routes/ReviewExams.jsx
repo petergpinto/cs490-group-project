@@ -272,7 +272,7 @@ class ReviewExams extends Component {
 		if(points < 0)
 			points = 0;
 
-		return <tr><td>Total Points</td><td style={{ border: 'none' }}></td><td style={{ border: 'none' }}></td><td style={{ border: 'none' }}></td><td>{totalPoints.toFixed(1)}</td><td>{points.toFixed(1)}</td></tr>
+		return <tr><td>Total Points</td><td style={{ border: 'none', 'background': 'inherit' }}></td><td style={{ border: 'none', 'background': 'inherit' }}></td><td style={{ border: 'none', 'background': 'inherit' }}></td><td>{totalPoints.toFixed(1)}</td><td>{points.toFixed(1)}</td></tr>
 	}
 
 	showExamTotalPoints(userId) {
@@ -342,7 +342,7 @@ class ReviewExams extends Component {
 		let items = this.state.constraints;
 		for (let i in items) {
 			if (items[i].UserId == userId && items[i].QuestionId == questionId && items[i].ExamId == this.state.selectedExam) {
-				return <tr><td>Constraint Followed</td><td style={{ border: 'none' }}></td><td style={{ border: 'none' }}></td><td style={{ border: 'none' }}></td><td>{items[i].ConstraintFollowed == 1 ? "Followed" : "Not Followed"}</td><td>{items[i].ConstraintFollowed == 1 ? 0 : -1}</td><td style={{ border: 'none' }}></td><td style={{ border: 'none' }}></td></tr>
+				return <tr><td>Constraint Followed</td><td style={{ border: 'none', 'background': 'inherit' }}></td><td style={{ border: 'none', 'background': 'inherit' }}></td><td style={{ border: 'none', 'background': 'inherit' }}></td><td>{items[i].ConstraintFollowed == 1 ? "Followed" : "Not Followed"}</td><td>{items[i].ConstraintFollowed == 1 ? 0 : -1}</td><td style={{ border: 'none', 'background': 'inherit' }}></td><td style={{ border: 'none', 'background': 'inherit' }}></td></tr>
 			}
 		}
     }
