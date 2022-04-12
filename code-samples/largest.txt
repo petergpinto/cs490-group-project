@@ -1,0 +1,6 @@
+def largest(lst):
+	largest = -1
+	for num in lst:
+		if num > largest:
+			largest = num
+	return largest

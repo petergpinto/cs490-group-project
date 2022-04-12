@@ -1,0 +1,2 @@
+def sayHello(name, greeting):
+	return greeting + ", " + name
