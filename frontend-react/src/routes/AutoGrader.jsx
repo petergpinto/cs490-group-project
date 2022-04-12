@@ -15,7 +15,6 @@ class AutoGrader extends Component {
 	}
 
 	triggerAutoGrader(event) {
-		alert("Exam Graded");
 		let data = new URLSearchParams();
 		data.append("ExamId", event.target.value);
 		return fetch('https://cs490backend.peterpinto.dev/triggerAutoGrader', {
