@@ -182,7 +182,7 @@ class ShowQuestionBank extends Component {
                 }
 				
             	return <tr key={index}>
-					<td style={activeBackground}><button style={{ 'background': 'none', 'border': 'none' }} className="append" index={index} onClick={this.handleChange}>{html}</button></td>
+					<td style={activeBackground}><button style={{ 'background': 'none', 'border': 'none' }} className="append" questionid={row.QuestionId} onClick={this.handleChange}>{html}</button></td>
 					<RenderRow key={index} data={row} keys={keys} backgroundStyle={activeBackground} showquestiontext/>
 					</tr>
         	})
@@ -218,9 +218,17 @@ class ShowQuestionBank extends Component {
 
 	handleChange(event) {
 		this.setState({loading:true})
-		let index = event.target.getAttribute('index');
+		let questionid = event.target.getAttribute('questionid');
 
-		let questionData = this.state.data[index];
+
+		let questionData
+
+		for (let i = 0; i < this.state.data.length; i++) {
+			if (questionid == this.state.data[index].QuestionId) {
+				questionData = this.state.data[index];
+				break;
+			}
+        }
 		let pointValue = this.defaultPointValue;
 		//Add question to exam
 	
