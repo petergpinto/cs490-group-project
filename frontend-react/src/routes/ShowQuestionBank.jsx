@@ -426,6 +426,7 @@ class ShowQuestionBank extends Component {
 							<option value="Basic Math">Basic Math</option>
 							<option value="Recursion">Recursion</option>
 							<option value="Conditionals">Conditionals</option>
+							<option value="Strings">Strings</option>
 							<option value="Advanced Math">Advanced Math</option>
 						</select>
 						<label>Constraint</label>
