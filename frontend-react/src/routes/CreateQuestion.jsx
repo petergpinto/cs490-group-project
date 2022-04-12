@@ -1,6 +1,7 @@
 import React, { Component, useState } from "react";
 import './CreateQuestion.css';
 import { Alert } from "react-alert";
+import ShowQuestionBank from './ShowQuestionBank';
 
 class CreateQuestion extends Component {
 
@@ -202,8 +203,8 @@ class CreateQuestion extends Component {
 					<button onClick={this.updateButton} type="button"> Add Test Case</button>
 					<input type= 'submit' name = 'Submit2' id = 'Submit2' value = 'Add Question' />
 				</form>
-				{this.state.displayCheckmark? <Icon /> : null}
-					
+				{this.state.displayCheckmark ? <Icon /> : null}
+				<ShowQuestionBank showElement={true} />
 			</div>
 		);
 	}

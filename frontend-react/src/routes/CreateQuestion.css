@@ -77,3 +77,8 @@ select{
 	height: auto;
 	margin:20px;
 }
+
+.CreateQuestion {
+	display:flex;
+	flex-direction:row;
+}
