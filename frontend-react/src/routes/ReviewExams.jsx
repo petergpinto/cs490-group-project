@@ -240,15 +240,18 @@ class ReviewExams extends Component {
 
 	showTotalPoints(questionId, userId) {
 		let points = 0;
+		let totalPoints = 0;
 		let responses = this.state.responses;
 
 		for(let i in responses) {
 			
 			if (responses[i].UserId == userId && responses[i].QuestionId == questionId && (responses[i].InstructorOverrideScore || responses[i].InstructorOverrideScore === 0)) {
 				points += responses[i].InstructorOverrideScore;
+				totalPoints += responses[i].TestCasePointValue;
 			}
 			else if(responses[i].UserId==userId && responses[i].QuestionId==questionId && responses[i].AutoGraderScore == 1) {
 				points += responses[i].TestCasePointValue;
+				totalPoints += responses[i].TestCasePointValue;
 			}
 		}
 		let items2 = this.state.functions;
@@ -267,7 +270,7 @@ class ReviewExams extends Component {
 		if(points < 0)
 			points = 0;
 
-		return <tr><td>Total Points</td><td style={{ border: 'none' }}></td><td style={{ border: 'none' }}></td><td style={{ border: 'none' }}></td><td style={{ border: 'none' }}></td><td>{points.toFixed(1)}</td></tr>
+		return <tr><td>Total Points</td><td style={{ border: 'none' }}></td><td style={{ border: 'none' }}></td><td style={{ border: 'none' }}></td><td>{totalPoints.toFixed(1)}</td><td>{points.toFixed(1)}</td></tr>
 	}
 
 	showExamTotalPoints(userId) {
