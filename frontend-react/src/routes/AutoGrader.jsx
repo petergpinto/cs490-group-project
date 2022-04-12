@@ -27,7 +27,7 @@ class AutoGrader extends Component {
 			this.setState({ displayCheckmark: true });
 			setTimeout(() => {
 				this.setState({ displayCheckmark: false });
-			}, 3000);
+			}, 1500);
 
 		})
 	}
