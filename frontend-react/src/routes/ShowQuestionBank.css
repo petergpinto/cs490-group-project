@@ -63,6 +63,11 @@
 	background:white;
 }
 
+.rightSplitScreen svg {
+	width: 50px !important;
+	height:auto;
+}
+
 .leftSplitScreen table {
 	background:skyblue;
 }
