@@ -55,6 +55,14 @@
 	text-align: center;
 }
 
+.rightSplitScreen table {
+	background:skyblue;
+}
+
+.rightSplitScreen td {
+	background:white;
+}
+
 .ShowQuestionBankList table, .ShowQuestionBankList td, .ShowQuestionBankList th {
     border: none;
 	text-align: center;

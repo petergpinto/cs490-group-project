@@ -9,6 +9,15 @@
     margin-left: auto;
     margin-right: auto;
 }
+
+.TestCaseTable table {
+	background:skyblue;
+}
+
+.TestCaseTable td {
+	background:white;
+}
+
 #save {
 	display: flex;
 	justify-content: center;
