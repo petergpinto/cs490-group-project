@@ -24,15 +24,13 @@ class AutoGrader extends Component {
             headers: {
                 'Accept':'application/json',
             }, body:data
-            }).then(res => res.json())
-            .then(json => {
-                if(json.Result && json.Result != 'Success')
-					this.props.navigate('/login');
-				this.setState({ displayCheckmark: true });
-				setTimeout(() => {
-					this.setState({ displayCheckmark: false });
-				}, 3000);
-            });
+		}).then(res => {
+			this.setState({ displayCheckmark: true });
+			setTimeout(() => {
+				this.setState({ displayCheckmark: false });
+			}, 3000);
+
+		})
 	}
 
 	refreshExamButtons() {
