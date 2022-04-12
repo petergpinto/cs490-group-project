@@ -169,9 +169,16 @@ class ShowQuestionBank extends Component {
 		});
 
 		if(this.props.buildForm) {
-			return items.map((row, index)=>{
+			return items.map((row, index) => {
+				let html = <PlusButton style={{ 'width': '50px', 'height': 'auto', 'pointer-events': 'none' }} />
+				for (let i = 0; i < this.state.examQuestions.length; i++) {
+					if (this.state.examQuestions[i].QuestionId == row.QuestionId) {
+						html = <Checkmark style={{ 'width': '50px', 'height': 'auto' }} />
+                    }
+                }
+				
             	return <tr key={index}>
-					<td><button style={{ 'background': 'none', 'border': 'none' }} className="append" index={index} onClick={this.handleChange}><PlusButton style={{ 'width': '50px', 'height': 'auto', 'pointer-events':'none'}} /></button></td>
+					<td><button style={{ 'background': 'none', 'border': 'none' }} className="append" index={index} onClick={this.handleChange}>{html}</button></td>
 					<RenderRow key={index} data={row} keys={keys} showquestiontext/>
 					</tr>
         	})
@@ -526,3 +533,14 @@ const MinusButton = (props) => (
 		<path d="M155.77 0C69.74 0 0 69.74 0 155.77s69.74 155.77 155.77 155.77 155.77-69.74 155.77-155.77S241.799 0 155.77 0zm0 271.539C91.784 271.539 40 219.761 40 155.77 40 91.784 91.778 40 155.77 40c63.986 0 115.77 51.778 115.77 115.77-.001 63.985-51.779 115.769-115.77 115.769z" />
 	</svg>
 )
+
+function Checkmark() {
+	return (
+		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 755 607">
+			<path
+				fill="#21b04b"
+				d="M225.38 585.25L198.611 550l-43.89-50.323-50.221-40.088-56.75-35.996L23 410.596l15.5-74.595L54 258.836l1.51-2.835 20.25 9.423 18.74 9.424 58.221 58.653 13.215 21.25L179.871 376l97.457-102 121.17-114.48 89-69.957 114.97-79.37 57.071 71.308 64.611 81.838 8.814 12-62.25 36.093-62.22 34.93-65.5 45.958-164.23 127.86-44.732 40.325-37.601 42.5-52.767 63.226-16.175 20.75z"
+			></path>
+		</svg>
+	);
+}
