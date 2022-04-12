@@ -171,7 +171,7 @@ class ShowQuestionBank extends Component {
 		if(this.props.buildForm) {
 			return items.map((row, index)=>{
             	return <tr key={index}>
-					<td><PlusButton index={index} onClick={this.handleChange} /><button className="append" index={index} onClick={this.handleChange}>+</button></td>
+					<td><PlusButton style={{ 'width': '50px', 'height': 'auto' }} index={index} onClick={this.handleChange} /><button className="append" index={index} onClick={this.handleChange}>+</button></td>
 					<RenderRow key={index} data={row} keys={keys} showquestiontext/>
 					</tr>
         	})
