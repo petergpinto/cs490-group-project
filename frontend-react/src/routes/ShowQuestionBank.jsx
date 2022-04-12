@@ -173,7 +173,6 @@ class ShowQuestionBank extends Component {
 				let whiteBackground = { 'background': 'white' };
 				let coloredBackground = { 'background': 'lightgreen' };
 				let activeBackground = whiteBackground;
-				for (let i = 0; i < )
 				let html = <PlusButton style={{ 'width': '50px', 'height': 'auto', 'pointer-events': 'none' }} />
 				for (let i = 0; i < this.state.examQuestions.length; i++) {
 					if (this.state.examQuestions[i].QuestionId == row.QuestionId) {
