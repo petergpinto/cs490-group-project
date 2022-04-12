@@ -236,7 +236,7 @@ class ShowQuestionBank extends Component {
     	data.append('ExamId', this.state.selectedExam);
 		data.append('PointValue', pointValue);
 	
-		if(event.target.className==="append" && !this.state.checked[index]) {
+		if(event.target.className==="append") {
 		data.append('QuestionId',questionData.QuestionId);
 		return fetch('https://cs490backend.peterpinto.dev/addQuestionToExam', {
             method: 'POST',
@@ -253,7 +253,7 @@ class ShowQuestionBank extends Component {
 			return res.json();
 		});
 		} 
-		if(event.target.className==="delete"&&!this.state.checked[index]){
+		if(event.target.className==="delete"){
 			data.append('QuestionId',event.target.getAttribute('questionid'));
 			return fetch('https://cs490backend.peterpinto.dev/removeQuestionFromExam', {
             method: 'POST',
