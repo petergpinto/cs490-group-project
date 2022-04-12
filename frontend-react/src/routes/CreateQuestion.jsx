@@ -7,6 +7,7 @@ class CreateQuestion extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			displayCheckmark: false,
 			inputLength: 2,
 			questionText: "",
 			functionName: "",
@@ -36,7 +37,6 @@ class CreateQuestion extends Component {
 		}));
 	}
 	async submitQuestion(questionData) {
-		alert("Question Added");
 		questionData.preventDefault();	
 		var data = new URLSearchParams();
 		data.append('QuestionText', questionData.target[0].value);
@@ -53,7 +53,13 @@ class CreateQuestion extends Component {
 				'content-type':'application/x-www-form-urlencoded'
 			},
 				body:data
-		}).then(res => res.json());
+		}).then(res => {
+			this.setState({ displayCheckmark: true });
+			setTimeout(() => {
+				this.setState({ displayCheckmark: false });
+			}, 1500);
+			return res.json()
+		});
 		console.log(response);
 		for(let i = 5; i+4<questionData.target.length;i+=4)
 		{
@@ -195,6 +201,7 @@ class CreateQuestion extends Component {
 					<button onClick={this.updateButton} type="button"> Add Test Case</button>
 					<input type= 'submit' name = 'Submit2' id = 'Submit2' value = 'Add Question' />
 				</form>
+				{this.state.displayCheckmark? <Icon /> : null}
 					
 			</div>
 		);
@@ -205,3 +212,14 @@ class CreateQuestion extends Component {
 
 
 export default CreateQuestion
+
+function Icon() {
+	return (
+		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 755 607">
+			<path
+				fill="#21b04b"
+				d="M225.38 585.25L198.611 550l-43.89-50.323-50.221-40.088-56.75-35.996L23 410.596l15.5-74.595L54 258.836l1.51-2.835 20.25 9.423 18.74 9.424 58.221 58.653 13.215 21.25L179.871 376l97.457-102 121.17-114.48 89-69.957 114.97-79.37 57.071 71.308 64.611 81.838 8.814 12-62.25 36.093-62.22 34.93-65.5 45.958-164.23 127.86-44.732 40.325-37.601 42.5-52.767 63.226-16.175 20.75z"
+			></path>
+		</svg>
+	);
+}
