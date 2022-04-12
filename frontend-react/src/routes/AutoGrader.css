@@ -32,3 +32,14 @@
 	height: 100%;
 	z-index: 9999;
 }
+
+.AutoGrader {
+	display:flex;
+	flex-direction:column;
+}
+
+.AutoGrader svg {
+	width: 200px;
+	height: auto;
+	align-self: center;
+}
