@@ -495,7 +495,9 @@ class ViewScore extends Component {
 			else if (responses[i].QuestionId == questionId && responses[i].AutoGraderScore == 1) {
 				points += responses[i].TestCasePointValue;
 				totalPoints += responses[i].TestCasePointValue;
-			}
+			} else if (responses[i].QuestionId == questionId && responses[i].AutoGraderScore == 0) {
+				totalPoints += responses[i].TestCasePointValue;
+            }
 		}
 		let items2 = this.state.functions;
 		for (let i in items2) {
