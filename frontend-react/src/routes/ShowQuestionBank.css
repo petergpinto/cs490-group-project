@@ -94,6 +94,7 @@
 	display: flex;
 	flex-direction: column;
 	max-width: 1000px;
+	padding:10px;
 }
 
 .ExamSelector input{
