@@ -170,16 +170,21 @@ class ShowQuestionBank extends Component {
 
 		if(this.props.buildForm) {
 			return items.map((row, index) => {
+				let whiteBackground = { 'background': 'white' };
+				let coloredBackground = { 'background': 'lightgreen' };
+				let activeBackground = whiteBackground;
+				for (let i = 0; i < )
 				let html = <PlusButton style={{ 'width': '50px', 'height': 'auto', 'pointer-events': 'none' }} />
 				for (let i = 0; i < this.state.examQuestions.length; i++) {
 					if (this.state.examQuestions[i].QuestionId == row.QuestionId) {
 						html = <Checkmark style={{ 'width': '50px', 'height': 'auto' }} />
+						activeBackground = coloredBackground;
                     }
                 }
 				
             	return <tr key={index}>
 					<td><button style={{ 'background': 'none', 'border': 'none' }} className="append" index={index} onClick={this.handleChange}>{html}</button></td>
-					<RenderRow key={index} data={row} keys={keys} showquestiontext/>
+					<RenderRow key={index} data={row} keys={keys} backgroundStyle={activeBackground} showquestiontext/>
 					</tr>
         	})
 		}
@@ -474,25 +479,25 @@ class ShowQuestionBank extends Component {
 }
 
 
-const RenderRow = (props) =>{
+const RenderRow = (props) => {		
         return props.keys.map((key, index)=>{
            if(key == 'QuestionId')
 		   		return null
 		   if(key == 'DifficultyRating') {
-				if(props.data[key] == 1)
-					return <td key={index+key+props.data[key]}>Easy</td>
+			   if (props.data[key] == 1)
+				   return <td style={props.backgroundStyle} key = { index+ key + props.data[key]}>Easy</td>
 				if(props.data[key] == 2)
-                    return <td key={index+key+props.data[key]}>Medium</td>
+					return <td style={props.backgroundStyle} key={index+key+props.data[key]}>Medium</td>
 				if(props.data[key] == 3)
-                    return <td key={index+key+props.data[key]}>Hard</td>
+					return <td style={props.backgroundStyle} key={index+key+props.data[key]}>Hard</td>
 		   }
 			if (key == 'QuestionText')
 				if (props.showquestiontext)
-					return <td key={index + key + props.data[key]}>{props.data[key]}</td>
+					return <td style={props.backgroundStyle} key={index + key + props.data[key]}>{props.data[key]}</td>
 				else
 					return null
 				//return <td key={index+key+props.data[key]} title={props.data[key]}>(Hover to reveal)</td>
-		   return <td key={index+key+props.data[key]}>{props.data[key]}</td>
+			return <td style={props.backgroundStyle} key={index+key+props.data[key]}>{props.data[key]}</td>
         })
     }
 
