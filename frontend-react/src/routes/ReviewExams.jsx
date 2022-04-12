@@ -1,7 +1,6 @@
 import React, { Component, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import './ReviewExams.css';
-import { Alert } from "react-alert";
 
 
 class ReviewExams extends Component {
@@ -20,6 +19,7 @@ class ReviewExams extends Component {
 		this.refreshConstraintScores = this.refreshConstraintScores.bind(this);
 		this.showExamTotalPoints = this.showExamTotalPoints.bind(this);
 		this.overrideScore = this.overrideScore.bind(this);
+		this.releaseScores = this.releaseScores.bind(this);
 		this.state = {exams:[], students:[], responses:[], selectedExam:-1, selectedUser:-1, points:0};
 	}
 
@@ -156,7 +156,6 @@ class ReviewExams extends Component {
 	}
 
 	releaseScores(event) {
-		alert("Exam Score Released");
 		let data = new URLSearchParams();
         data.append("ExamId", event.target.value);
 
