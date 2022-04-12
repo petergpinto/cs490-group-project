@@ -182,7 +182,7 @@ class ShowQuestionBank extends Component {
                 }
 				
             	return <tr key={index}>
-					<td><button style={{ 'background': 'none', 'border': 'none' }} className="append" index={index} onClick={this.handleChange}>{html}</button></td>
+					<td style={activeBackground}><button style={{ 'background': 'none', 'border': 'none' }} className="append" index={index} onClick={this.handleChange}>{html}</button></td>
 					<RenderRow key={index} data={row} keys={keys} backgroundStyle={activeBackground} showquestiontext/>
 					</tr>
         	})
