@@ -61,6 +61,14 @@
 	border: 1px solid black;
 }
 
+.ShowQuestionBankList table {
+	background:skyblue;
+}
+
+.ShowQuestionBankList td {
+	background:white;
+}
+
 .ShowQuestionBankList {
 	display: flex;
 	flex-direction: column;
