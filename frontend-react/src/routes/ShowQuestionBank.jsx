@@ -407,7 +407,7 @@ class ShowQuestionBank extends Component {
 							<br/><br/>
 						</div>
 						<table>
-						<thead><th>Point Value</th> {this.getHeaderNoQText()} </thead>
+						<thead><th></th><th>Point Value</th> {this.getHeaderNoQText()} </thead>
 						<tbody>
 						{ this.props.buildForm && this.state.selectedExam != -1? this.renderExamQuestions() : null }	
 						</tbody>
