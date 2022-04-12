@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Dimmer, Loader } from "semantic-ui-react";
 import './AutoGrader.css';
 import { Alert } from "react-alert";
+import { ReactComponent as ReactLogo } from './Checkmark.svg';
 
 class AutoGrader extends Component {
 
@@ -75,7 +76,8 @@ class AutoGrader extends Component {
 				{false ? <div className="Loader"><Dimmer active inverted size="massive"><Loader inverted>Loading</Loader></Dimmer></div> : null}
 			<h2>Select an Exam to Autograde</h2>
 				<div className='AutoGraderButtons'>
-					{ this.showExamButtons() }	
+					{this.showExamButtons()}
+					<ReactLogo />
 				</div>
 			</div>
 		)
