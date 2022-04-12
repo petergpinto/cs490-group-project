@@ -11,7 +11,7 @@ class AutoGrader extends Component {
 		this.showExamButtons = this.showExamButtons.bind(this);
 		this.refreshExamButtons = this.refreshExamButtons.bind(this);
 		this.triggerAutoGrader = this.triggerAutoGrader.bind(this);
-		this.state = {exams:[], loading:false};
+		this.state = {exams:[], displayCheckmark:false };
 	}
 
 	triggerAutoGrader(event) {
@@ -27,7 +27,11 @@ class AutoGrader extends Component {
             }).then(res => res.json())
             .then(json => {
                 if(json.Result && json.Result != 'Success')
-                    this.props.navigate('/login');
+					this.props.navigate('/login');
+				this.setState({ displayCheckmark: true });
+				setTimeout(() => {
+					this.setState({ displayCheckmark: false });
+				}, 3000);
             });
 	}
 
@@ -56,11 +60,12 @@ class AutoGrader extends Component {
 
 	componentDidMount() {
 		this.showExamButtons();
-		this.interval = setInterval(this.refreshExamButtons, 1000);
+		this.refreshExamButtons();
+		//this.interval = setInterval(this.refreshExamButtons, 1000);
 	}
 
 	componentWillUnmount() {
-		clearInterval(this.interval);
+		//clearInterval(this.interval);
 	}
 
 
@@ -77,7 +82,7 @@ class AutoGrader extends Component {
 					{this.showExamButtons()}
 					
 				</div>
-				<Icon />
+				{this.state.displayCheckmark ? <Icon /> : null}
 			</div>
 		)
 	}
