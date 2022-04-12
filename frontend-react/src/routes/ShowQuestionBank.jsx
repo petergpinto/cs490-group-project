@@ -236,6 +236,7 @@ class ShowQuestionBank extends Component {
 				body:data
 		}).then(res => {
 			this.getExamQuestions();
+			this.getPointValues();
 			this.setState({ loading: false })
 			return res.json();
 		});
@@ -252,6 +253,7 @@ class ShowQuestionBank extends Component {
                 body:data
 			}).then(res => {
 				this.getExamQuestions();
+				this.getPointValues();
 				this.setState({ loading: false })
 				return res.json();
 			});
