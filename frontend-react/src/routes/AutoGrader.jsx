@@ -2,6 +2,7 @@ import React, { Component, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Dimmer, Loader } from "semantic-ui-react";
 import './AutoGrader.css';
+import { Alert } from "react-alert";
 
 class AutoGrader extends Component {
 
@@ -15,6 +16,7 @@ class AutoGrader extends Component {
 	}
 
 	triggerAutoGrader(event) {
+		alert("Exam Graded");
 		let data = new URLSearchParams();
 		data.append("ExamId", event.target.value);
 		return fetch('https://cs490backend.peterpinto.dev/triggerAutoGrader', {

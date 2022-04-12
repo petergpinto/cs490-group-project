@@ -1,6 +1,7 @@
 import React, { Component, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import './ReviewExams.css';
+import { Alert } from "react-alert";
 
 
 class ReviewExams extends Component {
@@ -155,6 +156,7 @@ class ReviewExams extends Component {
 	}
 
 	releaseScores(event) {
+		alert("Exam Score Released");
 		let data = new URLSearchParams();
         data.append("ExamId", event.target.value);
 

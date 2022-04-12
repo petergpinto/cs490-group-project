@@ -58,30 +58,45 @@
 }
 
 .ExamSubmitButton button {
-    background-color: #04AA6D;
-    border: none;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    font-size: 17px;
+	background-color: #fbcf18;
+    	border: none;
+    	text-align: center;
+    	padding: 14px 16px;
+	position: relative;
+	bottom: -130px;
+	float: right;
+    	text-decoration: none;
+    	font-size: 17px;
 
 }
 
 .ExamSubmitButton button:hover {
-   background-color: #ddd;
+   background-color: #ffe05f;
   color: black;
 }
 
 .ExamSubmitButton button:active {
-      background-color: #04AA6D;
+      background-color: #ffe05f;
   color: white;
 }
+
 
 .StudentTestCaseTable table, .StudentTestCaseTable tr, .StudentTestCaseTable td, .StudentTestCaseTable th {
 	border: 1px solid black;
 	margin-left: auto;
 	margin-right: auto;
 	max-width:200px;
+}
+
+.StudentLanding #Take{
+	background-color: blue;
+	color: white;
+
+}
+
+.StudentLanding #View{
+	background-color: blue;
+	color: white;
 }
 
 .QuestionMinimap {
@@ -92,27 +107,83 @@
 	align-self: center;
 	margin: 10px;
 }
-
+/*
 .NextPrevButtons button {
 	background-color: #04AA6D;
 	border: none;
 	text-align: center;
 	padding: 14px 16px;
+	position: relative;
+	left: -190px;
+	bottom: -10px;
 	text-decoration: none;
 	font-size: 17px;
 }
+*/
+.NextPrevButtons #prev {
+	background-color: #04AA6D;
+        border: none;
+        text-align: center;
+        padding: 14px 16px;
+        position: relative;
+        left: -160px;
+        bottom: -10px;
+        text-decoration: none;
+        font-size: 17px;
+
+}
+
+.NextPrevButtons #next {
+        background-color: #04AA6D;
+        border: none;
+        text-align: center;
+        padding: 14px 16px;
+        position: relative;
+        right: -160px;
+        bottom: -10px;
+        text-decoration: none;
+        font-size: 17px;
+
+}
+
+
+/*
 .NextPrevButtons button:hover {
-	background-color: #ddd;
+	background-color: #15cc89;
 	color: black;
 }
 
 .NextPrevButtons button:active {
-	background-color: #04AA6D;
+	background-color: #15cc89;
 	color: white;
 }
+*/
+
+.NextPrevButtons #prev:hover {
+        background-color: #15cc89;
+        color: black;
+}
+
+.NextPrevButtons #prev:active {
+        background-color: #15cc89;
+        color: white;
+}
+
+.NextPrevButtons #next:hover {
+        background-color: #15cc89;
+        color: black;
+}
+
+.NextPrevButtons #next:active {
+        background-color: #15cc89;
+        color: white;
+}
+
+
 
 .QuestionMinimap {
-	background-color: #999999;
+	background-color: #a6a7a7;
+	border-color: blue;
 
 }
 
@@ -122,9 +193,16 @@
 	border: none;
         background-color: blue;
         border-radius: 12px;
+	position: relative;
+	top: -10px;
         color: white;
         font-size: 14px;
 	margin-left: 10px;
+}
+
+.QuestionMinimap h4{
+	color: #dd1e1e;
+	font-weight: bold;
 }
 
 .QuestionMinimap button:hover{

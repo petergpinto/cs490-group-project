@@ -76,10 +76,10 @@ class StudentLanding extends Component {
 					<div className="TopNavigationBar">
 						<button onClick={this.resetPage}>Home</button>
 						{ true? null:
-						<button onClick={this.refreshExamList}>Take Exam</button>
+						<button name='Take' id='Take' onClick={this.refreshExamList}>Take Exam</button>
 						}
 						{ true? null:
-						<button >View Exam Scores</button>
+						<button name='View' id='View' >View Exam Scores</button>
 						}
 						<button onClick={this.logout}>Logout</button>
 					</div>
@@ -257,12 +257,12 @@ class TakeExam extends Component {
 		let html = [];
 		if (parseInt(this.state.activeQuestion) > 0) {
 			//show prev button
-			html.push(<button onClick={this.goToPrevQuestion}>Previous Question</button>);
+			html.push(<button name='prev' id='prev' onClick={this.goToPrevQuestion}>Previous Question</button>);
 		}
 		html.push(<span>&nbsp;&nbsp;&nbsp;</span>)
 		if (parseInt(this.state.activeQuestion) < this.state.data.length - 1) {
 			//show next button
-			html.push(<button onClick={this.goToNextQuestion}>Next Question</button>);
+			html.push(<button name='next' id='next' onClick={this.goToNextQuestion}>Next Question</button>);
 		}
 
 		return html;

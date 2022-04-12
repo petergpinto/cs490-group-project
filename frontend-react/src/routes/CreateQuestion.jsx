@@ -1,5 +1,6 @@
 import React, { Component, useState } from "react";
 import './CreateQuestion.css';
+import { Alert } from "react-alert";
 
 class CreateQuestion extends Component {
 
@@ -35,6 +36,7 @@ class CreateQuestion extends Component {
 		}));
 	}
 	async submitQuestion(questionData) {
+		alert("Question Added");
 		questionData.preventDefault();	
 		var data = new URLSearchParams();
 		data.append('QuestionText', questionData.target[0].value);
