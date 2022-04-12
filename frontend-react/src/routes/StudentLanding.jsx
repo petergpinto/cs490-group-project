@@ -440,7 +440,7 @@ class ViewScore extends Component {
 			if(items[i].QuestionId == questionId)
 				return (
 					<tr>
-                		<td>Function Name</td><td style={{border:'none'}}></td><td style={{border:"none"}}></td><td>{items[i].CorrectFunctionName == 1? "Correct":"Incorrect"}</td><td>{items[i].CorrectFunctionName == 1? 0 : -1}</td>
+						<td>Function Name</td><td style={{ border: 'none', 'background': 'inherit' }}></td><td style={{ border: "none", 'background': 'inherit'}}></td><td>{items[i].CorrectFunctionName == 1? "Correct":"Incorrect"}</td><td>{items[i].CorrectFunctionName == 1? 0 : -1}</td>
             		</tr>
 				)
 		}
@@ -468,7 +468,7 @@ class ViewScore extends Component {
 		let items = this.state.functions;
 		for (let i in items) {
 			if (items[i].QuestionId == questionId && items[i].ExamId == this.props.ExamId) {
-				return <tr><td>Function Name</td><td style={{ border: 'none' }}></td><td style={{ border: 'none' }}></td><td style={{ border: 'none' }}></td><td>{items[i].CorrectFunctionName == 1 ? "Correct" : "Incorrect"}</td><td>{items[i].CorrectFunctionName == 1 ? 0 : -1}</td><td style={{ border: 'none' }}></td><td style={{ border: 'none' }}></td></tr>
+				return <tr><td>Function Name</td><td style={{ border: 'none', 'background': 'inherit' }}></td><td style={{ border: 'none', 'background': 'inherit' }}></td><td style={{ border: 'none', 'background': 'inherit' }}></td><td>{items[i].CorrectFunctionName == 1 ? "Correct" : "Incorrect"}</td><td>{items[i].CorrectFunctionName == 1 ? 0 : -1}</td><td style={{ border: 'none', 'background': 'inherit' }}></td><td style={{ border: 'none', 'background': 'inherit' }}></td></tr>
 			}
 		}
 	}
@@ -477,7 +477,7 @@ class ViewScore extends Component {
 		let items = this.state.constraints;
 		for (let i in items) {
 			if (items[i].QuestionId == questionId && items[i].ExamId == this.props.ExamId) {
-				return <tr><td>Constraint Followed</td><td style={{ border: 'none' }}></td><td style={{ border: 'none' }}></td><td style={{ border: 'none' }}></td><td>{items[i].ConstraintFollowed == 1 ? "Followed" : "Not Followed"}</td><td>{items[i].ConstraintFollowed == 1 ? 0 : -1}</td><td style={{ border: 'none' }}></td><td style={{ border: 'none' }}></td></tr>
+				return <tr><td>Constraint Followed</td><td style={{ border: 'none', 'background': 'inherit' }}></td><td style={{ border: 'none', 'background': 'inherit' }}></td><td style={{ border: 'none', 'background': 'inherit' }}></td><td>{items[i].ConstraintFollowed == 1 ? "Followed" : "Not Followed"}</td><td>{items[i].ConstraintFollowed == 1 ? 0 : -1}</td><td style={{ border: 'none', 'background': 'inherit' }}></td><td style={{ border: 'none', 'background': 'inherit' }}></td></tr>
 			}
 		}
 	}
@@ -515,7 +515,7 @@ class ViewScore extends Component {
 		if (points < 0)
 			points = 0;
 
-		return <tr><td>Total Points</td><td style={{ border: 'none' }}></td><td style={{ border: 'none' }}></td><td style={{ border: 'none' }}></td><td>{totalPoints.toFixed(1)}</td><td>{points.toFixed(1)}</td></tr>
+		return <tr><td>Total Points</td><td style={{ border: 'none', 'background': 'inherit' }}></td><td style={{ border: 'none', 'background': 'inherit' }}></td><td style={{ border: 'none', 'background': 'inherit' }}></td><td>{totalPoints.toFixed(1)}</td><td>{points.toFixed(1)}</td></tr>
 	}
 
 	showResponses() {
