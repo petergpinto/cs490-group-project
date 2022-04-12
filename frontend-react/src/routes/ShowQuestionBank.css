@@ -32,7 +32,7 @@
 	flex-direction: column;
 	min-width: 500px;
 	min-height: 500px;
-	border: 2px solid black;
+	padding: 10px;
 }
 
 .leftSplitScreen {
@@ -40,7 +40,7 @@
 	flex-direction: column;
 	min-width: 500px;
 	min-height: 500px;
-	border: 2px solid black;
+	padding:10px;
 }
 
 .leftSplitScreen table, .leftSplitScreen td, .leftSplitScreen tr, .leftSplitScreen th {
