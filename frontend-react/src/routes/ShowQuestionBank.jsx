@@ -224,8 +224,8 @@ class ShowQuestionBank extends Component {
 		let questionData
 
 		for (let i = 0; i < this.state.data.length; i++) {
-			if (questionid == this.state.data[index].QuestionId) {
-				questionData = this.state.data[index];
+			if (questionid == this.state.data[i].QuestionId) {
+				questionData = this.state.data[i];
 				break;
 			}
         }
