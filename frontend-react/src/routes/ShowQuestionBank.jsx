@@ -171,7 +171,7 @@ class ShowQuestionBank extends Component {
 		if(this.props.buildForm) {
 			return items.map((row, index)=>{
             	return <tr key={index}>
-					<td><button className="append" index={index} onClick={this.handleChange}><PlusButton style={{ 'width': '50px', 'height': 'auto', 'pointer-events':'none', 'background':'none', 'border':'none'}} /></button></td>
+					<td><button style={{ 'background': 'none', 'border': 'none' }} className="append" index={index} onClick={this.handleChange}><PlusButton style={{ 'width': '50px', 'height': 'auto', 'pointer-events':'none'}} /></button></td>
 					<RenderRow key={index} data={row} keys={keys} showquestiontext/>
 					</tr>
         	})
@@ -359,7 +359,7 @@ class ShowQuestionBank extends Component {
 		let keys = this.getKeys(items);
 		return (  items.map((row, index) => {
 					return (<tr>
-						<td><button className="delete" index={index} questionid={row.QuestionId} onClick={this.handleChange}><MinusButton style={{ 'width': '20px', 'height': 'auto', 'pointer-events': 'none', 'background':'none', 'border':'none' }} /></button></td>
+						<td><button style={{ 'background': 'none', 'border': 'none' }} className="delete" index={index} questionid={row.QuestionId} onClick={this.handleChange}><MinusButton style={{ 'width': '20px', 'height': 'auto', 'pointer-events': 'none'}} /></button></td>
 								<td><NumericInput questionid={row.QuestionId} data-key={'PointValue'+index} key={'PointValue'+index} min={0} value={this.state.pointValue['PointValue'+index]? this.state.pointValue['PointValue'+index] : this.state.QuestionPointValues[index] ? this.state.QuestionPointValues[index]["PointValue"]: 1} onChange={this.pointValueChange} size={5}/></td>
 								<RenderRow key={index} data={row} keys={keys}/>
 							</tr>
