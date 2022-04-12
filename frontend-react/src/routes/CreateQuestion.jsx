@@ -165,46 +165,47 @@ class CreateQuestion extends Component {
 
 		return (
 			<div className="CreateQuestion">
-				<form onSubmit={this.submitQuestion}>
-					<br/>
-					<label>Question Text</label>
-					<br/>
-					<textarea type='text' size='1500' id='QuestionText' key='QuestionText' onChange={this.updateQuestionTextState} value={ this.state.questionText }/>
-					<br/><br/>
-					<label>Function Name</label>
-					<br/>
-					<input type='text' id='FunctionName' key='FunctionName' onChange={this.updateFunctionNameState} value={this.state.functionName}/>
-					<br/><br/>
-					<label>Difficulty Rating </label>
-					<select name='DifficultyRating' onChange={this.updateDifficultyState} value={this.state.difficulty}>
-						<option value='1'>Easy</option>
-						<option value='2'>Medium</option>
-						<option value='3'>Hard</option>
-					</select>
-					<label>Category</label>
-					<select name="Category" onChange={this.updateCategoryState} value={this.state.category}>
-						<option value="For Loops">For Loops</option>
-						<option value="While Loops">While Loops</option>
-						<option value="Basic Math">Basic Math</option>
-						<option value="Recursion">Recursion</option>
-						<option value="Conditionals">Conditionals</option>
-						<option value="Strings">Strings</option>
-						<option value="Advanced Math">Advanced Math</option>
-					</select>
-					<label>Constraint Type</label>
-					<select name="ConstraintType" onChange={this.updateConstraintState} value={this.state.constraint}>
-						<option value="None">None</option>
-						<option value="For">For</option>
-						<option value="While">While</option>
-						<option value="Recursion">Recursion</option>
-					</select>
-					{ this.showTestCaseInput() }
-					<br />
-					<button onClick={this.updateButton} type="button"> Add Test Case</button>
-					<input type='submit' name='Submit2' id='Submit2' value='Add Question' />
+				<div style={{'display':'flex', 'flex-direction':'column'}}>
+					<form onSubmit={this.submitQuestion}>
+						<br/>
+						<label>Question Text</label>
+						<br/>
+						<textarea type='text' size='1500' id='QuestionText' key='QuestionText' onChange={this.updateQuestionTextState} value={ this.state.questionText }/>
+						<br/><br/>
+						<label>Function Name</label>
+						<br/>
+						<input type='text' id='FunctionName' key='FunctionName' onChange={this.updateFunctionNameState} value={this.state.functionName}/>
+						<br/><br/>
+						<label>Difficulty Rating </label>
+						<select name='DifficultyRating' onChange={this.updateDifficultyState} value={this.state.difficulty}>
+							<option value='1'>Easy</option>
+							<option value='2'>Medium</option>
+							<option value='3'>Hard</option>
+						</select>
+						<label>Category</label>
+						<select name="Category" onChange={this.updateCategoryState} value={this.state.category}>
+							<option value="For Loops">For Loops</option>
+							<option value="While Loops">While Loops</option>
+							<option value="Basic Math">Basic Math</option>
+							<option value="Recursion">Recursion</option>
+							<option value="Conditionals">Conditionals</option>
+							<option value="Strings">Strings</option>
+							<option value="Advanced Math">Advanced Math</option>
+						</select>
+						<label>Constraint Type</label>
+						<select name="ConstraintType" onChange={this.updateConstraintState} value={this.state.constraint}>
+							<option value="None">None</option>
+							<option value="For">For</option>
+							<option value="While">While</option>
+							<option value="Recursion">Recursion</option>
+						</select>
+						{ this.showTestCaseInput() }
+						<br />
+						<button onClick={this.updateButton} type="button"> Add Test Case</button>
+						<input type='submit' name='Submit2' id='Submit2' value='Add Question' />
+					</form>
 					{this.state.displayCheckmark ? <Icon /> : null}
-				</form>
-				
+				</div>
 				<ShowQuestionBank showElement={true} />
 			</div>
 		);
