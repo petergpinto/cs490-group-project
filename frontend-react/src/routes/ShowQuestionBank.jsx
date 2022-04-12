@@ -269,7 +269,8 @@ class ShowQuestionBank extends Component {
 
 	async selectExam(event) {
 		await this.setState({selectedExam:event.target.getAttribute('examid')});
-		this.setState({pointValue : {}});
+		this.setState({ pointValue: {} });
+		this.setState({ QuestionPointValues: [] })
 		this.getPointValues();
 		this.getExamQuestions();
 	}
