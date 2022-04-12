@@ -61,7 +61,7 @@ for i in range(len(json_file)):
 		constraint_results.append({"UserId":user_id,"ExamId":exam_id,"QuestionId":q_id,"ConstraintFollowed":response.find("while") != -1})
 	elif(constraint == "For"):
 		constraint_results.append({"UserId":user_id,"ExamId":exam_id,"QuestionId":q_id,"ConstraintFollowed":response.find("for") != -1})
-	if (answer["TestCaseInputType"] == "L"):
+	if answer["TestCaseInputType"] == "L" and type(test_input) != type([1,2,3]):
 		tobexeced = response + "\noutput=" + test_case + "(" + "*test_input" + ")"
 	else:
 		tobexeced = response + "\noutput=" + test_case + "(" + "test_input" + ")"
