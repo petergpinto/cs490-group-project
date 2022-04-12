@@ -359,7 +359,7 @@ class ShowQuestionBank extends Component {
 		let keys = this.getKeys(items);
 		return (  items.map((row, index) => {
 					return (<tr>
-								<button className="delete" index={index} questionid={row.QuestionId} onClick={this.handleChange}>-</button>
+						<button className="delete" index={index} questionid={row.QuestionId} onClick={this.handleChange}><MinusButton style={{ 'width': '50px', 'height': 'auto', 'pointer-events': 'none' }} /></button>
 								<NumericInput questionid={row.QuestionId} data-key={'PointValue'+index} key={'PointValue'+index} min={0} value={this.state.pointValue['PointValue'+index]? this.state.pointValue['PointValue'+index] : this.state.QuestionPointValues[index] ? this.state.QuestionPointValues[index]["PointValue"]: 1} onChange={this.pointValueChange} size={5}/>
 								<RenderRow key={index} data={row} keys={keys}/>
 							</tr>
@@ -508,5 +508,20 @@ const PlusButton = (props) => (
 	>
 		<path d="M178.876 138.876V90.287c0-11.046-8.954-20-20-20s-20 8.954-20 20v48.589H90.287c-11.046 0-20 8.954-20 20s8.954 20 20 20h48.589v48.59c0 11.046 8.954 20 20 20s20-8.954 20-20v-48.59h48.59c11.046 0 20-8.954 20-20s-8.954-20-20-20h-48.59z" />
 		<path d="M286.527 0H31.225C18.685 0 8.519 10.166 8.519 22.707v272.339c0 12.54 10.166 22.707 22.707 22.707h255.301c12.54 0 22.707-10.166 22.707-22.707V22.707C309.233 10.166 299.067 0 286.527 0zM158.876 274.646c-63.985 0-115.77-51.778-115.77-115.77 0-63.985 51.778-115.77 115.77-115.77 63.986 0 115.77 51.779 115.77 115.77 0 63.986-51.779 115.77-115.77 115.77z" />
+	</svg>
+)
+
+const MinusButton = (props) => (
+	<svg
+		xmlns="http://www.w3.org/2000/svg"
+		viewBox="0 0 311.539 311.539"
+		style={{
+			enableBackground: "new 0 0 311.539 311.539",
+		}}
+		xmlSpace="preserve"
+		{...props}
+	>
+		<path d="M214.603 135.77H96.937c-11.046 0-20 8.954-20 20s8.954 20 20 20h117.666c11.046 0 20-8.954 20-20s-8.954-20-20-20z" />
+		<path d="M155.77 0C69.74 0 0 69.74 0 155.77s69.74 155.77 155.77 155.77 155.77-69.74 155.77-155.77S241.799 0 155.77 0zm0 271.539C91.784 271.539 40 219.761 40 155.77 40 91.784 91.778 40 155.77 40c63.986 0 115.77 51.778 115.77 115.77-.001 63.985-51.779 115.769-115.77 115.769z" />
 	</svg>
 )
