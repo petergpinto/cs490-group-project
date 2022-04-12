@@ -40,7 +40,7 @@ select{
 }
 
 .CreateQuestion select{
-	margin-left: 20px;
+	margin-left: 2px;
 }
 
 #TestCaseOutputType{
@@ -66,10 +66,6 @@ select{
 .CreateQuestion button:active{
 	background-color: #1799fa;
 	color: black;
-}
-
-.CreateQuestion select{
-	margin-right: 50px;
 }
 
 .CreateQuestion svg {
