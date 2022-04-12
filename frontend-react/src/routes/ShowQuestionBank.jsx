@@ -360,7 +360,7 @@ class ShowQuestionBank extends Component {
 		return (  items.map((row, index) => {
 					return (<tr>
 						<td><button className="delete" index={index} questionid={row.QuestionId} onClick={this.handleChange}><MinusButton style={{ 'width': '20px', 'height': 'auto', 'pointer-events': 'none' }} /></button></td>
-								<NumericInput questionid={row.QuestionId} data-key={'PointValue'+index} key={'PointValue'+index} min={0} value={this.state.pointValue['PointValue'+index]? this.state.pointValue['PointValue'+index] : this.state.QuestionPointValues[index] ? this.state.QuestionPointValues[index]["PointValue"]: 1} onChange={this.pointValueChange} size={5}/>
+								<td><NumericInput questionid={row.QuestionId} data-key={'PointValue'+index} key={'PointValue'+index} min={0} value={this.state.pointValue['PointValue'+index]? this.state.pointValue['PointValue'+index] : this.state.QuestionPointValues[index] ? this.state.QuestionPointValues[index]["PointValue"]: 1} onChange={this.pointValueChange} size={5}/></td>
 								<RenderRow key={index} data={row} keys={keys}/>
 							</tr>
 					)}
