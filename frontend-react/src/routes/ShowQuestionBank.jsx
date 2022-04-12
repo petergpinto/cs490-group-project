@@ -86,6 +86,7 @@ class ShowQuestionBank extends Component {
 					this.props.navigate('/login');
                 this.setState({examResult:json})
 				this.setState({ selectedExam: json.ExamId });
+				this.setState({ pointValue: {} });
 				this.refreshExamList();
 				this.getExamQuestions();
             });
