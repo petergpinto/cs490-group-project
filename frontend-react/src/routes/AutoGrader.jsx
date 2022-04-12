@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { Dimmer, Loader } from "semantic-ui-react";
 import './AutoGrader.css';
 import { Alert } from "react-alert";
-import { ReactComponent as ReactLogo } from './Checkmark.svg';
 
 class AutoGrader extends Component {
 
