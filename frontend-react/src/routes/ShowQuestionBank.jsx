@@ -173,7 +173,7 @@ class ShowQuestionBank extends Component {
 		if(this.props.buildForm) {
 			return items.map((row, index)=>{
             	return <tr key={index}>
-					<td><button className="append" index={index} onClick={this.handleChange}>+</button></td>
+					<td><PlusButton index={index} onClick={this.handleChange} /><button className="append" index={index} onClick={this.handleChange}>+</button></td>
 					<RenderRow key={index} data={row} keys={keys} showquestiontext/>
 					</tr>
         	})
@@ -497,3 +497,19 @@ function WithNavigate(props) {
     return <ShowQuestionBank {...props} navigate={navigate} />
 }
 export default WithNavigate
+
+
+const PlusButton = (props) => (
+	<svg
+		xmlns="http://www.w3.org/2000/svg"
+		width={349.03}
+		height={349.031}
+		style={{
+			enableBackground: "new 0 0 349.03 349.031",
+		}}
+		xmlSpace="preserve"
+		{...props}
+	>
+		<path d="M349.03 141.226v66.579a9.078 9.078 0 0 1-9.079 9.079H216.884v123.067a9.077 9.077 0 0 1-9.079 9.079h-66.579c-5.009 0-9.079-4.061-9.079-9.079V216.884H9.079A9.08 9.08 0 0 1 0 207.805v-66.579a9.079 9.079 0 0 1 9.079-9.079h123.068V9.079c0-5.018 4.069-9.079 9.079-9.079h66.579a9.078 9.078 0 0 1 9.079 9.079v123.068h123.067a9.077 9.077 0 0 1 9.079 9.079z" />
+	</svg>
+)
