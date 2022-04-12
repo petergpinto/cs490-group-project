@@ -1,7 +1,6 @@
 import React, { Component, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import NumericInput from 'react-numeric-input';
-import { Dimmer, Loader } from "semantic-ui-react";
 import './ShowQuestionBank.css';
 
 function sortByProperty(property){
@@ -44,7 +43,6 @@ class ShowQuestionBank extends Component {
 			checked: {},
 			selectedExam: -1,
 			examResult: "",
-			loading: true,
 			categoryFilter: "",
 			constraintFilter: "",
 			difficultyFilter: 0,
@@ -396,7 +394,6 @@ class ShowQuestionBank extends Component {
 
 		return (
 			<div className={this.props.buildForm ? "ShowQuestionBankForm" : "ShowQuestionBankList"} >
-				{ this.state.loading ? <div className="Loader"><Dimmer active inverted size="massive"><Loader inverted>Loading</Loader></Dimmer></div> : null }
 				{ !this.props.buildForm? null :
 					<div className='leftSplitScreen'>
 						<div className='ExamSelector'>
