@@ -59,14 +59,13 @@
 
 .ExamSubmitButton button {
 	background-color: #fbcf18;
-    	border: none;
-    	text-align: center;
-    	padding: 14px 16px;
+    border: none;
+    text-align: center;
+    padding: 14px 16px;
 	position: relative;
-	bottom: -130px;
-	float: right;
-    	text-decoration: none;
-    	font-size: 17px;
+	bottom: -5vh;
+    text-decoration: none;
+    font-size: 17px;
 
 }
 
