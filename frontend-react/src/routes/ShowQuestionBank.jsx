@@ -358,7 +358,8 @@ class ShowQuestionBank extends Component {
 		let items = this.state.examQuestions;
 		let keys = this.getKeys(items);
 		return (items.map((row, index) => {
-			let html = <tr><button className="delete" index={index} questionid={row.QuestionId} onClick={this.handleChange}><MinusButton style={{ 'width': '20px', 'height': 'auto', 'pointer-events': 'none' }} /></button></tr>
+			let html = [];
+			html.push(<tr><button className="delete" index={index} questionid={row.QuestionId} onClick={this.handleChange}><MinusButton style={{ 'width': '20px', 'height': 'auto', 'pointer-events': 'none' }} /></button></tr>)
 			html.push(<tr><NumericInput questionid={row.QuestionId} data-key={'PointValue' + index} key={'PointValue' + index} min={0} value={this.state.pointValue['PointValue' + index] ? this.state.pointValue['PointValue' + index] : this.state.QuestionPointValues[index] ? this.state.QuestionPointValues[index]["PointValue"] : 1} onChange={this.pointValueChange} size={5} />
 				<RenderRow key={index} data={row} keys={keys} />
 			</tr>)
