@@ -170,10 +170,10 @@ class ShowQuestionBank extends Component {
 
 		if(this.props.buildForm) {
 			return items.map((row, index) => {
-				let html = <PlusButton style={{ 'width': '50px', 'height': 'auto', 'pointer-events': 'none' }} />
+				let html = <PlusButton style={{ 'width': '50px !important', 'height': 'auto', 'pointer-events': 'none' }} />
 				for (let i = 0; i < this.state.examQuestions.length; i++) {
 					if (this.state.examQuestions[i].QuestionId == row.QuestionId) {
-						html = <Checkmark style={{ 'width': '50px', 'height': 'auto' }} />
+						html = <Checkmark style={{ 'width': '50px !important', 'height': 'auto' }} />
                     }
                 }
 				
