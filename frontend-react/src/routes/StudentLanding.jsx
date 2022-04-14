@@ -379,9 +379,6 @@ class ViewScore extends Component {
         let responses = this.state.data;
         let small_map = {};
 
-        if(this.props.ExamId == -1)
-            return;
-
         for(let i in responses) {
 			if (responses[i].InstructorOverrideScore || responses[i].InstructorOverrideScore === 0) {
 				points += responses[i].InstructorOverrideScore;
