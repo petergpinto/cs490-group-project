@@ -404,7 +404,8 @@ class ViewScore extends Component {
                 delete small_map[key];
             }
         }
-        let items2 = this.state.functions;
+		let items2 = this.state.functions;
+		console.log(items2)
 		for (let i in items2) {
 			console.log("TEST", items2[i].OverrideScore, items2[i].FunctionName)
 			if (items2[i].CorrectFunctionName == 0) {
