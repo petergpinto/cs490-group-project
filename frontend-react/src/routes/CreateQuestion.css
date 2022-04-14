@@ -7,8 +7,8 @@ label{
 
 #QuestionText{
 	margin-left: 20px;
-	height: 80px;
-	width: 500px;
+	height: 150px;
+	width: 400px;
 }
 
 #FunctionName{
@@ -43,10 +43,6 @@ select{
 	margin-left: 2px;
 }
 
-#TestCaseOutputType{
-	margin-left: 20px;
-}
-
 .CreateQuestion button{
 	width: 100px;
         height: 30px;
@@ -77,4 +73,19 @@ select{
 .CreateQuestion {
 	display:flex;
 	flex-direction:row;
+}
+
+.CreateQuestionForm {
+	padding: 10px;
+}
+
+.CreateQuestionForm form {
+	border: 1px solid black;
+	width:700px;
+}
+
+.TestCaseFormPart {
+	display: flex;
+	flex-direction: column;
+	padding: 10px;
 }
