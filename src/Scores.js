@@ -18,7 +18,7 @@ app.post('/studentGetFunctionNameScores', async function(request, response) {
 
     getFunctionScoresPromise = () => {
         return new Promise((resolve, reject) => {
-            pool.query('SELECT * FROM FunctionNameScores WHERE ExamId=? AND UserId=?', [ExamId, UserId],
+            pool.query('SELECT FunctionNameScores.CorrectFunctionName, FunctionNameScores.OverrideScore, FunctionNameScores.ProvidedFunctionName, FunctionNameScores.UserId, FunctionNameScores.ExamId, FunctionNameScores.QuestionId, Questions.FunctionName FROM FunctionNameScores INNER JOIN Questions ON FunctionNameScores.QuestionId=Questions.QuestionId WHERE FunctionNameScores.ExamId=? AND FunctionNameScores.UserId=?', [ExamId, UserId],
                 (error, elements) => {
                     if(error) return reject(error);
                     return resolve(elements);
@@ -47,7 +47,7 @@ app.post('/getFunctionNameScores', async function(request, response) {
 
 	getFunctionScoresPromise = () => {
         return new Promise((resolve, reject) => {
-            pool.query('SELECT FunctionNameScores.CorrectFunctionName, FunctionNameScores.UserId, FunctionNameScores.ExamId, FunctionNameScores.QuestionId, Questions.FunctionName FROM FunctionNameScores INNER JOIN Questions ON FunctionNameScores.QuestionId=Questions.QuestionId WHERE FunctionNameScores.ExamId=?', [ExamId],
+            pool.query('SELECT FunctionNameScores.CorrectFunctionName, FunctionNameScores.OverrideScore, FunctionNameScores.ProvidedFunctionName, FunctionNameScores.UserId, FunctionNameScores.ExamId, FunctionNameScores.QuestionId, Questions.FunctionName FROM FunctionNameScores INNER JOIN Questions ON FunctionNameScores.QuestionId=Questions.QuestionId WHERE FunctionNameScores.ExamId=?', [ExamId],
                 (error, elements) => {
                     if(error) return reject(error);
                     return resolve(elements);
@@ -75,7 +75,7 @@ app.post('/getConstraintScores', async function(request, response) {
 
     getFunctionScoresPromise = () => {
         return new Promise((resolve, reject) => {
-            pool.query('SELECT * FROM ConstraintScores WHERE ExamId=?', [ExamId],
+            pool.query('SELECT ConstraintScores.UserId, ConstraintScores.ExamId, ConstraintScores.QuestionId, ConstraintScores.ConstraintFollowed, ConstraintScores.OverrideScore, Questions.ConstraintType FROM ConstraintScores INNER JOIN Questions ON ConstraintScores.QuestionId=Questions.QuestionId WHERE ConstraintScores.ExamId=?', [ExamId],
                 (error, elements) => {
                     if(error) return reject(error);
                     return resolve(elements);
@@ -104,7 +104,7 @@ app.post('/studentGetConstraintScores', async function(request, response) {
 
     getFunctionScoresPromise = () => {
         return new Promise((resolve, reject) => {
-            pool.query('SELECT * FROM ConstraintScores WHERE ExamId=? AND UserId=?', [ExamId, UserId],
+            pool.query('SELECT ConstraintScores.UserId, ConstraintScores.ExamId, ConstraintScores.QuestionId, ConstraintScores.ConstraintFollowed, ConstraintScores.OverrideScore, Questions.ConstraintType FROM ConstraintScores INNER JOIN Questions ON ConstraintScores.QuestionId=Questions.QuestionId WHERE ConstraintScores.ExamId=? AND ConstraintScores.UserId=?', [ExamId, UserId],
                 (error, elements) => {
                     if(error) return reject(error);
                     return resolve(elements);
@@ -115,6 +115,48 @@ app.post('/studentGetConstraintScores', async function(request, response) {
     response.json(await getFunctionScoresPromise());
 
 });
+
+app.post('/overrideConstraintScore', async function(request, response) {
+	if(!(await util.isUserLoggedIn(request.session, pool))) {
+        response.json({"Result":"Please login"});
+        response.end();
+        return;
+    }
+
+	let ExamId = request.body.ExamId;
+	let UserId = request.body.UserId;
+	let QuestionId = request.body.QuestionId;
+	let OverrideScore = request.body.OverrideScore;
+	if(!OverrideScore) {
+		OverrideScore=0
+	}
+
+	if(!ExamId || !UserId || !QuestionId || !OverrideScore) {
+		response.json({'Result':"Invalid Request"});
+        response.end();
+        return;
+    }
+	
+	constraintOverridePromise = () => {
+        return new Promise((resolve, reject) => {
+            pool.query('UPDATE ConstraintScores SET OverrideScore=? WHERE ExamId=? AND UserId=? AND QuestionId=?', [OverrideScore, ExamId, UserId, QuestionId],
+                (error, elements) => {
+                    if(error) return reject(error);
+                    return resolve(elements);
+                });
+        });
+    }
+	
+	if(await constraintOverridePromise()) {
+        response.json({'Result':'Success'});
+        response.end();
+    } else {
+        response.json({'Result':'Error'});
+        response.end();
+    }
+
+});
+
 
 app.post('/getStudentResponsesAndScores', async function(request, response) {
 	if(!(await util.isUserLoggedIn(request.session, pool))) {
