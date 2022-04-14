@@ -213,9 +213,10 @@ class CreateQuestion extends Component {
 								</div>
 							</div>
 							{ this.showTestCaseInput() }
-							<br />
-							<button onClick={this.updateButton} type="button"> Add Test Case</button>
-							<input type='submit' name='Submit2' id='Submit2' value='Add Question' />
+							<div className="AddQuestionFormButtons">
+								<button onClick={this.updateButton} type="button"> Add Test Case</button>
+								<input type='submit' name='Submit2' id='Submit2' value='Add Question' />
+							</div>
 							</form>
 						</div>
 					{this.state.displayCheckmark ? <Icon /> : null}
