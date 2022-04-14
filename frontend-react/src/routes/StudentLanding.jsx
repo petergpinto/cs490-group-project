@@ -376,21 +376,23 @@ class ViewScore extends Component {
 	showExamTotalPoints(userId) {
         let points = 0;
         let totalPossible = 0;
-        let responses = this.state.data;
+        let responses = this.state.responses;
         let small_map = {};
 
-        if(this.props.ExamId == -1 || this.state.selectedUser == -1)
+        //console.info(responses);
+        if (this.state.selectedExam == -1 || this.state.selectedUser == -1)
             return;
 
-        for(let i in responses) {
-                if(responses[i].InstructorOverrideScore) {
+        for (let i in responses) {
+            if (responses[i].UserId == userId) {
+                if (responses[i].InstructorOverrideScore || responses[i].InstructorOverrideScore === 0) {
                     points += responses[i].InstructorOverrideScore;
                 }
-                else if(responses[i].AutoGraderScore == 1) {
+                else if (responses[i].AutoGraderScore == 1) {
                     points += responses[i].TestCasePointValue;
                 }
                 else {
-                    if(responses[i].QuestionId in small_map){
+                    if (responses[i].QuestionId in small_map) {
                         small_map[responses[i].QuestionId] += 1
                     }
                     else {
@@ -398,23 +400,48 @@ class ViewScore extends Component {
                     }
                 }
                 totalPossible += responses[i].TestCasePointValue;
+            }
         }
-        for( var key in small_map){
-            if(small_map[key]<2){
+        console.info(small_map);
+        for (var key in small_map) {
+            if (small_map[key] < 2) {
                 delete small_map[key];
             }
         }
         let items2 = this.state.functions;
         for (let i in items2) {
-            if(items2[i].CorrectFunctionName == 0 && !(items2[i].QuestionId in small_map)) {
-                points -= 1;
+            if (items2[i].UserId == userId && items2[i].ExamId == this.state.selectedExam && !(items2[i].QuestionId in small_map)) {
+                if (items2[i].CorrectFunctionName == 0) {
+                    if (items2[i].OverrideScore || items2[i].OverrideScore === 0) {
+                        points += items2[i].OverrideScore;
+                    } else {
+                        points -= 1;
+                    }
+                } else {
+                    if (items2[i].OverrideScore || items2[i].OverrideScore === 0) {
+                        points += items2[i].OverrideScore;
+                    } else {
+                        points += 0;
+                    }
+                }
             }
         }
-        if(points < 0)
+
+        let items3 = this.state.constraints;
+        for (let i in items3) {
+            if (items3[i].UserId == userId && items3[i].ExamId == this.state.selectedExam && items3[i].ConstraintFollowed == 0 && !(items3[i].QuestionId in small_map)) {
+                if (items3[i].OverrideScore || items3[i].OverrideScore === 0) {
+                    points += items3[i].OverrideScore
+                } else {
+                    points -= 1;
+                }
+            }
+        }
+        if (points < 0)
             points = 0;
 
-        return <div className='TestCaseTable'><table><tr><td>Total Points</td><td>{points}</td></tr><tr><td>Total Possible Points</td><td>{totalPossible}</td></tr><tr><td>Percentage Score</td><td>{(points / totalPossible)*100}</td></tr></table></div>
-	}
+        return <div className='TestCaseTable'><h3>Final Score</h3><table><tr><td>Total Points</td><td>{points.toFixed(1)}</td></tr><tr><td>Total Possible Points</td><td>{totalPossible.toFixed(1)}</td></tr><tr><td>Percentage Score</td><td>{((points.toFixed(1) / totalPossible.toFixed(1)) * 100).toFixed(2)}</td></tr></table></div>
+    }
 
 	renderQuestion(questionId) {
 		let items = this.state.data;
