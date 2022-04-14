@@ -530,34 +530,38 @@ class ViewScore extends Component {
 		}
 		let items2 = this.state.functions;
 		for (let i in items2) {
-			if (items2[i].CorrectFunctionName == 0) {
-				if (items2[i].OverrideScore || items2[i].OverrideScore === 0) {
-					points += items2[i].OverrideScore;
+			if (items2[i].QuestionId == questionId) {
+				if (items2[i].CorrectFunctionName == 0) {
+					if (items2[i].OverrideScore || items2[i].OverrideScore === 0) {
+						points += items2[i].OverrideScore;
+					} else {
+						points -= 1;
+					}
 				} else {
-					points -= 1;
-				}
-			} else {
-				if (items2[i].OverrideScore || items2[i].OverrideScore === 0) {
-					points += items2[i].OverrideScore;
-				} else {
-					points += 0;
+					if (items2[i].OverrideScore || items2[i].OverrideScore === 0) {
+						points += items2[i].OverrideScore;
+					} else {
+						points += 0;
+					}
 				}
 			}
 		}
 
 		let items3 = this.state.constraints;
 		for (let i in items3) {
-			if (items3[i].ConstraintFollowed == 0) {
-				if (items3[i].OverrideScore || items3[i].OverrideScore === 0) {
-					points += items3[i].OverrideScore
+			if (items3[i].QuestionId == questionId) {
+				if (items3[i].ConstraintFollowed == 0) {
+					if (items3[i].OverrideScore || items3[i].OverrideScore === 0) {
+						points += items3[i].OverrideScore
+					} else {
+						points -= 1;
+					}
 				} else {
-					points -= 1;
-				}
-			} else {
-				if (items3[i].OverrideScore || items3[i].OverrideScore === 0) {
-					points += items3[i].OverrideScore
-				} else {
-					points += 0;
+					if (items3[i].OverrideScore || items3[i].OverrideScore === 0) {
+						points += items3[i].OverrideScore
+					} else {
+						points += 0;
+					}
 				}
 			}
 		}
