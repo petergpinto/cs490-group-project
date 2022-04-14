@@ -333,7 +333,7 @@ class ReviewExams extends Component {
 		let items = this.state.functions;
 		for (let i in items) {
 			if (items[i].UserId == userId && items[i].QuestionId == questionId && items[i].ExamId == this.state.selectedExam) {
-				return <tr><td>Function Name</td><td style={{ border: 'none', 'background': 'inherit' }}></td><td style={{ border: 'none', 'background': 'inherit' }}></td><td style={{ border: 'none', 'background': 'inherit' }}></td><td>{items[i].CorrectFunctionName == 1 ? "Correct" : "Incorrect"}</td><td>{items[i].CorrectFunctionName == 1 ? 0 : -1}</td><td style={{ border: 'none', 'background': 'inherit' }}></td><td style={{ border: 'none', 'background': 'inherit'}}></td></tr>
+				return <tr><td>Function Name</td><td>{items[i].FunctionName}</td><td style={{ border: 'none', 'background': 'inherit' }}></td><td style={{ border: 'none', 'background': 'inherit' }}></td><td>{items[i].CorrectFunctionName == 1 ? "Correct" : "Incorrect"}</td><td>{items[i].CorrectFunctionName == 1 ? 0 : -1}</td><td style={{ border: 'none', 'background': 'inherit' }}></td><td style={{ border: 'none', 'background': 'inherit'}}></td></tr>
 			}
 		}
 	}
