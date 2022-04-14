@@ -200,7 +200,6 @@ class TakeExam extends Component {
 	}
 
 	goToNextQuestion() {
-		console.log(this.state.activeQuestion);
 		this.setState({
 			activeQuestion: parseInt(this.state.activeQuestion) + 1,
 			value: this.state.data[parseInt(this.state.activeQuestion)+1] ? this.state.data[parseInt(this.state.activeQuestion)+1].user_text : ""
