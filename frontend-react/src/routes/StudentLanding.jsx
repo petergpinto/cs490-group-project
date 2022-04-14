@@ -437,8 +437,6 @@ class ViewScore extends Component {
 				}
 			}
 		}
-        if(points < 0)
-            points = 0;
 
         return <div className='TestCaseTable'><table><tr><td>Total Points</td><td>{points}</td></tr><tr><td>Total Possible Points</td><td>{totalPossible}</td></tr><tr><td>Percentage Score</td><td>{(points / totalPossible)*100}</td></tr></table></div>
 	}
@@ -563,8 +561,6 @@ class ViewScore extends Component {
 				}
 			}
 		}
-		if (points < 0)
-			points = 0;
 
 		return <tr><td>Total Points</td><td style={{ border: 'none', 'background': 'inherit' }}></td><td style={{ border: 'none', 'background': 'inherit' }}></td><td style={{ border: 'none', 'background': 'inherit' }}></td><td>{totalPoints.toFixed(1)}</td><td>{points.toFixed(1)}</td></tr>
 	}
