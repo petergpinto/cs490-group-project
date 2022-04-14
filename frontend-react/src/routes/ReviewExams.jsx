@@ -342,9 +342,32 @@ class ReviewExams extends Component {
 		let items = this.state.constraints;
 		for (let i in items) {
 			if (items[i].UserId == userId && items[i].QuestionId == questionId && items[i].ExamId == this.state.selectedExam) {
-				return <tr><td>Constraint Followed</td><td style={{ border: 'none', 'background': 'inherit' }}></td><td>{items[i].ConstraintType}</td><td>{items[i].ConstraintFollowed == 1 ? "Followed" : "Not Followed"}</td><td>0</td><td>{items[i].ConstraintFollowed == 1 ? 0 : -1}</td><td style={{ border: 'none', 'background': 'inherit' }}></td><td style={{ border: 'none', 'background': 'inherit' }}></td></tr>
+				return <tr><td>Constraint Followed</td><td style={{ border: 'none', 'background': 'inherit' }}></td><td>{items[i].ConstraintType}</td><td>{items[i].ConstraintFollowed == 1 ? "Followed" : "Not Followed"}</td><td>0</td><td>{items[i].ConstraintFollowed == 1 ? 0 : -1}</td><td><input examid={items[i].ExamId} userid={items[i].UserId} questionid={items[i].QuestionId} type="number" step="0.1" onChange={this.overrideConstraintScore} placeholder={ items[i].OverrideScore || items[i].OverrideScore === 0 ? items[i].OverrideScore : null }/></td><td style={{ border: 'none', 'background': 'inherit' }}></td></tr>
 			}
 		}
+	}
+
+	overrideConstraintScore(event) {
+		event.preventDefault();
+
+		let data = new URLSearchParams();
+		data.append("UserId", event.target.getAttribute('userid'));
+		data.append("ExamId", event.target.getAttribute('examid'));
+		data.append("QuestionId", event.target.getAttribute('questionid'));
+		data.append("OverrideScore", event.target.value);
+
+		return fetch('https://cs490backend.peterpinto.dev/overrideConstraintScore', {
+			method: 'POST',
+			credentials: 'include',
+			headers: {
+				'Accept': 'application/json',
+			}, body: data
+		}).then(res => res.json())
+			.then(json => {
+				if (json.Result && json.Result != 'Success')
+					this.props.navigate('/login');
+				this.refreshStudentResponses(this.state.selectedExam);
+			});
     }
 
 	showTestCases(questionId, userId) {
@@ -360,7 +383,7 @@ class ReviewExams extends Component {
 				<td>{row.AutoGraderOutput}</td>
 				<td>{row.TestCasePointValue}</td>
 				<td>{row.AutoGraderScore == 1 ? row.TestCasePointValue : 0}</td>
-				<td><input placeholder={row.InstructorOverrideScore || row.InstructorOverrideScore === 0 ? row.InstructorOverrideScore : null} examid={row.ExamId} userid={row.UserId} testcaseid={row.TestCaseId} onChange={this.overrideScore} type='number' min={0} step="0.1" /></td>
+				<td><input placeholder={row.InstructorOverrideScore || row.InstructorOverrideScore === 0 ? row.InstructorOverrideScore : null} examid={row.ExamId} userid={row.UserId} testcaseid={row.TestCaseId} onChange={this.overrideScore} type='number' step="0.1" /></td>
 				<td><input value={row.InstructorComment ? row.InstructorComment : null} examid={row.ExamId} userid={row.UserId} testcaseid={row.TestCaseId} onChange={this.addComment} type='text' /></td></tr>
 		});
 	}
