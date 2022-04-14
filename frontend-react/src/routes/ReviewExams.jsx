@@ -277,7 +277,11 @@ class ReviewExams extends Component {
         let items3 = this.state.constraints;
         for (let i in items3) {
             if (items3[i].QuestionId == questionId && items3[i].ExamId == this.state.selectedExam && items3[i].UserId == userId && items3[i].ConstraintFollowed == 0) {
-                points -= 1;
+                if (items3[i].OverrideScore || items3[i].OverrideScore === 0) {
+                    points += items3[i].OverrideScore
+                } else {
+                    points -= 1;
+                }
             }
         }
         if (points < 0)
@@ -335,7 +339,11 @@ class ReviewExams extends Component {
         let items3 = this.state.constraints;
         for (let i in items3) {
             if (items3[i].UserId == userId && items3[i].ExamId == this.state.selectedExam && items3[i].ConstraintFollowed == 0 && !(items3[i].QuestionId in small_map)) {
-                points -= 1;
+                if (items3[i].OverrideScore || items3[i].OverrideScore === 0) {
+                    points += items3[i].OverrideScore
+                } else {
+                    points -= 1;
+                }
             }
         }
         if (points < 0)
