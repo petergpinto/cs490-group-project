@@ -21,6 +21,7 @@ class ReviewExams extends Component {
         this.overrideScore = this.overrideScore.bind(this);
         this.releaseScores = this.releaseScores.bind(this);
         this.overrideConstraintScore = this.overrideConstraintScore.bind(this);
+        this.overrideFunctionNameScore = this.overrideFunctionNameScore.bind(this);
 
         this.state = { exams: [], students: [], responses: [], selectedExam: -1, selectedUser: -1, points: 0 };
     }
@@ -270,7 +271,11 @@ class ReviewExams extends Component {
         let items2 = this.state.functions;
         for (let i in items2) {
             if (items2[i].QuestionId == questionId && items2[i].ExamId == this.state.selectedExam && items2[i].UserId == userId && items2[i].CorrectFunctionName == 0) {
-                points -= 1;
+                if (items2[i].OverrideScore || items2[i].OverrideScore === 0) {
+                    points += items2[i].OverrideScore;
+                } else {
+                    points -= 1;
+                }
             }
         }
 
@@ -332,7 +337,11 @@ class ReviewExams extends Component {
         let items2 = this.state.functions;
         for (let i in items2) {
             if (items2[i].UserId == userId && items2[i].ExamId == this.state.selectedExam && items2[i].CorrectFunctionName == 0 && !(items2[i].QuestionId in small_map)) {
-                points -= 1;
+                if (items2[i].OverrideScore || items2[i].OverrideScore === 0) {
+                    points += items2[i].OverrideScore;
+                } else {
+                    points -= 1;
+                }
             }
         }
 
@@ -358,8 +367,12 @@ class ReviewExams extends Component {
             if (items[i].UserId == userId && items[i].QuestionId == questionId && items[i].ExamId == this.state.selectedExam) {
                 return <tr>
                     <td>Function Name</td><td style={{ border: 'none', 'background': 'inherit' }}></td>
-                    <td>{items[i].FunctionName}</td><td>{items[i].ProvidedFunctionName}</td><td>0</td><td>{items[i].CorrectFunctionName == 1 ? 0 : -1}</td>
-                    <td style={{ border: 'none', 'background': 'inherit' }}></td><td style={{ border: 'none', 'background': 'inherit' }}></td>
+                    <td>{items[i].FunctionName}</td>
+                    <td>{items[i].ProvidedFunctionName}</td>
+                    <td>0</td>
+                    <td>{items[i].CorrectFunctionName == 1 ? (items[i].OverrideScore || items[i].OverrideScore === 0 ? items[i].OverrideScore : 0) : (items[i].OverrideScore || items[i].OverrideScore === 0 ? items[i].OverrideScore :-1) }</td>
+                    <td><input examid={items[i].ExamId} userid={items[i].UserId} questionid={items[i].QuestionId} type="number" step="0.1" onChange={this.overrideFunctionNameScore} placeholder={items[i].OverrideScore || items[i].OverrideScore === 0 ? items[i].OverrideScore : null} /></td>
+                    <td style={{ border: 'none', 'background': 'inherit' }}></td>
                 </tr>
             }
         }
@@ -400,6 +413,27 @@ class ReviewExams extends Component {
         }).then(res => res.json())
             .then(json => {
                 this.refreshConstraintScores(this.state.selectedExam);
+            });
+    }
+
+    overrideFunctionNameScore(event) {
+        event.preventDefault();
+
+        let data = new URLSearchParams();
+        data.append("UserId", event.target.getAttribute('userid'));
+        data.append("ExamId", event.target.getAttribute('examid'));
+        data.append("QuestionId", event.target.getAttribute('questionid'));
+        data.append("OverrideScore", event.target.value);
+
+        return fetch('https://cs490backend.peterpinto.dev/overrideFunctionNameScore', {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Accept': 'application/json',
+            }, body: data
+        }).then(res => res.json())
+            .then(json => {
+                this.refreshFunctionNameScores(this.state.selectedExam);
             });
     }
 
