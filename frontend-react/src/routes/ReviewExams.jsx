@@ -129,8 +129,6 @@ class ReviewExams extends Component {
             }, body: data
         }).then(res => res.json())
             .then(json => {
-                if (json.Result && json.Result != 'Success')
-                    this.props.navigate('/login');
                 this.refreshStudentResponses(this.state.selectedExam);
             });
     }
@@ -401,8 +399,6 @@ class ReviewExams extends Component {
             }, body: data
         }).then(res => res.json())
             .then(json => {
-                if (json.Result && json.Result != 'Success')
-                    this.props.navigate('/login');
                 this.refreshConstraintScores(this.state.selectedExam);
             });
     }
