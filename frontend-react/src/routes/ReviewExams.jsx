@@ -399,7 +399,7 @@ class ReviewExams extends Component {
                     <td>{items[i].FunctionName}</td>
                     <td>{items[i].ProvidedFunctionName}</td>
                     <td>0</td>
-                    <td>{items[i].CorrectFunctionName == 1 ? (items[i].OverrideScore || items[i].OverrideScore === 0 ? items[i].OverrideScore : 0) : (items[i].OverrideScore || items[i].OverrideScore === 0 ? items[i].OverrideScore :-1) }</td>
+                    <td>{items[i].CorrectFunctionName == 1 ?  0 : -1 }</td>
                     <td><input examid={items[i].ExamId} userid={items[i].UserId} questionid={items[i].QuestionId} type="number" step="0.1" onChange={this.overrideFunctionNameScore} placeholder={items[i].OverrideScore || items[i].OverrideScore === 0 ? items[i].OverrideScore : null} /></td>
                     <td style={{ border: 'none', 'background': 'inherit' }}></td>
                 </tr>
