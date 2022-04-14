@@ -215,7 +215,7 @@ class CreateQuestion extends Component {
 							{ this.showTestCaseInput() }
 							<div className="AddQuestionFormButtons">
 								<button onClick={this.updateButton} type="button"> Add Test Case</button>
-								<button type='submit' value='Add Question' />
+								<button type='submit' value='Add Question'>Add Question</button>
 							</div>
 							</form>
 						</div>
