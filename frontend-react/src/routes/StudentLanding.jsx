@@ -403,6 +403,12 @@ class ViewScore extends Component {
 		let items2 = this.state.functions;
 		console.log(items2)
 		for (let i in items2) {
+			if (items2[i].CorrectFunctionName == 0 && !(items2[i].QuestionId in small_map)) {
+				points -= 1;
+			}
+		}
+		/*
+		for (let i in items2) {
 			console.log("TEST", items2[i].OverrideScore, items2[i].FunctionName)
 			if (items2[i].CorrectFunctionName == 0) {
 				
@@ -418,7 +424,7 @@ class ViewScore extends Component {
 					points += 0;
 				}
 			}
-		}
+		}*/
 
 		let items3 = this.state.constraints;
 		for (let i in items3) {
