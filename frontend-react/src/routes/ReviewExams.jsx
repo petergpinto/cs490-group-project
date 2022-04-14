@@ -270,23 +270,38 @@ class ReviewExams extends Component {
         }
         let items2 = this.state.functions;
         for (let i in items2) {
-            if (items2[i].QuestionId == questionId && items2[i].ExamId == this.state.selectedExam && items2[i].UserId == userId && items2[i].CorrectFunctionName == 0) {
-                console.log(items2[i])
-                if (items2[i].OverrideScore || items2[i].OverrideScore === 0) {
-                    points += items2[i].OverrideScore;
+            if (items2[i].QuestionId == questionId && items2[i].ExamId == this.state.selectedExam && items2[i].UserId == userId) {
+                if (items2[i].CorrectFunctionName == 0) {
+                    if (items2[i].OverrideScore || items2[i].OverrideScore === 0) {
+                        points += items2[i].OverrideScore;
+                    } else {
+                        points -= 1;
+                    }
                 } else {
-                    points -= 1;
+                    if (items2[i].OverrideScore || items2[i].OverrideScore === 0) {
+                        points += items2[i].OverrideScore;
+                    } else {
+                        points += 0;
+                    }
                 }
             }
         }
 
         let items3 = this.state.constraints;
         for (let i in items3) {
-            if (items3[i].QuestionId == questionId && items3[i].ExamId == this.state.selectedExam && items3[i].UserId == userId && items3[i].ConstraintFollowed == 0) {
-                if (items3[i].OverrideScore || items3[i].OverrideScore === 0) {
-                    points += items3[i].OverrideScore
+            if (items3[i].QuestionId == questionId && items3[i].ExamId == this.state.selectedExam && items3[i].UserId == userId) {
+                if (items3[i].ConstraintFollowed == 0) {
+                    if (items3[i].OverrideScore || items3[i].OverrideScore === 0) {
+                        points += items3[i].OverrideScore
+                    } else {
+                        points -= 1;
+                    }
                 } else {
-                    points -= 1;
+                    if (items3[i].OverrideScore || items3[i].OverrideScore === 0) {
+                        points += items3[i].OverrideScore
+                    } else {
+                        points += 0;
+                    }
                 }
             }
         }
@@ -337,11 +352,19 @@ class ReviewExams extends Component {
         }
         let items2 = this.state.functions;
         for (let i in items2) {
-            if (items2[i].UserId == userId && items2[i].ExamId == this.state.selectedExam && items2[i].CorrectFunctionName == 0 && !(items2[i].QuestionId in small_map)) {
-                if (items2[i].OverrideScore || items2[i].OverrideScore === 0) {
-                    points += items2[i].OverrideScore;
+            if (items2[i].UserId == userId && items2[i].ExamId == this.state.selectedExam && !(items2[i].QuestionId in small_map)) {
+                if (items2[i].CorrectFunctionName == 0) {
+                    if (items2[i].OverrideScore || items2[i].OverrideScore === 0) {
+                        points += items2[i].OverrideScore;
+                    } else {
+                        points -= 1;
+                    }
                 } else {
-                    points -= 1;
+                    if (items2[i].OverrideScore || items2[i].OverrideScore === 0) {
+                        points += items2[i].OverrideScore;
+                    } else {
+                        points += 0;
+                    }
                 }
             }
         }
