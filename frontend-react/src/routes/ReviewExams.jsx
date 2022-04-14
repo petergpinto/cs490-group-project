@@ -374,7 +374,7 @@ class ReviewExams extends Component {
                     <td style={{ border: 'none', 'background': 'inherit' }}></td>
                     <td>{items[i].ConstraintType}</td><td>{items[i].ConstraintFollowed == 1 ? "Followed" : "Not Followed"}</td>
                     <td>0</td>
-                    <td>{items[i].ConstraintFollowed == 1 ? 0 : -1}</td>
+                    <td>{items[i].ConstraintFollowed == 1 ? { items[i].OverrideScore || items[i].OverrideScore === 0 ? items[i].OverrideScore : 0 } : { items[i].OverrideScore || items[i].OverrideScore === 0 ? items[i].OverrideScore : -1 }}</td>
                     <td><input examid={items[i].ExamId} userid={items[i].UserId} questionid={items[i].QuestionId} type="number" step="0.1" onChange={this.overrideConstraintScore} placeholder={items[i].OverrideScore || items[i].OverrideScore === 0 ? items[i].OverrideScore : null} /></td>
                     <td style={{ border: 'none', 'background': 'inherit' }}></td>
                 </tr>
