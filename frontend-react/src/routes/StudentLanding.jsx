@@ -472,22 +472,6 @@ class ViewScore extends Component {
         });
 	}
 
-	renderFunctionName(questionId) {
-		let items = this.state.functions;
-		for(let i in items) {
-			if(items[i].QuestionId == questionId)
-				return (
-					<tr>
-						<td>Function Name</td>
-						<td>{items[i].FunctionName}</td>
-						<td>{items[i].ProvidedFunctionName}</td>
-						<td>{items[i].CorrectFunctionName == 1 ? "Correct" : "Incorrect"}</td>
-						<td>{items[i].CorrectFunctionName == 1 ? 0 : -1}</td>
-            		</tr>
-				)
-		}
-	}
-
 	showTestCases(questionId) {
 		let items = this.state.data;
 		let i = 1;
@@ -510,7 +494,15 @@ class ViewScore extends Component {
 		let items = this.state.functions;
 		for (let i in items) {
 			if (items[i].QuestionId == questionId && items[i].ExamId == this.props.ExamId) {
-				return <tr><td>Function Name</td><td style={{ border: 'none', 'background': 'inherit' }}></td><td style={{ border: 'none', 'background': 'inherit' }}></td><td style={{ border: 'none', 'background': 'inherit' }}></td><td>{items[i].CorrectFunctionName == 1 ? "Correct" : "Incorrect"}</td><td>{items[i].CorrectFunctionName == 1 ? 0 : -1}</td><td style={{ border: 'none', 'background': 'inherit' }}></td><td style={{ border: 'none', 'background': 'inherit' }}></td></tr>
+				return <tr>
+					<td>Function Name</td><td style={{ border: 'none', 'background': 'inherit' }}></td>
+					<td>{items[i].FunctionName}</td>
+					<td>{items[i].ProvidedFunctionName}</td>
+					<td>0</td>
+					<td>{items[i].CorrectFunctionName == 1 ? (items[i].OverrideScore || items[i].OverrideScore === 0 ? items[i].OverrideScore : 0) : (items[i].OverrideScore || items[i].OverrideScore === 0 ? items[i].OverrideScore : -1)}</td>
+					<td><input examid={items[i].ExamId} userid={items[i].UserId} questionid={items[i].QuestionId} type="number" step="0.1" onChange={this.overrideFunctionNameScore} placeholder={items[i].OverrideScore || items[i].OverrideScore === 0 ? items[i].OverrideScore : null} /></td>
+					<td style={{ border: 'none', 'background': 'inherit' }}></td>
+				</tr>
 			}
 		}
 	}
@@ -519,7 +511,15 @@ class ViewScore extends Component {
 		let items = this.state.constraints;
 		for (let i in items) {
 			if (items[i].QuestionId == questionId && items[i].ExamId == this.props.ExamId) {
-				return <tr><td>Constraint Followed</td><td style={{ border: 'none', 'background': 'inherit' }}></td><td style={{ border: 'none', 'background': 'inherit' }}></td><td style={{ border: 'none', 'background': 'inherit' }}></td><td>{items[i].ConstraintFollowed == 1 ? "Followed" : "Not Followed"}</td><td>{items[i].ConstraintFollowed == 1 ? 0 : -1}</td><td style={{ border: 'none', 'background': 'inherit' }}></td><td style={{ border: 'none', 'background': 'inherit' }}></td></tr>
+				return <tr>
+					<td>Constraint Followed</td>
+					<td style={{ border: 'none', 'background': 'inherit' }}></td>
+					<td>{items[i].ConstraintType}</td><td>{items[i].ConstraintFollowed == 1 ? "Followed" : "Not Followed"}</td>
+					<td>0</td>
+					<td>{items[i].ConstraintFollowed == 1 ? (items[i].OverrideScore || items[i].OverrideScore === 0 ? items[i].OverrideScore : 0) : (items[i].OverrideScore || items[i].OverrideScore === 0 ? items[i].OverrideScore : -1)}</td>
+					<td><input examid={items[i].ExamId} userid={items[i].UserId} questionid={items[i].QuestionId} type="number" step="0.1" onChange={this.overrideConstraintScore} placeholder={items[i].OverrideScore || items[i].OverrideScore === 0 ? items[i].OverrideScore : null} /></td>
+					<td style={{ border: 'none', 'background': 'inherit' }}></td>
+				</tr>
 			}
 		}
 	}
