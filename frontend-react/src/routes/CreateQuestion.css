@@ -86,6 +86,8 @@ select{
 .CreateQuestionForm form {
 	border: 1px solid black;
 	width:700px;
+	display:flex;
+	flex-direction:column;
 }
 
 .TestCaseFormPart {
