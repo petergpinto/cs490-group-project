@@ -102,6 +102,8 @@ select{
 	padding: 10px;
 	width: fit-content;
 	align-self: center;
+	border: 3px solid skyblue;
+	margin: 4px;
 }
 
 .QuestionOption label {
