@@ -217,9 +217,12 @@ class CreateQuestion extends Component {
 								<button onClick={this.updateButton} type="button"> Add Test Case</button>
 								<button type='submit' value='Add Question'>Add Question</button>
 							</div>
-							</form>
+						</form>
+						<div className="submitCheckmark">
+							{this.state.displayCheckmark ? <Icon /> : null}
 						</div>
-					{this.state.displayCheckmark ? <Icon /> : null}
+						</div>
+					
 				</div>
 				<ShowQuestionBank showElement={true} />
 			</div>

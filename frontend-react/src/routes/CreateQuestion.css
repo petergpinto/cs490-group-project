@@ -103,3 +103,7 @@ select{
 	align-self: center;
 	margin: 10px;
 }
+
+.submitCheckmark {
+	align-self:center;
+}
