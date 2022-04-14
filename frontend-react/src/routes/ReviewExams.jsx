@@ -401,7 +401,7 @@ class ReviewExams extends Component {
             .then(json => {
                 if (json.Result && json.Result != 'Success')
                     this.props.navigate('/login');
-                this.refreshStudentResponses(this.state.selectedExam);
+                this.refreshConstraintScores(this.state.selectedExam);
             });
     }
 
