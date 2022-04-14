@@ -385,8 +385,6 @@ class ReviewExams extends Component {
                 }
             }
         }
-
-
         return <div className='TestCaseTable'><h3>Final Score</h3><table><tr><td>Total Points</td><td>{points.toFixed(1)}</td></tr><tr><td>Total Possible Points</td><td>{totalPossible.toFixed(1)}</td></tr><tr><td>Percentage Score</td><td>{((points.toFixed(1) / totalPossible.toFixed(1)) * 100).toFixed(2)}</td></tr></table></div>
     }
 

@@ -473,7 +473,7 @@ class ViewScore extends Component {
 				<td>{row.TestCasePointValue}</td>
 				<td>{row.AutoGraderScore == 1 ? row.TestCasePointValue : 0}</td>
 				<td>{row.InstructorOverrideScore || row.InstructorOverrideScore === 0 ? row.InstructorOverrideScore : null}</td>
-				<td>{row.InstructorComment ? row.InstructorComment : null}</td></tr>
+				{i == 2 ? <td rowspan="0">{row.InstructorComment ? row.InstructorComment : null}</td> : null}</tr>
 		});
 	}
 
@@ -486,7 +486,7 @@ class ViewScore extends Component {
 					<td>{items[i].FunctionName}</td>
 					<td>{items[i].ProvidedFunctionName}</td>
 					<td>0</td>
-					<td>{items[i].CorrectFunctionName == 1 ?  0 : -1 }</td>
+					<td>{items[i].CorrectFunctionName == 1 ? 0 : -1 }</td>
 					<td>{items[i].OverrideScore || items[i].OverrideScore === 0 ? items[i].OverrideScore : null}</td>
 					<td style={{ border: 'none', 'background': 'inherit' }}></td>
 				</tr>
