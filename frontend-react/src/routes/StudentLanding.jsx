@@ -379,7 +379,7 @@ class ViewScore extends Component {
         let responses = this.state.data;
         let small_map = {};
 
-        if(this.props.ExamId == -1 || this.state.selectedUser == -1)
+        if(this.props.ExamId == -1)
             return;
 
         for(let i in responses) {
