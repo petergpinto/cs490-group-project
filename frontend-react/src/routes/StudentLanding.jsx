@@ -549,7 +549,7 @@ class ViewScore extends Component {
 
 		let items3 = this.state.constraints;
 		for (let i in items3) {
-]			if (items3[i].ConstraintFollowed == 0) {
+			if (items3[i].ConstraintFollowed == 0) {
 				if (items3[i].OverrideScore || items3[i].OverrideScore === 0) {
 					points += items3[i].OverrideScore
 				} else {
