@@ -76,8 +76,6 @@ select{
 	display:flex;
 	flex-direction:row;
 }
-<<<<<<< HEAD
-=======
 
 .CreateQuestionForm {
 	padding: 10px;
@@ -93,4 +91,3 @@ select{
 	flex-direction: column;
 	padding: 10px;
 }
->>>>>>> 6611da3c1183da57b669c4bb9b78af72418ba9fe
