@@ -239,7 +239,7 @@ class TakeExam extends Component {
 				<h2>Question {parseInt(this.state.activeQuestion) + 1}</h2>
 				<h3 style={{'max-width':'1000px'}}>{questions[this.state.activeQuestion].QuestionText}</h3>
 				<h4>{questions[this.state.activeQuestion].PointValue} {questions[this.state.activeQuestion].PointValue > 1 ? 'Points' : 'Point'}</h4>
-				<textarea questionid={questions[this.state.activeQuestion].QuestionId} value = {this.state.value || ""} onChange={e => {this.debounce(this.handleQuestionChange(e), 1000),this.saveQuestionInfo(e)}} onKeyDown={this.handleKeyDown} />
+				<textarea spellcheck="false" questionid={questions[this.state.activeQuestion].QuestionId} value = {this.state.value || ""} onChange={e => {this.debounce(this.handleQuestionChange(e), 1000),this.saveQuestionInfo(e)}} onKeyDown={this.handleKeyDown} />
 			</div>
 		);
     }
