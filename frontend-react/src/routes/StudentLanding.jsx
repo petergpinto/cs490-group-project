@@ -517,7 +517,7 @@ class ViewScore extends Component {
 					<td>{items[i].ConstraintType}</td><td>{items[i].ConstraintFollowed == 1 ? "Followed" : "Not Followed"}</td>
 					<td>0</td>
 					<td>{items[i].ConstraintFollowed == 1 ? (items[i].OverrideScore || items[i].OverrideScore === 0 ? items[i].OverrideScore : 0) : (items[i].OverrideScore || items[i].OverrideScore === 0 ? items[i].OverrideScore : -1)}</td>
-					<td><input{items[i].OverrideScore || items[i].OverrideScore === 0 ? items[i].OverrideScore : null}</td>
+					<td>{items[i].OverrideScore || items[i].OverrideScore === 0 ? items[i].OverrideScore : null}</td>
 					<td style={{ border: 'none', 'background': 'inherit' }}></td>
 				</tr>
 			}
