@@ -47,7 +47,7 @@ app.post('/getFunctionNameScores', async function(request, response) {
 
 	getFunctionScoresPromise = () => {
         return new Promise((resolve, reject) => {
-            pool.query('SELECT * FROM FunctionNameScores WHERE ExamId=?', [ExamId],
+            pool.query('SELECT FunctionNameScores.CorrectFunctionName, FunctionNameScores.UserId, FunctionNameScores.ExamId, FunctionNameScores.QuestionId, Questions.FunctionName FROM FunctionNameScores INNER JOIN Questions ON FunctionNameScores.QuestionId=Questions.QuestionId WHERE FunctionNameScores.ExamId=?', [ExamId],
                 (error, elements) => {
                     if(error) return reject(error);
                     return resolve(elements);
