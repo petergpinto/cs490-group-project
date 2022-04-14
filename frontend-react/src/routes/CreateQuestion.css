@@ -79,6 +79,8 @@ select{
 
 .CreateQuestionForm {
 	padding: 10px;
+	display:flex;
+	flex-direction:column;
 }
 
 .CreateQuestionForm form {
@@ -104,4 +106,9 @@ select{
 
 .QuestionOption label {
 	align-self:center;
+}
+
+.QuestionOptions {
+	display:flex;
+	flex-direction:column;
 }
