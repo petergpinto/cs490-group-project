@@ -372,7 +372,7 @@ class ViewScore extends Component {
 		this.getConstraintScores(this.props.ExamId);
 	}
 
-	showExamTotalPoints(userId) {
+	showExamTotalPoints() {
         let points = 0;
         let totalPossible = 0;
         let responses = this.state.data;
