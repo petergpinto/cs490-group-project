@@ -171,8 +171,8 @@ class CreateQuestion extends Component {
 			<div className="CreateQuestion">
 				<div style={{ 'display': 'flex', 'flex-direction': 'column' }}>
 					<div className="CreateQuestionForm">
-						<h2>Add a new Question</h2>
 						<form onSubmit={this.submitQuestion}>
+							<h2>Add a new Question</h2>
 							<div className="QuestionOptions">
 								<div className="QuestionOption">
 									<label>Question Text</label>
