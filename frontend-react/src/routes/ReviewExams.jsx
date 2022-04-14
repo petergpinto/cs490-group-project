@@ -271,6 +271,7 @@ class ReviewExams extends Component {
         let items2 = this.state.functions;
         for (let i in items2) {
             if (items2[i].QuestionId == questionId && items2[i].ExamId == this.state.selectedExam && items2[i].UserId == userId && items2[i].CorrectFunctionName == 0) {
+                console.log(items2[i])
                 if (items2[i].OverrideScore || items2[i].OverrideScore === 0) {
                     points += items2[i].OverrideScore;
                 } else {
