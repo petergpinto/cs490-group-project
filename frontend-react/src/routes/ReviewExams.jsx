@@ -20,6 +20,8 @@ class ReviewExams extends Component {
         this.showExamTotalPoints = this.showExamTotalPoints.bind(this);
         this.overrideScore = this.overrideScore.bind(this);
         this.releaseScores = this.releaseScores.bind(this);
+        this.overrideConstraintScore = this.overrideConstraintScore.bind(this);
+
         this.state = { exams: [], students: [], responses: [], selectedExam: -1, selectedUser: -1, points: 0 };
     }
 
