@@ -17,26 +17,6 @@ label{
 	margin-left: 20px;
 }
 
-#Submit2{
-	width: 100px;
-	height: 30px;
-	border: none;
-	background-color: blue;
-	border-radius: 12px;
-	color: white;
-	font-size: 12px;
-	margin-left: 20px;
-}
-
-#Submit2:hover{
-	background-color: #1799fa;
-}
-
-#Submit2:active{
-	background-color: #1799fa;
-	color: black;
-}
-
 select{
 	margin-left: -20px;
 }
@@ -45,23 +25,22 @@ select{
 	margin-left: 2px;
 }
 
-.CreateQuestion button{
+.AddQuestionFormButtons button {
 	width: 100px;
-        height: 30px;
-        background-color: blue;
-        border-radius: 12px;
-        color: white;
+	height: 30px;
+	background-color: blue;
+	border-radius: 12px;
+	color: white;
 	font-size: 12px;
 	border: none;
-        margin-left: 20px;
-
+	margin: 5px;
 }
 
-.CreateQuestion button:hover{
+.AddQuestionFormButtons button:hover {
 	background-color: #1799fa;
 }
 
-.CreateQuestion button:active{
+.AddQuestionFormButtons button:active {
 	background-color: #1799fa;
 	color: black;
 }
@@ -96,6 +75,7 @@ select{
 	padding: 10px;
 	border: 3px solid skyblue;
 	margin: 5px;
+	align-self: center;
 }
 
 .QuestionOption {
