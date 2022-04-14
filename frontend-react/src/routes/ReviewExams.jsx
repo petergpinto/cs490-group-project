@@ -333,7 +333,7 @@ class ReviewExams extends Component {
 		let items = this.state.functions;
 		for (let i in items) {
 			if (items[i].UserId == userId && items[i].QuestionId == questionId && items[i].ExamId == this.state.selectedExam) {
-				return <tr><td>Function Name</td><td style={{ border: 'none', 'background': 'inherit' }}></td><td>{items[i].FunctionName}</td><td>{items[i].ProvidedFunctionName}</td><td>{items[i].CorrectFunctionName == 1 ? "Correct" : "Incorrect"}</td><td>{items[i].CorrectFunctionName == 1 ? 0 : -1}</td><td style={{ border: 'none', 'background': 'inherit' }}></td><td style={{ border: 'none', 'background': 'inherit'}}></td></tr>
+				return <tr><td>Function Name</td><td style={{ border: 'none', 'background': 'inherit' }}></td><td>{items[i].FunctionName}</td><td>{items[i].ProvidedFunctionName}</td><td>0</td><td>{items[i].CorrectFunctionName == 1 ? 0 : -1}</td><td style={{ border: 'none', 'background': 'inherit' }}></td><td style={{ border: 'none', 'background': 'inherit'}}></td></tr>
 			}
 		}
 	}
@@ -342,7 +342,7 @@ class ReviewExams extends Component {
 		let items = this.state.constraints;
 		for (let i in items) {
 			if (items[i].UserId == userId && items[i].QuestionId == questionId && items[i].ExamId == this.state.selectedExam) {
-				return <tr><td>Constraint Followed</td><td style={{ border: 'none', 'background': 'inherit' }}></td><td>{items[i].ConstraintType}</td><td style={{ border: 'none', 'background': 'inherit' }}></td><td>{items[i].ConstraintFollowed == 1 ? "Followed" : "Not Followed"}</td><td>{items[i].ConstraintFollowed == 1 ? 0 : -1}</td><td style={{ border: 'none', 'background': 'inherit' }}></td><td style={{ border: 'none', 'background': 'inherit' }}></td></tr>
+				return <tr><td>Constraint Followed</td><td style={{ border: 'none', 'background': 'inherit' }}></td><td>{items[i].ConstraintType}</td><td>{items[i].ConstraintFollowed == 1 ? "Followed" : "Not Followed"}</td><td>0</td><td>{items[i].ConstraintFollowed == 1 ? 0 : -1}</td><td style={{ border: 'none', 'background': 'inherit' }}></td><td style={{ border: 'none', 'background': 'inherit' }}></td></tr>
 			}
 		}
     }
