@@ -478,7 +478,11 @@ class ViewScore extends Component {
 			if(items[i].QuestionId == questionId)
 				return (
 					<tr>
-						<td>Function Name</td><td style={{ border: 'none', 'background': 'inherit' }}></td><td style={{ border: "none", 'background': 'inherit'}}></td><td>{items[i].CorrectFunctionName == 1? "Correct":"Incorrect"}</td><td>{items[i].CorrectFunctionName == 1? 0 : -1}</td>
+						<td>Function Name</td>
+						<td>{items[i].FunctionName}</td>
+						<td>{items[i].ProvidedFunctionName}</td>
+						<td>{items[i].CorrectFunctionName == 1 ? "Correct" : "Incorrect"}</td>
+						<td>{items[i].CorrectFunctionName == 1 ? 0 : -1}</td>
             		</tr>
 				)
 		}
