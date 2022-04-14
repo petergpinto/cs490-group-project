@@ -386,7 +386,7 @@ class ViewScore extends Component {
 				<td>{row.TestCasePointValue}</td>
 				<td>{row.AutoGraderScore == 1 ? row.TestCasePointValue : 0}</td>
 				<td>{row.InstructorOverrideScore || row.InstructorOverrideScore === 0 ? row.InstructorOverrideScore : null}</td>
-				{i == 2 ? <td rowspan="0">{row.InstructorComment ? <span style={{ 'width': '300px', 'display': 'inline-block', 'white-space': 'pre-wrap' }}>row.InstructorComment</span> : null}</td> : null}</tr>
+				{i == 2 ? <td rowspan="0">{row.InstructorComment ? <span style={{ 'width': '300px', 'display': 'inline-block', 'white-space': 'pre-wrap' }}>{row.InstructorComment}</span> : null}</td> : null}</tr>
 		});
 	}
 
