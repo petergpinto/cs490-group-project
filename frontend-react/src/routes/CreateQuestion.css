@@ -98,4 +98,10 @@ select{
 	align-content: center;
 	text-align: center;
 	padding: 10px;
+	width: fit-content;
+	align-self: center;
+}
+
+.QuestionOption label {
+	align-self:center;
 }
