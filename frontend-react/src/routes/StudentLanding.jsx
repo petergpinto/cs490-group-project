@@ -352,7 +352,7 @@ class ViewScore extends Component {
 		let data = new URLSearchParams();
 		data.append("ExamId", examid);
 
-		return fetch('https://cs490backend.peterpinto.dev/getConstraintScores', {
+		return fetch('https://cs490backend.peterpinto.dev/studentGetConstraintScores', {
 			method: 'POST',
 			credentials: 'include',
 			headers: {
@@ -632,7 +632,7 @@ class ViewScore extends Component {
 				totalPossible += responses[i].TestCasePointValue;
 			}
 		}
-		console.info(small_map);
+		//console.info(small_map);
 		for (var key in small_map) {
 			if (small_map[key] < 2) {
 				delete small_map[key];
