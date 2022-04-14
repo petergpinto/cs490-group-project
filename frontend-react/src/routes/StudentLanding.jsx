@@ -372,24 +372,6 @@ class ViewScore extends Component {
 		this.getConstraintScores(this.props.ExamId);
 	}
 
-	renderQuestion(questionId) {
-		let items = this.state.data;
-        let i = 1;
-
-		return items.map((row, index) => {
-            if(row.QuestionId != questionId)
-                return null
-            return <tr>
-				<td style={{'white-space':'nowrap'}}>Test Case {i++}: {row.AutoGraderScore == 1? 'Passed': 'Failed'}</td>
-                <td>{row.TestCaseInput}</td>
-                <td>{row.TestCaseOutput}</td>
-                <td>{row.AutoGraderOutput}</td>
-                {row.InstructorOverrideScore? <td>{row.InstructorOverrideScore}</td> : <td>{row.AutoGraderScore == 1? row.TestCasePointValue : 0}</td> }
-				<td>{row.InstructorComment ? <span style={{'width':'300px', 'display':'inline-block', 'white-space':'pre-wrap'}}>row.InstructorComment</span> : null }</td>
-                </tr>
-        });
-	}
-
 	showTestCases(questionId) {
 		let items = this.state.data;
 		let i = 1;
@@ -404,7 +386,7 @@ class ViewScore extends Component {
 				<td>{row.TestCasePointValue}</td>
 				<td>{row.AutoGraderScore == 1 ? row.TestCasePointValue : 0}</td>
 				<td>{row.InstructorOverrideScore || row.InstructorOverrideScore === 0 ? row.InstructorOverrideScore : null}</td>
-				{i == 2 ? <td rowspan="0">{row.InstructorComment ? row.InstructorComment : null}</td> : null}</tr>
+				{i == 2 ? <td rowspan="0">{row.InstructorComment ? <span style={{ 'width': '300px', 'display': 'inline-block', 'white-space': 'pre-wrap' }}>row.InstructorComment</span> : null}</td> : null}</tr>
 		});
 	}
 
