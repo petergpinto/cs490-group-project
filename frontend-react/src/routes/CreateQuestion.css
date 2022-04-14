@@ -91,3 +91,11 @@ select{
 	flex-direction: column;
 	padding: 10px;
 }
+
+.QuestionOption {
+	justify-content: center;
+	display: flex;
+	align-content: center;
+	text-align: center;
+	padding: 10px;
+}
