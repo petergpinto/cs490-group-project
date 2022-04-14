@@ -383,21 +383,21 @@ class ViewScore extends Component {
             return;
 
         for(let i in responses) {
-                if(responses[i].InstructorOverrideScore) {
-                    points += responses[i].InstructorOverrideScore;
-                }
-                else if(responses[i].AutoGraderScore == 1) {
-                    points += responses[i].TestCasePointValue;
-                }
-                else {
-                    if(responses[i].QuestionId in small_map){
-                        small_map[responses[i].QuestionId] += 1
-                    }
-                    else {
-                        small_map[responses[i].QuestionId] = 1
-                    }
-                }
-                totalPossible += responses[i].TestCasePointValue;
+			if (responses[i].InstructorOverrideScore || responses[i].InstructorOverrideScore === 0) {
+				points += responses[i].InstructorOverrideScore;
+			}
+			else if (responses[i].AutoGraderScore == 1) {
+				points += responses[i].TestCasePointValue;
+			}
+			else {
+				if (responses[i].QuestionId in small_map) {
+					small_map[responses[i].QuestionId] += 1
+				}
+				else {
+					small_map[responses[i].QuestionId] = 1
+				}
+			}
+			totalPossible += responses[i].TestCasePointValue;
         }
         for( var key in small_map){
             if(small_map[key]<2){
@@ -409,7 +409,45 @@ class ViewScore extends Component {
             if(items2[i].CorrectFunctionName == 0 && !(items2[i].QuestionId in small_map)) {
                 points -= 1;
             }
-        }
+		}
+		for (let i in items2) {
+			if (items2[i].UserId == userId && items2[i].ExamId == this.props.ExamId) { // && !(items2[i].QuestionId in small_map)) {
+				if (items2[i].CorrectFunctionName == 0) {
+					if (items2[i].OverrideScore || items2[i].OverrideScore === 0) {
+						points += items2[i].OverrideScore;
+					} else {
+						points -= 1;
+					}
+				} else {
+					if (items2[i].OverrideScore || items2[i].OverrideScore === 0) {
+						points += items2[i].OverrideScore;
+					} else {
+						points += 0;
+					}
+				}
+			}
+		}
+
+		let items3 = this.state.constraints;
+		for (let i in items3) {
+			if (items3[i].UserId == userId && items3[i].ExamId == this.props.ExamId) { // && !(items3[i].QuestionId in small_map)) {
+				if (items3[i].ConstraintFollowed == 0) {
+					if (items3[i].OverrideScore || items3[i].OverrideScore === 0) {
+						points += items3[i].OverrideScore;
+					} else {
+						points -= 1;
+					}
+				} else {
+					if (items3[i].OverrideScore || items3[i].OverrideScore === 0) {
+						points += items3[i].OverrideScore;
+					} else {
+						points -= 0;
+					}
+				}
+			}
+		}
+
+
         if(points < 0)
             points = 0;
 
