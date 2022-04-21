@@ -78,6 +78,11 @@ select{
 	align-self: center;
 }
 
+.TestCaseFormPart select {
+	background: skyblue;
+	border: solid 1px black;
+}
+
 .QuestionOption {
 	justify-content: center;
 	display: flex;
@@ -92,6 +97,11 @@ select{
 
 .QuestionOption label {
 	align-self:center;
+}
+
+.QuestionOption select {
+	background: skyblue;
+	border: solid 1px black;
 }
 
 .QuestionOptions {
