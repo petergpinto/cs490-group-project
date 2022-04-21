@@ -83,6 +83,10 @@ select{
 	border: solid 1px black;
 }
 
+.TestCaseFormPart input {
+	border: 1px solid black;
+}
+
 .QuestionOption {
 	justify-content: center;
 	display: flex;
@@ -102,6 +106,10 @@ select{
 .QuestionOption select {
 	background: skyblue;
 	border: solid 1px black;
+}
+
+.QuestionOption input {
+	border: 1px solid black;
 }
 
 .QuestionOptions {
