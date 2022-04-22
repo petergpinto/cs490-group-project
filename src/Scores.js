@@ -157,6 +157,47 @@ app.post('/overrideConstraintScore', async function(request, response) {
 
 });
 
+app.post('/overrideFunctionNameScore', async function(request, response) {
+    if(!(await util.isUserLoggedIn(request.session, pool))) {
+        response.json({"Result":"Please login"});
+        response.end();
+        return;
+    }
+
+    let ExamId = request.body.ExamId;
+    let UserId = request.body.UserId;
+    let QuestionId = request.body.QuestionId;
+    let OverrideScore = request.body.OverrideScore;
+    if(!OverrideScore) {
+        OverrideScore=0
+    }
+
+    if(!ExamId || !UserId || !QuestionId || !OverrideScore) {
+        response.json({'Result':"Invalid Request"});
+        response.end();
+        return;
+    }
+
+    constraintOverridePromise = () => {
+        return new Promise((resolve, reject) => {
+            pool.query('UPDATE FunctionNameScores SET OverrideScore=? WHERE ExamId=? AND UserId=? AND QuestionId=?', [OverrideScore, ExamId, UserId, QuestionId],
+                (error, elements) => {
+                    if(error) return reject(error);
+                    return resolve(elements);
+                });
+        });
+    }
+
+    if(await constraintOverridePromise()) {
+        response.json({'Result':'Success'});
+        response.end();
+    } else {
+        response.json({'Result':'Error'});
+        response.end();
+    }
+
+});
+
 
 app.post('/getStudentResponsesAndScores', async function(request, response) {
 	if(!(await util.isUserLoggedIn(request.session, pool))) {
