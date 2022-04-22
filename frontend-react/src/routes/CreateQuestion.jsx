@@ -1,6 +1,5 @@
 import React, { Component, useState } from "react";
 import './CreateQuestion.css';
-import { Alert } from "react-alert";
 import ShowQuestionBank from './ShowQuestionBank';
 
 class CreateQuestion extends Component {
