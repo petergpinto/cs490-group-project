@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, useNavigate, Navigate } from "react-route
 import StudentExamList from './StudentExamList.jsx';
 import './StudentLanding.css';
 
+
 const SHOW_EXAM_LIST = "show_exam_list";
 const SHOW_TAKE_EXAM = "show_take_exam";
 const SHOW_VIEW_SCORE = "show_view_score";
@@ -244,11 +245,12 @@ class TakeExam extends Component {
 		);
     }
 
-
 	renderQuestionMinimap() {
 		let questions = this.state.data;
+		console.log(questions);
 		return questions.map((row, index) => {
-			return <button value={index} onClick={this.setActiveQuestion}>Question {index+1}</button>
+			return <button value={index} onClick={this.setActiveQuestion}>Question {index+1} </button>
+
         })
 	}
 
