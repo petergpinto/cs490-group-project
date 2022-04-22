@@ -35,17 +35,17 @@ for i in range(len(json_file)):
 	is_def = tmp.find("def")
 	if(is_def != 0):
 		test_results.append({"UserId":user_id,"ExamId":exam_id,"QuestionId":q_id,"TestCaseId":case_id,"AutoGraderScore":0,"AutoGraderOutput":"Syntax Error"})
-		function_results.append({"UserId":user_id,"ExamId":exam_id,"QuestionId":q_id,"CorrectFunctionName":0})
+		function_results.append({"UserId":user_id,"ExamId":exam_id,"QuestionId":q_id,"CorrectFunctionName":0,"ProvidedFunctionName":"NONE"})
 		continue;
 	is_func = tmp.split("(")[0][4:]
 	if(is_func == test_case):
-		function_results.append({"UserId":user_id,"ExamId":exam_id,"QuestionId":q_id,"CorrectFunctionName":1})
+		function_results.append({"UserId":user_id,"ExamId":exam_id,"QuestionId":q_id,"CorrectFunctionName":1,"ProvidedFunctionName":is_func})
 	elif(len(is_func) == 0):
-		function_results.append({"UserId":user_id,"ExamId":exam_id,"QuestionId":q_id,"CorrectFunctionName":0})
+		function_results.append({"UserId":user_id,"ExamId":exam_id,"QuestionId":q_id,"CorrectFunctionName":0,"ProvidedFunctionName":is_func})
 		test_results.append({"UserId":user_id,"ExamId":exam_id,"QuestionId":q_id,"TestCaseId":case_id,"AutoGraderScore":0,"AutoGraderOutput":"No Function Name"})
 		continue	
 	else:
-		function_results.append({"UserId":user_id,"ExamId":exam_id,"QuestionId":q_id,"CorrectFunctionName":0})
+		function_results.append({"UserId":user_id,"ExamId":exam_id,"QuestionId":q_id,"CorrectFunctionName":0,"ProvidedFunctionName":is_func})
 		response = response.replace(is_func,test_case)
 	if(answer["TestCaseInputType"] == "S"):
 		test_input = str(test_input)
@@ -108,7 +108,7 @@ for item in test_results:
 	prepared_tests.append((item["UserId"],item["ExamId"],item["TestCaseId"],item["AutoGraderScore"],item["AutoGraderOutput"]))	
 prepared_funcs = []
 for item in function_results:
-	prepared_funcs.append((item["UserId"],item["ExamId"],item["QuestionId"],item["CorrectFunctionName"]))
+	prepared_funcs.append((item["UserId"],item["ExamId"],item["QuestionId"],item["CorrectFunctionName"],item["ProvidedFunctionName"]))
 prepared_constraints = []
 for item in constraint_results:
 	prepared_constraints.append((item["UserId"],item["ExamId"],item["QuestionId"],item["ConstraintFollowed"]))
@@ -116,7 +116,7 @@ print(constraint_results)
 try:
 	cursor.executemany(sql,prepared_tests)
 	db.commit()
-	sql = "REPLACE INTO FunctionNameScores (UserId,ExamId,QuestionId,CorrectFunctionName) VALUES (%s,%s,%s,%s)"
+	sql = "REPLACE INTO FunctionNameScores (UserId,ExamId,QuestionId,CorrectFunctionName,ProvidedFunctionName) VALUES (%s,%s,%s,%s,%s)"
 	cursor.executemany(sql,prepared_funcs)
 	db.commit()
 	sql = "REPLACE INTO ConstraintScores (UserId,ExamId,QuestionId,ConstraintFollowed) VALUES (%s,%s,%s,%s)"
